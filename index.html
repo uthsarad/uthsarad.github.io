@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Uthsara Dahanaike — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ─── CSS Variables ─── */
+:root {
+  --bg-deep: #0a0612;
+  --bg-card: rgba(15, 10, 25, 0.75);
+  --border: rgba(255, 255, 255, 0.06);
+  --border-hover: rgba(139, 92, 246, 0.35);
+  --accent-blue: #6366f1;
+  --accent-purple: #a855f7;
+  --accent-violet: #8b5cf6;
+  --text-primary: #f3f4f6;
+  --text-secondary: #9ca3af;
+  --text-muted: #6b7280;
+  --glow: rgba(139, 92, 246, 0.25);
+  --radius: 18px;
+}
+
+/* ─── Reset & Base ─── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* ─── Animated Background ─── */
+.bg-layer {
+  position: fixed; inset: 0; z-index: -2;
+  background:
+    radial-gradient(ellipse at 20% 30%, rgba(99, 102, 241, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 70%, rgba(168, 85, 247, 0.10) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(139, 92, 246, 0.06) 0%, transparent 60%),
+    linear-gradient(180deg, #0a0612 0%, #0f0818 30%, #120a1e 60%, #0a0612 100%);
+}
+
+.bg-curtain {
+  position: fixed; inset: 0; z-index: -1;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0px,
+      transparent 40px,
+      rgba(139, 92, 246, 0.015) 40px,
+      rgba(139, 92, 246, 0.015) 41px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0px,
+      transparent 120px,
+      rgba(99, 102, 241, 0.02) 120px,
+      rgba(99, 102, 241, 0.02) 122px
+    );
+  animation: curtainDrift 20s ease-in-out infinite alternate;
+}
+
+@keyframes curtainDrift {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-20px); }
+}
+
+.bg-vignette {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(10, 6, 18, 0.8) 100%);
+}
+
+/* ─── Floating Orbs ─── */
+.orb {
+  position: fixed; border-radius: 50%; filter: blur(80px); z-index: -1; pointer-events: none;
+  animation: orbFloat 15s ease-in-out infinite alternate;
+}
+.orb-1 { width: 400px; height: 400px; background: rgba(99, 102, 241, 0.15); top: 10%; left: 5%; animation-delay: 0s; }
+.orb-2 { width: 300px; height: 300px; background: rgba(168, 85, 247, 0.12); top: 50%; right: 5%; animation-delay: -5s; }
+.orb-3 { width: 350px; height: 350px; background: rgba(139, 92, 246, 0.10); bottom: 10%; left: 30%; animation-delay: -10s; }
+
+@keyframes orbFloat {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(30px, -20px) scale(1.05); }
+  100% { transform: translate(-20px, 15px) scale(0.95); }
+}
+
+/* ─── Glass Card ─── */
+.glass {
+  background: var(--bg-card);
+  backdrop-filter: blur(20px) saturate(1.2);
+  -webkit-backdrop-filter: blur(20px) saturate(1.2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.glass:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-hover);
+  box-shadow: 0 12px 40px rgba(139, 92, 246, 0.15), 0 0 0 1px rgba(139, 92, 246, 0.1);
+}
+
+/* ─── Sidebar Navigation ─── */
+.sidebar {
+  position: fixed; left: 24px; top: 50%; transform: translateY(-50%);
+  display: flex; flex-direction: column; gap: 8px;
+  z-index: 100; padding: 12px 8px;
+  background: rgba(15, 10, 25, 0.6);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+.nav-btn {
+  width: 44px; height: 44px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  background: transparent; border: none; cursor: pointer;
+  color: var(--text-muted); transition: all 0.3s ease;
+  position: relative;
+}
+.nav-btn:hover { color: var(--text-primary); background: rgba(255,255,255,0.04); }
+.nav-btn.active {
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+  box-shadow: 0 0 20px var(--glow), 0 4px 12px rgba(139, 92, 246, 0.3);
+}
+.nav-btn svg { width: 20px; height: 20px; }
+
+.nav-tooltip {
+  position: absolute; left: 56px; top: 50%; transform: translateY(-50%) scale(0.9);
+  background: rgba(20, 15, 35, 0.95); padding: 6px 12px; border-radius: 8px;
+  font-size: 12px; font-weight: 500; color: var(--text-secondary);
+  white-space: nowrap; opacity: 0; pointer-events: none; transition: all 0.2s ease;
+  border: 1px solid var(--border);
+}
+.nav-btn:hover .nav-tooltip { opacity: 1; transform: translateY(-50%) scale(1); }
+
+/* ─── Main Content ─── */
+main { margin-left: 90px; padding: 0 24px; max-width: 900px; }
+section { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 80px 0; }
+
+/* ─── Section Headers ─── */
+.section-title {
+  font-size: clamp(2rem, 5vw, 3rem); font-weight: 800;
+  text-align: center; margin-bottom: 48px; letter-spacing: -0.02em;
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple), var(--accent-violet));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+
+/* ─── Scroll Reveal ─── */
+.reveal { opacity: 0; transform: translateY(30px); transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+
+/* ─── Hero ─── */
+.hero { text-align: center; align-items: center; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 18px; border-radius: 100px;
+  background: rgba(139, 92, 246, 0.1); border: 1px solid rgba(139, 92, 246, 0.2);
+  font-size: 13px; font-weight: 500; color: var(--accent-violet); margin-bottom: 24px;
+}
+.hero h1 {
+  font-size: clamp(2.5rem, 7vw, 4.5rem); font-weight: 800; line-height: 1.1;
+  margin-bottom: 20px; letter-spacing: -0.03em;
+}
+.hero h1 .gradient-text {
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.hero p {
+  font-size: 1.15rem; color: var(--text-secondary); max-width: 520px;
+  line-height: 1.7; margin-bottom: 36px;
+}
+.hero-btns { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 28px; border-radius: 12px; font-size: 14px; font-weight: 600;
+  text-decoration: none; transition: all 0.3s ease; cursor: pointer; border: none;
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+  color: #fff; box-shadow: 0 4px 20px rgba(139, 92, 246, 0.3);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(139, 92, 246, 0.4); }
+.btn-secondary {
+  background: rgba(255,255,255,0.03); color: var(--text-secondary);
+  border: 1px solid var(--border);
+}
+.btn-secondary:hover { border-color: var(--border-hover); color: var(--text-primary); background: rgba(255,255,255,0.06); }
+
+/* ─── About ─── */
+.about-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+.about-card { padding: 32px; }
+.about-header { display: flex; align-items: center; gap: 20px; margin-bottom: 24px; flex-wrap: wrap; }
+.avatar {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+  display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: 700; color: #fff;
+  flex-shrink: 0; box-shadow: 0 0 30px rgba(139, 92, 246, 0.3);
+}
+.about-header h3 { font-size: 1.5rem; font-weight: 700; }
+.about-header span { font-size: 14px; color: var(--text-muted); }
+.about-bio { color: var(--text-secondary); line-height: 1.8; margin-bottom: 28px; }
+
+.info-rows { display: flex; flex-direction: column; gap: 14px; }
+.info-row {
+  display: flex; align-items: center; gap: 14px; padding: 14px 18px;
+  background: rgba(255,255,255,0.02); border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.04); transition: all 0.3s ease;
+}
+.info-row:hover { background: rgba(255,255,255,0.04); border-color: rgba(139, 92, 246, 0.15); }
+.info-row-icon {
+  width: 36px; height: 36px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(139, 92, 246, 0.1); color: var(--accent-violet); flex-shrink: 0;
+}
+.info-row-icon svg { width: 18px; height: 18px; }
+.info-row-content { flex: 1; }
+.info-row-label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+.info-row-value { font-size: 14px; font-weight: 500; color: var(--text-primary); margin-top: 2px; }
+
+.tech-stack { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 24px; }
+.tech-badge {
+  padding: 8px 16px; border-radius: 10px; font-size: 13px; font-weight: 500;
+  background: rgba(139, 92, 246, 0.08); border: 1px solid rgba(139, 92, 246, 0.15);
+  color: var(--text-secondary); transition: all 0.3s ease;
+}
+.tech-badge:hover { background: rgba(139, 92, 246, 0.15); color: var(--text-primary); border-color: rgba(139, 92, 246, 0.3); transform: translateY(-2px); }
+
+/* ─── Showcase / Projects ─── */
+.projects-grid { display: flex; flex-direction: column; gap: 20px; }
+.project-card { padding: 28px; display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap; }
+.project-icon {
+  width: 56px; height: 56px; border-radius: 16px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  background: linear-gradient(135deg, rgba(99,102,241,0.2), rgba(168,85,247,0.2));
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  font-size: 24px;
+}
+.project-content { flex: 1; min-width: 200px; }
+.project-title { font-size: 1.15rem; font-weight: 700; margin-bottom: 6px; }
+.project-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 14px; }
+.project-meta { display: flex; gap: 10px; flex-wrap: wrap; }
+.meta-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 5px 12px; border-radius: 8px; font-size: 12px; font-weight: 500;
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+  color: var(--text-muted);
+}
+.meta-badge svg { width: 13px; height: 13px; }
+
+/* ─── Featured / Now ─── */
+.featured-card { padding: 36px; text-align: center; max-width: 600px; margin: 0 auto; }
+.featured-label {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 14px; border-radius: 100px; font-size: 12px; font-weight: 600;
+  background: linear-gradient(135deg, rgba(99,102,241,0.15), rgba(168,85,247,0.15));
+  border: 1px solid rgba(139, 92, 246, 0.2); color: var(--accent-violet); margin-bottom: 20px;
+}
+.featured-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 12px; }
+.featured-desc { color: var(--text-secondary); line-height: 1.7; margin-bottom: 24px; }
+.featured-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+/* ─── Contact ─── */
+.contact-card { padding: 48px; text-align: center; max-width: 600px; margin: 0 auto; }
+.contact-card h2 { font-size: 2rem; font-weight: 800; margin-bottom: 16px; }
+.contact-card p { color: var(--text-secondary); margin-bottom: 32px; line-height: 1.7; }
+.social-links { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+.social-link {
+  display: flex; align-items: center; gap: 8px;
+  padding: 12px 24px; border-radius: 12px;
+  background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+  color: var(--text-secondary); text-decoration: none; font-size: 14px; font-weight: 500;
+  transition: all 0.3s ease;
+}
+.social-link:hover {
+  border-color: var(--border-hover); color: var(--text-primary);
+  background: rgba(139, 92, 246, 0.08); transform: translateY(-2px);
+}
+.social-link svg { width: 18px; height: 18px; }
+
+/* ─── Footer ─── */
+.footer { text-align: center; padding: 40px 0 60px; color: var(--text-muted); font-size: 13px; }
+
+/* ─── Scroll Progress ─── */
+.scroll-progress {
+  position: fixed; top: 0; left: 0; height: 3px; z-index: 200;
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+  width: 0%; transition: width 0.1s linear;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+  .sidebar { left: 12px; padding: 8px 6px; }
+  .nav-btn { width: 38px; height: 38px; border-radius: 12px; }
+  .nav-btn svg { width: 18px; height: 18px; }
+  main { margin-left: 68px; padding: 0 16px; }
+  section { padding: 60px 0; }
+  .project-card { flex-direction: column; }
+  .about-header { flex-direction: column; text-align: center; }
+}
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg-deep); }
+::-webkit-scrollbar-thumb { background: rgba(139, 92, 246, 0.3); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(139, 92, 246, 0.5); }
+</style>
+</head>
+<body>
+
+<!-- Background Layers -->
+<div class="bg-layer"></div>
+<div class="bg-curtain"></div>
+<div class="bg-vignette"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<!-- Scroll Progress -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- Sidebar Navigation -->
+<nav class="sidebar" id="sidebar">
+  <button class="nav-btn active" data-section="hero" onclick="scrollToSection('hero')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span class="nav-tooltip">Home</span>
+  </button>
+  <button class="nav-btn" data-section="about" onclick="scrollToSection('about')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    <span class="nav-tooltip">About</span>
+  </button>
+  <button class="nav-btn" data-section="showcase" onclick="scrollToSection('showcase')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+    <span class="nav-tooltip">Work</span>
+  </button>
+  <button class="nav-btn" data-section="featured" onclick="scrollToSection('featured')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+    <span class="nav-tooltip">Featured</span>
+  </button>
+  <button class="nav-btn" data-section="contact" onclick="scrollToSection('contact')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+    <span class="nav-tooltip">Contact</span>
+  </button>
+</nav>
+
+<!-- Main Content -->
+<main>
+
+  <!-- Hero -->
+  <section id="hero" class="hero">
+    <div class="reveal">
+      <div class="hero-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Open to internships & collaboration
+      </div>
+      <h1>Hi, I'm <span class="gradient-text">Uthsara Dahanaike</span></h1>
+      <p>A Cybersecurity undergraduate and IT intern who enjoys digging into how systems work under the hood — from low-level malware analysis to building full geospatial pipelines.</p>
+      <div class="hero-btns">
+        <a href="https://www.linkedin.com/in/uthsara-dahanaike" class="btn btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          View My LinkedIn
+        </a>
+        <a href="mailto:uthsarad@gmail.com" class="btn btn-secondary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Send an email
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <h2 class="section-title reveal">About Me</h2>
+    <div class="about-grid">
+      <div class="glass about-card reveal reveal-delay-1">
+        <div class="about-header">
+          <div class="avatar">UD</div>
+          <div>
+            <h3>Uthsara Dahanaike</h3>
+            <span>Cybersecurity Student & IT Intern</span>
+          </div>
+        </div>
+        <p class="about-bio">
+          A Computer Science undergraduate majoring in Cybersecurity, currently interning in IT at a Sri Lankan ICT distribution company. I'm drawn to the low-level side of computing — malware analysis, reverse engineering, and firmware/embedded systems security — and I like building full end-to-end tools, from digital forensics workflows to geospatial data pipelines.
+        </p>
+        <div class="info-rows">
+          <div class="info-row">
+            <div class="info-row-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <div class="info-row-content">
+              <div class="info-row-label">Name</div>
+              <div class="info-row-value">Uthsara Dahanaike</div>
+            </div>
+          </div>
+          <div class="info-row">
+            <div class="info-row-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            </div>
+            <div class="info-row-content">
+              <div class="info-row-label">Interning Since</div>
+              <div class="info-row-value">May 2026</div>
+            </div>
+          </div>
+          <div class="info-row">
+            <div class="info-row-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div class="info-row-content">
+              <div class="info-row-label">Location</div>
+              <div class="info-row-value">Colombo, Sri Lanka</div>
+            </div>
+          </div>
+          <div class="info-row">
+            <div class="info-row-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.66 4 3 9 3s9-1.34 9-3v-5"/></svg>
+            </div>
+            <div class="info-row-content">
+              <div class="info-row-label">Education</div>
+              <div class="info-row-value">BSc Computer Science (Cybersecurity), Edith Cowan University</div>
+            </div>
+          </div>
+          <div class="info-row">
+            <div class="info-row-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+            </div>
+            <div class="info-row-content">
+              <div class="info-row-label">Work</div>
+              <div class="info-row-value">IT Intern at Sala Enterprises</div>
+            </div>
+          </div>
+        </div>
+        <div class="tech-stack">
+          <span class="tech-badge">Python</span>
+          <span class="tech-badge">React</span>
+          <span class="tech-badge">Flask</span>
+          <span class="tech-badge">Linux / Arch</span>
+          <span class="tech-badge">Malware Analysis</span>
+          <span class="tech-badge">Reverse Engineering</span>
+          <span class="tech-badge">Digital Forensics</span>
+          <span class="tech-badge">OpenCV</span>
+          <span class="tech-badge">Git</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Showcase -->
+  <section id="showcase">
+    <h2 class="section-title reveal">Showcase</h2>
+    <div class="projects-grid">
+      <div class="glass project-card reveal reveal-delay-1">
+        <div class="project-icon">🗺️</div>
+        <div class="project-content">
+          <div class="project-title">GeoSpine</div>
+          <div class="project-desc">A geospatial web app with a 7-stage GIS pipeline — Import → Align → Segment → Boundary Trace → Auto-Georeference → Assembly Canvas → Export. Built with React, Flask, OpenCV, Leaflet.js, and GeoPandas, with a homography-based image overlay and a Web Worker flood-fill for segment preview.</div>
+          <div class="project-meta">
+            <span class="meta-badge">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              Personal Project
+            </span>
+            <span class="meta-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              React · Flask · OpenCV
+            </span>
+            <span class="meta-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              In progress
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass project-card reveal reveal-delay-2">
+        <div class="project-icon">🐧</div>
+        <div class="project-content">
+          <div class="project-title">NeOS</div>
+          <div class="project-desc">A custom Arch Linux–based operating system build, exploring low-level system configuration and Linux internals from the ground up.</div>
+          <div class="project-meta">
+            <span class="meta-badge">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              Personal Project
+            </span>
+            <span class="meta-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Arch Linux
+            </span>
+            <span class="meta-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              Ongoing
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass project-card reveal reveal-delay-3">
+        <div class="project-icon">🔍</div>
+        <div class="project-content">
+          <div class="project-title">Digital Forensics Investigation</div>
+          <div class="project-desc">A ransomware investigation project for the CSG2305 Digital Forensics module, working through evidence collection, artifact analysis, and incident reconstruction.</div>
+          <div class="project-meta">
+            <span class="meta-badge">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              Coursework
+            </span>
+            <span class="meta-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Ransomware Case Study
+            </span>
+            <span class="meta-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              CSG2305
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass project-card reveal reveal-delay-1">
+        <div class="project-icon">🧠</div>
+        <div class="project-content">
+          <div class="project-title">AI Model Evaluation — Osteoporosis Detection</div>
+          <div class="project-desc">A group notebook project for CSG2341 (AI) evaluating MLP and CNN models for osteoporosis detection, covering data preprocessing, model comparison, and performance evaluation.</div>
+          <div class="project-meta">
+            <span class="meta-badge">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              Coursework
+            </span>
+            <span class="meta-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              MLP · CNN
+            </span>
+            <span class="meta-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              CSG2341
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured -->
+  <section id="featured">
+    <h2 class="section-title reveal">Featured</h2>
+    <div class="glass featured-card reveal reveal-delay-1">
+      <div class="featured-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        Currently Focused On
+      </div>
+      <div class="featured-title">Firmware Security & Reverse Engineering</div>
+      <div class="featured-desc">
+        Alongside my IT internship and coursework, I'm spending time going deeper into low-level, defensive-security territory — binary analysis with tools like Ghidra, and firmware/embedded systems vulnerability research — while continuing to build out GeoSpine's GIS pipeline.
+      </div>
+      <div class="featured-actions">
+        <a href="https://github.com/uthsarad" class="btn btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          View GitHub
+        </a>
+        <a href="mailto:uthsarad@gmail.com" class="btn btn-secondary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          Get In Touch
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="glass contact-card reveal">
+      <h2>Let's work together</h2>
+      <p>Have a project in mind or just want to say hi? I'm always open to discussing new opportunities, creative ideas, or potential collaborations.</p>
+      <div class="hero-btns" style="margin-bottom: 32px;">
+        <a href="mailto:uthsarad@gmail.com" class="btn btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          uthsarad@gmail.com
+        </a>
+      </div>
+      <div class="social-links">
+        <a href="https://github.com/uthsarad" class="social-link" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          GitHub
+        </a>
+        <a href="https://www.linkedin.com/in/uthsara-dahanaike" class="social-link" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+          LinkedIn
+        </a>
+        <a href="mailto:uthsarad@gmail.com" class="social-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Email
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">
+    <p>Built with curiosity and coffee. &copy; 2026 Uthsara Dahanaike.</p>
+  </div>
+</main>
+
+<script>
+// ─── Scroll to Section ───
+function scrollToSection(id) {
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+}
+
+// ─── Intersection Observer for Reveal Animations ───
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// ─── Section Observer for Active Nav ───
+const sections = ['hero', 'about', 'showcase', 'featured', 'contact'];
+const navObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.querySelector(`.nav-btn[data-section="${entry.target.id}"]`);
+      if (activeBtn) activeBtn.classList.add('active');
+    }
+  });
+}, { threshold: 0.4 });
+
+sections.forEach(id => {
+  const el = document.getElementById(id);
+  if (el) navObserver.observe(el);
+});
+
+// ─── Scroll Progress Bar ───
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = (scrollTop / docHeight) * 100;
+  document.getElementById('scrollProgress').style.width = progress + '%';
+});
+</script>
+
+</body>
+</html>
