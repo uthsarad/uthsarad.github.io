@@ -42,6 +42,7 @@ export function Featured() {
                   <a
                     href="https://github.com/uthsarad"
                     target="_blank"
+                    rel="noopener noreferrer"
                     className="px-8 py-4 bg-gradient-to-r from-brand-blue to-brand-purple rounded-xl font-semibold text-white shadow-lg hover:shadow-brand-violet/30 transition-all hover:-translate-y-1 inline-block"
                   >
                     View GitHub

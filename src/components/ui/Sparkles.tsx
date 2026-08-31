@@ -49,7 +49,7 @@ export function Sparkles({
     }
 
     function frame() {
-      if (!ctx) return
+      if (!ctx || w === 0 || h === 0) return
       ctx.clearRect(0, 0, w, h)
       t += 0.01
       for (const s of parts) {

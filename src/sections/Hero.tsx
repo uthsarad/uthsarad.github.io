@@ -1,9 +1,7 @@
 import { motion, useScroll, useTransform } from 'framer-motion'
-import { cn } from '@/lib/utils'
 import { profile } from '@/data/profile'
 import { Reveal } from '@/components/ui/Reveal'
 import { AuroraBackground } from '@/components/ui/AuroraBackground'
-import { Card3D } from '@/components/ui/Card3D'
 import { TextGenerateEffect } from '@/components/ui/TextGenerateEffect'
 
 // Signature interaction: scroll-scrubbed hero with parallax + scale.
@@ -20,10 +18,9 @@ export function Hero() {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center px-6">
-      <AuroraBackground
-        className="absolute inset-0"
-        style={{ transform: `translateY(${auroraY}) scale(${auroraScale})` }}
-      />
+      <motion.div className="absolute inset-0" style={{ y: auroraY, scale: auroraScale }}>
+        <AuroraBackground className="absolute inset-0" />
+      </motion.div>
 
       <motion.div
         style={{ y: nameY, scale: nameScale }}
@@ -56,6 +53,7 @@ export function Hero() {
             <a
               href="https://www.linkedin.com/in/uthsara-dahanaike"
               target="_blank"
+              rel="noopener noreferrer"
               className="group relative px-8 py-4 bg-gradient-to-r from-brand-blue to-brand-purple rounded-xl font-semibold text-white shadow-lg hover:shadow-brand-violet/30 transition-all hover:-translate-y-1"
             >
               <span className="relative z-10">View My LinkedIn</span>

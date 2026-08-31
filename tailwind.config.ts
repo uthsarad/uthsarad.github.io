@@ -17,6 +17,9 @@ export default {
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
       },
+      borderRadius: {
+        '4xl': '2rem',
+      },
       keyframes: {
         aurora: {
           '0%,100%': { transform: 'translate3d(0,0,0) scale(1)' },

@@ -38,7 +38,7 @@ export function SidebarNav() {
   ]
 
   return (
-    <nav className="fixed left-6 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col gap-4">
+    <nav aria-label="Section navigation" className="fixed left-6 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col gap-4">
       <div className="glass rounded-3xl p-3 backdrop-blur-xl border border-white/5 shadow-2xl">
         {items.map(({ id, label, href }) => (
           <a

@@ -30,6 +30,7 @@ export function Contact() {
                 <a
                   href="https://github.com/uthsarad"
                   target="_blank"
+                  rel="noopener noreferrer"
                   className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center hover:bg-brand-violet/20 hover:border-brand-violet/40 transition-all"
                   aria-label="GitHub"
                 >
@@ -40,6 +41,7 @@ export function Contact() {
                 <a
                   href="https://www.linkedin.com/in/uthsara-dahanaike"
                   target="_blank"
+                  rel="noopener noreferrer"
                   className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center hover:bg-brand-violet/20 hover:border-brand-violet/40 transition-all"
                   aria-label="LinkedIn"
                 >
