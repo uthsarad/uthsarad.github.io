@@ -1,9 +1,8 @@
-import { motion } from 'framer-motion'
-import { cn } from '@/lib/utils'
 import { profile } from '@/data/profile'
 import { Reveal } from '@/components/ui/Reveal'
 import { Sparkles } from '@/components/ui/Sparkles'
 import { Magnetic } from '@/components/ui/Magnetic'
+import { BackgroundBeams } from '@/components/ui/BackgroundBeams'
 
 export function Featured() {
   return (
@@ -17,11 +16,7 @@ export function Featured() {
           <Sparkles className="absolute -inset-8" density={32} color="rgba(139,92,246,0.45)" />
 
           <div className="glass rounded-4xl p-10 md:p-14 relative overflow-hidden">
-            {/* subtle animated background beams */}
-            <div className="absolute inset-0 rounded-4xl">
-              <div className="absolute inset-0 bg-gradient-to-br from-brand-blue/20 via-transparent to-brand-violet/20 animate-pulse" />
-              <div className="absolute inset-0 bg-grid-white/5 [mask-image:linear-gradient(to_bottom,white,transparent)]" />
-            </div>
+            <BackgroundBeams />
 
             <div className="relative z-10">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-violet/10 border border-brand-violet/20 text-brand-violet text-sm font-medium mb-6">

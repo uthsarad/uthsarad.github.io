@@ -1,4 +1,3 @@
-import { cn } from '@/lib/utils'
 import { useState, useEffect } from 'react'
 
 // Scroll progress bar at top of viewport (visible on desktop).

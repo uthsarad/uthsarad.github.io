@@ -1,5 +1,3 @@
-import { motion } from 'framer-motion'
-import { cn } from '@/lib/utils'
 import { profile } from '@/data/profile'
 import { Reveal } from '@/components/ui/Reveal'
 import { Sparkles } from '@/components/ui/Sparkles'
