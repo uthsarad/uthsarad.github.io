@@ -1,4 +1,4 @@
-# Minimal background beams effect for Featured section.
+// Minimal background beams effect for Featured section.
 import { cn } from '@/lib/utils'
 
 export function BackgroundBeams({ className }: { className?: string }) {

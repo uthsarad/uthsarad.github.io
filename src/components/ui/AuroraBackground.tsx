@@ -1,13 +1,21 @@
 import { cn } from '@/lib/utils'
+import type { CSSProperties } from 'react'
 
 // Soft animated aurora glow blobs. Purely decorative.
-export function AuroraBackground({ className }: { className?: string }) {
+export function AuroraBackground({
+  className,
+  style,
+}: {
+  className?: string
+  style?: CSSProperties
+}) {
   return (
     <div
       className={cn(
         'pointer-events-none absolute inset-0 overflow-hidden',
         className,
       )}
+      style={style}
       aria-hidden
     >
       <div className="absolute -top-40 -left-[10%] h-[520px] w-[520px] animate-aurora rounded-full bg-brand-blue/25 blur-[120px]" />
