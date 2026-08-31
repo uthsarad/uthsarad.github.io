@@ -6,7 +6,7 @@ export type Project = {
   kind: string
   stack: string
   status: string
-  url: string
+  url?: string
 }
 
 // Keep this list limited to original public repositories on github.com/uthsarad.
@@ -42,6 +42,15 @@ export const projects: Project[] = [
     url: 'https://github.com/uthsarad/mEgis',
   },
   {
+    id: 'museek',
+    emoji: '🎵',
+    title: 'Museek',
+    desc: 'A private, lightweight music player built around mpv for local music playback.',
+    kind: 'Private Project',
+    stack: 'mpv · Music playback',
+    status: 'Private',
+  },
+  {
     id: 'hsfix',
     emoji: '🩹',
     title: 'hsfix',
@@ -50,5 +59,36 @@ export const projects: Project[] = [
     stack: 'Python · Git',
     status: 'Usable',
     url: 'https://github.com/uthsarad/hsfix',
+  },
+]
+
+export const coursework: Project[] = [
+  {
+    id: 'forensics',
+    emoji: '🔍',
+    title: 'Digital Forensics Investigation',
+    desc: 'A ransomware investigation project covering evidence collection, artifact analysis, and incident reconstruction.',
+    kind: 'Coursework',
+    stack: 'Digital forensics',
+    status: 'CSG2305',
+  },
+  {
+    id: 'osteoporosis',
+    emoji: '🧠',
+    title: 'AI Model Evaluation — Osteoporosis Detection',
+    desc: 'A group notebook project evaluating MLP and CNN models for osteoporosis detection, including data preprocessing, model comparison, and performance evaluation.',
+    kind: 'Coursework',
+    stack: 'MLP · CNN',
+    status: 'CSG2341',
+  },
+  {
+    id: 'dsrpc',
+    emoji: '🏦',
+    title: 'Banking RPC System',
+    desc: 'A three-tier banking transfer system with separate client, application-server, and database-server layers, including validation, fee calculation, SQLite transactions, and end-to-end tests.',
+    kind: 'Coursework',
+    stack: 'Python · Pyro5 · SQLite',
+    status: 'Distributed systems',
+    url: 'https://github.com/uthsarad/dsrpc',
   },
 ]
