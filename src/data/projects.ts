@@ -51,14 +51,4 @@ export const projects: Project[] = [
     status: 'Usable',
     url: 'https://github.com/uthsarad/hsfix',
   },
-  {
-    id: 'dsrpc',
-    emoji: '🏦',
-    title: 'Banking RPC System',
-    desc: 'A three-tier banking transfer system where clients call an application server, the application server calls a database server, and only the database tier accesses SQLite. Includes sessions, validation, fee calculation, transactions, and end-to-end tests.',
-    kind: 'Coursework',
-    stack: 'Python · Pyro5 · SQLite',
-    status: 'Complete',
-    url: 'https://github.com/uthsarad/dsrpc',
-  },
 ]
