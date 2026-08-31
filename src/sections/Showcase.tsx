@@ -1,5 +1,3 @@
-import { motion } from 'framer-motion'
-import { cn } from '@/lib/utils'
 import { projects } from '@/data/projects'
 import { Reveal } from '@/components/ui/Reveal'
 import { Card3D } from '@/components/ui/Card3D'
@@ -14,7 +12,7 @@ export function Showcase() {
         </Reveal>
 
         <div className="space-y-12">
-          {projects.map((project, idx) => (
+          {projects.map((project) => (
             <Spotlight
               key={project.id}
               className="block group"
@@ -32,7 +30,14 @@ export function Showcase() {
 
                     <div className="flex-1">
                       <h3 className="text-2xl font-bold mb-3 group-hover:text-brand-violet transition-colors">
-                        {project.title}
+                        <a
+                          href={project.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-violet rounded"
+                        >
+                          {project.title}
+                        </a>
                       </h3>
                       <p className="text-slate-400 leading-relaxed mb-6">
                         {project.desc}
@@ -62,6 +67,14 @@ export function Showcase() {
                           </svg>
                           {project.status}
                         </span>
+                        <a
+                          href={project.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-violet/10 border border-brand-violet/20 text-xs font-medium text-brand-violet hover:bg-brand-violet/20 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-violet"
+                        >
+                          View repository
+                        </a>
                       </div>
                     </div>
                   </div>

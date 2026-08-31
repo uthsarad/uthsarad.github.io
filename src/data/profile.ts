@@ -33,6 +33,6 @@ export const profile = {
   featured: {
     label: 'Currently Focused On',
     title: 'Firmware Security & Reverse Engineering',
-    desc: "Alongside my IT internship and coursework, I'm spending time going deeper into low-level, defensive-security territory — binary analysis with tools like Ghidra, and firmware/embedded systems vulnerability research — while continuing to build out GeoSpine's GIS pipeline.",
+    desc: "Alongside my IT internship and coursework, I'm spending time going deeper into low-level, defensive-security territory — binary analysis with tools like Ghidra, firmware and embedded-systems vulnerability research, and the systems work behind projects like NeOS.",
   },
 }
