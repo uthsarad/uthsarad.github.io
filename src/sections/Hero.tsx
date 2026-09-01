@@ -3,6 +3,7 @@ import { profile } from '@/data/profile'
 import { Reveal } from '@/components/ui/Reveal'
 import { AuroraBackground } from '@/components/ui/AuroraBackground'
 import { TextGenerateEffect } from '@/components/ui/TextGenerateEffect'
+import { CopyEmailButton } from '@/components/ui/CopyButton'
 
 // Signature interaction: scroll-scrubbed hero with parallax + scale.
 export function Hero() {
@@ -49,27 +50,41 @@ export function Hero() {
         </Reveal>
 
         <Reveal delay={0.3}>
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="flex flex-wrap justify-center items-center gap-4">
             <a
-              href="https://www.linkedin.com/in/uthsara-dahanaike"
+              href={profile.links.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative px-8 py-4 bg-gradient-to-r from-brand-blue to-brand-purple rounded-xl font-semibold text-white shadow-lg hover:shadow-brand-violet/30 transition-all hover:-translate-y-1"
+              className="group relative px-6 py-3.5 bg-gradient-to-r from-brand-blue to-brand-purple rounded-xl font-semibold text-white shadow-lg hover:shadow-brand-violet/30 transition-all hover:-translate-y-1 inline-flex items-center gap-2"
             >
-              <span className="relative z-10">View My LinkedIn</span>
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+              </svg>
+              <span>View My LinkedIn</span>
             </a>
+
             <a
-              href={`mailto:${profile.email}`}
-              className="group relative px-8 py-4 bg-white/5 backdrop-blur-md border border-white/10 rounded-xl font-semibold text-slate-200 hover:bg-white/10 transition-all hover:-translate-y-1"
+              href={profile.links.resume}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative px-6 py-3.5 bg-white/5 backdrop-blur-md border border-white/10 rounded-xl font-semibold text-slate-200 hover:bg-white/10 hover:border-brand-violet/40 transition-all hover:-translate-y-1 inline-flex items-center gap-2"
             >
-              <span className="relative z-10">Send an email</span>
+              <svg className="w-5 h-5 text-brand-violet group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              <span>View Resume</span>
             </a>
+
+            <CopyEmailButton
+              email={profile.email}
+              className="group relative px-6 py-3.5 bg-white/5 backdrop-blur-md border border-white/10 rounded-xl font-semibold text-slate-200 hover:bg-white/10 hover:border-brand-violet/40 transition-all hover:-translate-y-1 inline-flex items-center gap-2 cursor-pointer"
+            />
           </div>
         </Reveal>
       </motion.div>
 
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
-        <svg className="w-6 h-6 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-6 h-6 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
         </svg>
       </div>

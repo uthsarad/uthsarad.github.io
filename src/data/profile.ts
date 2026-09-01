@@ -8,16 +8,18 @@ export const profile = {
   links: {
     github: 'https://github.com/uthsarad',
     linkedin: 'https://www.linkedin.com/in/uthsara-dahanaike',
+    resume: '/resume.pdf',
   },
   info: [
-    { label: 'Name', value: 'Uthsara Dahanaike' },
-    { label: 'Interning Since', value: 'May 2026' },
-    { label: 'Location', value: 'Colombo, Sri Lanka' },
+    { label: 'Name', value: 'Uthsara Dahanaike', type: 'user' },
+    { label: 'Interning Since', value: 'May 2026', type: 'calendar' },
+    { label: 'Location', value: 'Colombo, Sri Lanka', type: 'location' },
     {
       label: 'Education',
       value: 'BSc Computer Science (Cybersecurity), Edith Cowan University',
+      type: 'education',
     },
-    { label: 'Work', value: 'IT Intern at Sala Enterprises' },
+    { label: 'Work', value: 'IT Intern at Sala Enterprises', type: 'work' },
   ],
   tech: [
     'Python',

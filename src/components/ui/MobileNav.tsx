@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { cn } from '@/lib/utils'
-import { Sparkles } from './Sparkles'
+import { motion } from 'framer-motion'
 
 type NavItem = {
   id: string
@@ -9,7 +9,7 @@ type NavItem = {
   icon: (active: boolean) => React.ReactNode
 }
 
-export function SidebarNav() {
+export function MobileNav() {
   const [active, setActive] = useState('hero')
 
   useEffect(() => {
@@ -20,7 +20,7 @@ export function SidebarNav() {
           if (entry.isIntersecting) setActive(entry.target.id as string)
         })
       },
-      { threshold: 0.35 }
+      { threshold: 0.3 }
     )
     sections.forEach((id) => {
       const el = document.getElementById(id)
@@ -36,7 +36,7 @@ export function SidebarNav() {
       href: '#hero',
       icon: (isActive) => (
         <svg
-          className={cn('w-5 h-5 transition-colors', isActive ? 'text-white' : 'text-slate-400 group-hover:text-slate-200')}
+          className={cn('w-5 h-5 transition-colors', isActive ? 'text-white' : 'text-slate-400')}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -52,7 +52,7 @@ export function SidebarNav() {
       href: '#about',
       icon: (isActive) => (
         <svg
-          className={cn('w-5 h-5 transition-colors', isActive ? 'text-white' : 'text-slate-400 group-hover:text-slate-200')}
+          className={cn('w-5 h-5 transition-colors', isActive ? 'text-white' : 'text-slate-400')}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -68,7 +68,7 @@ export function SidebarNav() {
       href: '#showcase',
       icon: (isActive) => (
         <svg
-          className={cn('w-5 h-5 transition-colors', isActive ? 'text-white' : 'text-slate-400 group-hover:text-slate-200')}
+          className={cn('w-5 h-5 transition-colors', isActive ? 'text-white' : 'text-slate-400')}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -84,7 +84,7 @@ export function SidebarNav() {
       href: '#featured',
       icon: (isActive) => (
         <svg
-          className={cn('w-5 h-5 transition-colors', isActive ? 'text-white' : 'text-slate-400 group-hover:text-slate-200')}
+          className={cn('w-5 h-5 transition-colors', isActive ? 'text-white' : 'text-slate-400')}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -100,7 +100,7 @@ export function SidebarNav() {
       href: '#contact',
       icon: (isActive) => (
         <svg
-          className={cn('w-5 h-5 transition-colors', isActive ? 'text-white' : 'text-slate-400 group-hover:text-slate-200')}
+          className={cn('w-5 h-5 transition-colors', isActive ? 'text-white' : 'text-slate-400')}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -114,43 +114,34 @@ export function SidebarNav() {
 
   return (
     <nav
-      aria-label="Section navigation"
-      className="fixed left-6 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col gap-4"
+      aria-label="Mobile Navigation"
+      className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 lg:hidden"
     >
-      <div className="glass rounded-3xl p-3 backdrop-blur-xl border border-white/5 shadow-2xl">
+      <div className="flex items-center gap-1.5 px-3 py-2 rounded-full bg-slate-950/85 backdrop-blur-xl border border-white/10 shadow-2xl shadow-black/80">
         {items.map(({ id, label, href, icon }) => {
           const isActive = active === id
           return (
             <a
               key={id}
               href={href}
+              aria-label={label}
               className={cn(
-                'group relative flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-300',
-                isActive ? 'text-white' : 'text-slate-400 hover:text-slate-100'
+                'relative flex flex-col items-center justify-center w-11 h-11 rounded-full transition-colors',
+                isActive ? 'text-white' : 'text-slate-400 hover:text-slate-200'
               )}
               onClick={(e) => {
                 e.preventDefault()
                 document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
               }}
             >
-              <div
-                className={cn(
-                  'w-11 h-11 rounded-xl flex items-center justify-center transition-all',
-                  isActive
-                    ? 'bg-gradient-to-br from-brand-blue to-brand-purple shadow-lg shadow-brand-purple/30'
-                    : 'bg-slate-800/50 group-hover:bg-slate-700/50'
-                )}
-              >
-                {icon(isActive)}
-              </div>
-              <span className="font-medium hidden xl:block">{label}</span>
               {isActive && (
-                <Sparkles
-                  className="absolute -inset-2"
-                  density={16}
-                  color="rgba(168,85,247,0.5)"
+                <motion.div
+                  layoutId="mobile-nav-pill"
+                  className="absolute inset-0 rounded-full bg-gradient-to-tr from-brand-blue/80 to-brand-purple/80 shadow-md shadow-brand-violet/30"
+                  transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                 />
               )}
+              <span className="relative z-10">{icon(isActive)}</span>
             </a>
           )
         })}

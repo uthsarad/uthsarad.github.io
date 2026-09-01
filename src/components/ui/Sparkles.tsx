@@ -30,7 +30,10 @@ export function Sparkles({
     let raf = 0
     let t = 0
 
-    const parts = Array.from({ length: density }, () => ({
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
+    const actualDensity = isMobile ? Math.max(12, Math.floor(density * 0.5)) : density
+
+    const parts = Array.from({ length: actualDensity }, () => ({
       x: Math.random(),
       y: Math.random(),
       r: Math.random() * 1.6 + 0.3,
@@ -80,7 +83,7 @@ export function Sparkles({
   return (
     <canvas
       ref={ref}
-      aria-hidden
+      aria-hidden="true"
       className={cn('pointer-events-none absolute inset-0 h-full w-full', className)}
     />
   )

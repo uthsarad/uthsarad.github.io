@@ -7,6 +7,7 @@ export type Project = {
   stack: string
   status: string
   url?: string
+  tags?: string[]
 }
 
 // Keep this list limited to original public repositories on github.com/uthsarad.
@@ -20,6 +21,7 @@ export const projects: Project[] = [
     stack: 'Arch Linux · Shell · CI',
     status: 'Active development',
     url: 'https://github.com/uthsarad/NeOS',
+    tags: ['systems', 'os', 'linux'],
   },
   {
     id: 'ferrumcalc',
@@ -30,6 +32,7 @@ export const projects: Project[] = [
     stack: 'Rust · egui',
     status: 'Complete',
     url: 'https://github.com/uthsarad/FerrumCalc',
+    tags: ['systems', 'rust', 'tools'],
   },
   {
     id: 'megis',
@@ -40,6 +43,7 @@ export const projects: Project[] = [
     stack: 'Python · GeoPandas · Shapely',
     status: 'Active development',
     url: 'https://github.com/uthsarad/mEgis',
+    tags: ['python', 'tools', 'gis'],
   },
   {
     id: 'museek',
@@ -49,6 +53,7 @@ export const projects: Project[] = [
     kind: 'Private Project',
     stack: 'mpv · Music playback',
     status: 'Private',
+    tags: ['tools', 'audio'],
   },
   {
     id: 'hsfix',
@@ -59,6 +64,7 @@ export const projects: Project[] = [
     stack: 'Python · Git',
     status: 'Usable',
     url: 'https://github.com/uthsarad/hsfix',
+    tags: ['tools', 'python', 'git'],
   },
 ]
 
@@ -71,6 +77,7 @@ export const coursework: Project[] = [
     kind: 'Coursework',
     stack: 'Digital forensics',
     status: 'CSG2305',
+    tags: ['security', 'coursework'],
   },
   {
     id: 'osteoporosis',
@@ -80,6 +87,7 @@ export const coursework: Project[] = [
     kind: 'Coursework',
     stack: 'MLP · CNN',
     status: 'CSG2341',
+    tags: ['ai', 'coursework'],
   },
   {
     id: 'dsrpc',
@@ -90,5 +98,6 @@ export const coursework: Project[] = [
     stack: 'Python · Pyro5 · SQLite',
     status: 'Distributed systems',
     url: 'https://github.com/uthsarad/dsrpc',
+    tags: ['systems', 'python', 'coursework'],
   },
 ]
