@@ -9,6 +9,7 @@ A stunning, scroll-driven portfolio site built with Vite + React + TypeScript + 
 - **Modern Tech Stack**: Vite, React 18, TypeScript, Tailwind CSS
 - **Premium Animations**: Motion (motion.dev) scroll-linked effects, native ScrollTimeline where possible
 - **Aceternity UI**: 200+ copy-paste animated components with glassmorphism design
+- **React Bits**: 165+ animated React components by David Haz (GlitchText, GlassSurface, FadeContent, BlobCursor)
 - **ScrollCraft Quality Bar**: Signature scroll interaction, one visual peak, no "AI slop" aesthetics
 - **Dark Glassmorphism Theme**: Indigo/violet palette with animated backgrounds and orbs
 - **Responsive Design**: Left sidebar navigation on desktop, mobile-optimized
@@ -39,7 +40,7 @@ src/
 - **Build Tool**: Vite (zero-config, fast HMR)
 - **Animations**: Framer Motion (useScroll, useTransform, layout/gesture/exit)
 - **Styling**: Tailwind CSS with custom design tokens
-- **Components**: Aceternity UI (aurora, spotlight, sparkles, 3D card, bento grid)
+- **Components**: Aceternity UI (aurora, spotlight, sparkles, 3D card, bento grid), React Bits (GlitchText, GlassSurface, FadeContent, BlobCursor)
 - **Deployment**: GitHub Actions → GitHub Pages (static site)
 
 ### 🚀 Quick Start

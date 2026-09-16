@@ -4,6 +4,8 @@ import { Reveal } from '@/components/ui/Reveal'
 import { AuroraBackground } from '@/components/ui/AuroraBackground'
 import { TextGenerateEffect } from '@/components/ui/TextGenerateEffect'
 import { CopyEmailButton } from '@/components/ui/CopyButton'
+import { GlitchText } from '@/components/ui/reactbits'
+import { BlobCursor } from '@/components/ui/reactbits'
 
 // Signature interaction: scroll-scrubbed hero with parallax + scale.
 export function Hero() {
@@ -82,6 +84,27 @@ export function Hero() {
           </div>
         </Reveal>
       </motion.div>
+
+      {/* Interactive Blob Cursor effect */}
+      <div className="absolute inset-0 pointer-events-none z-20">
+        <BlobCursor
+          blobType="circle"
+          fillColor="#8b5cf6"
+          trailCount={3}
+          sizes={[60, 125, 75]}
+          innerSizes={[20, 35, 25]}
+          innerColor="rgba(255,255,255,0.8)"
+          opacities={[0.3, 0.2, 0.15]}
+          shadowColor="rgba(139,92,246,0.5)"
+          shadowBlur={20}
+          shadowOffsetX={5}
+          shadowOffsetY={5}
+          useFilter={true}
+          fastDuration={0.1}
+          slowDuration={0.6}
+          zIndex={100}
+        />
+      </div>
 
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
         <svg className="w-6 h-6 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">

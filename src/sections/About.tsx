@@ -3,6 +3,8 @@ import { profile } from '@/data/profile'
 import { Reveal } from '@/components/ui/Reveal'
 import { Sparkles } from '@/components/ui/Sparkles'
 import { stagger } from '@/lib/motion'
+import { FadeContent } from '@/components/ui/reactbits'
+import { GlassSurface } from '@/components/ui/reactbits'
 
 function renderInfoIcon(type?: string) {
   switch (type) {
@@ -70,9 +72,11 @@ export function About() {
                 </div>
               </div>
 
-              <p className="text-slate-300 leading-relaxed mb-8 text-lg">
-                {profile.bio}
-              </p>
+              <FadeContent blur={false} duration={1200} threshold={0.2}>
+                <p className="text-slate-300 leading-relaxed mb-8 text-lg">
+                  {profile.bio}
+                </p>
+              </FadeContent>
 
               <div className="grid md:grid-cols-2 gap-4">
                 {profile.info.map((item, idx) => (
@@ -90,7 +94,7 @@ export function About() {
             </div>
           </motion.div>
 
-          {/* Tech Stack Card */}
+          {/* Tech Stack Card with GlassSurface */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -98,7 +102,23 @@ export function About() {
             viewport={{ once: true }}
             className="relative"
           >
-            <div className="glass rounded-3xl p-8 h-full relative overflow-hidden group">
+            <GlassSurface
+              width="100%"
+              height="auto"
+              borderRadius={20}
+              borderWidth={0.07}
+              brightness={50}
+              opacity={0.93}
+              blur={11}
+              backgroundOpacity={0}
+              saturation={1}
+              distortionScale={-180}
+              redOffset={0}
+              greenOffset={10}
+              blueOffset={20}
+              mixBlendMode="difference"
+              className="p-8 relative overflow-hidden group"
+            >
               <Sparkles className="absolute -inset-4" density={24} color="rgba(168,85,247,0.4)" />
 
               <h4 className="text-xl font-bold mb-6 relative z-10">Tech Stack</h4>
@@ -112,7 +132,7 @@ export function About() {
                   </span>
                 ))}
               </div>
-            </div>
+            </GlassSurface>
           </motion.div>
         </div>
       </div>

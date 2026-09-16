@@ -3,6 +3,8 @@ import { Reveal } from '@/components/ui/Reveal'
 import { Sparkles } from '@/components/ui/Sparkles'
 import { Magnetic } from '@/components/ui/Magnetic'
 import { BackgroundBeams } from '@/components/ui/BackgroundBeams'
+import { GlitchText } from '@/components/ui/reactbits'
+import { FadeContent } from '@/components/ui/reactbits'
 
 export function Featured() {
   return (
@@ -26,11 +28,17 @@ export function Featured() {
                 {profile.featured.label}
               </div>
 
-              <h3 className="text-3xl md:text-4xl font-bold mb-6">{profile.featured.title}</h3>
+              <FadeContent blur={false} duration={1000} threshold={0.2}>
+                <h3 className="text-3xl md:text-4xl font-bold mb-6">
+                  <GlitchText speed={0.3} enableOnHover={true}>{profile.featured.title}</GlitchText>
+                </h3>
+              </FadeContent>
 
-              <p className="text-slate-300 leading-relaxed mb-10 text-lg">
-                {profile.featured.desc}
-              </p>
+              <FadeContent blur={false} duration={1000} delay={200} threshold={0.2}>
+                <p className="text-slate-300 leading-relaxed mb-10 text-lg">
+                  {profile.featured.desc}
+                </p>
+              </FadeContent>
 
               <div className="flex flex-wrap gap-5">
                 <Magnetic>
