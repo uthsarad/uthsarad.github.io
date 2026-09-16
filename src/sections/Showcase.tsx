@@ -30,22 +30,22 @@ function ProjectList({ items }: ProjectListProps) {
           radius={360}
         >
           <Card3D max={6} className="block">
-            <div className="glass rounded-3xl overflow-hidden hover:shadow-2xl hover:shadow-brand-violet/10 transition-all duration-500">
+            <div className="glass rounded-3xl overflow-hidden hover:shadow-2xl hover:shadow-blue-900/20 hover:border-blue-700/40 transition-all duration-500">
               <div className="p-8 md:p-10 flex flex-col md:flex-row gap-8">
                 <div className="flex-shrink-0">
-                  <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-brand-blue/20 to-brand-violet/20 flex items-center justify-center text-4xl shadow-lg">
+                  <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-950/70 to-blue-900/50 border border-blue-800/30 flex items-center justify-center text-4xl shadow-lg shadow-blue-950/40">
                     {project.emoji}
                   </div>
                 </div>
 
                 <div className="flex-1">
-                  <h3 className="text-2xl font-bold mb-3 group-hover:text-brand-violet transition-colors">
+                  <h3 className="text-2xl font-bold mb-3 group-hover:text-blue-400 transition-colors">
                     {project.url ? (
                       <a
                         href={project.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-violet rounded"
+                        className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded"
                       >
                         {project.title}
                       </a>
@@ -72,7 +72,7 @@ function ProjectList({ items }: ProjectListProps) {
                         href={project.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-brand-violet/10 border border-brand-violet/20 text-xs font-medium text-brand-violet hover:bg-brand-violet/20 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-violet"
+                        className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-blue-950/40 border border-blue-900/40 text-xs font-medium text-blue-400 hover:bg-blue-900/40 hover:border-blue-700/50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
                       >
                         <span>View repository</span>
                         <svg
@@ -166,8 +166,8 @@ export function Showcase() {
                     onClick={() => setFilter(key)}
                     className={`relative px-4 py-2 rounded-full text-xs font-medium transition-all duration-200 cursor-pointer flex items-center gap-1.5 ${
                       isActive
-                        ? 'bg-gradient-to-r from-brand-blue to-brand-purple text-white shadow-lg shadow-brand-violet/25'
-                        : 'bg-white/5 border border-white/10 text-slate-400 hover:text-slate-200 hover:bg-white/10'
+                        ? 'bg-gradient-to-r from-blue-700 to-blue-900 text-white shadow-lg shadow-blue-950/60'
+                        : 'bg-white/5 border border-white/10 text-slate-400 hover:text-blue-200 hover:bg-white/10'
                     }`}
                   >
                     <span>{label}</span>

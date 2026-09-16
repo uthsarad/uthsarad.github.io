@@ -57,7 +57,7 @@ export function Hero() {
               href={profile.links.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative px-6 py-3.5 bg-gradient-to-r from-brand-blue to-brand-purple rounded-xl font-semibold text-white shadow-lg hover:shadow-brand-violet/30 transition-all hover:-translate-y-1 inline-flex items-center gap-2"
+              className="group relative px-6 py-3.5 bg-gradient-to-r from-blue-700 to-blue-900 rounded-xl font-semibold text-white shadow-lg hover:shadow-blue-600/30 transition-all hover:-translate-y-1 inline-flex items-center gap-2"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
@@ -69,9 +69,9 @@ export function Hero() {
               href={profile.links.resume}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative px-6 py-3.5 bg-white/5 backdrop-blur-md border border-white/10 rounded-xl font-semibold text-slate-200 hover:bg-white/10 hover:border-brand-violet/40 transition-all hover:-translate-y-1 inline-flex items-center gap-2"
+              className="group relative px-6 py-3.5 bg-white/5 backdrop-blur-md border border-white/10 rounded-xl font-semibold text-slate-200 hover:bg-white/10 hover:border-blue-500/40 transition-all hover:-translate-y-1 inline-flex items-center gap-2"
             >
-              <svg className="w-5 h-5 text-brand-violet group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <svg className="w-5 h-5 text-blue-400 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
               <span>View Resume</span>
@@ -79,7 +79,7 @@ export function Hero() {
 
             <CopyEmailButton
               email={profile.email}
-              className="group relative px-6 py-3.5 bg-white/5 backdrop-blur-md border border-white/10 rounded-xl font-semibold text-slate-200 hover:bg-white/10 hover:border-brand-violet/40 transition-all hover:-translate-y-1 inline-flex items-center gap-2 cursor-pointer"
+              className="group relative px-6 py-3.5 bg-white/5 backdrop-blur-md border border-white/10 rounded-xl font-semibold text-slate-200 hover:bg-white/10 hover:border-blue-500/40 transition-all hover:-translate-y-1 inline-flex items-center gap-2 cursor-pointer"
             />
           </div>
         </Reveal>
@@ -89,13 +89,13 @@ export function Hero() {
       <div className="absolute inset-0 pointer-events-none z-20">
         <BlobCursor
           blobType="circle"
-          fillColor="#8b5cf6"
+          fillColor="#1d4ed8"
           trailCount={3}
           sizes={[60, 125, 75]}
           innerSizes={[20, 35, 25]}
           innerColor="rgba(255,255,255,0.8)"
           opacities={[0.3, 0.2, 0.15]}
-          shadowColor="rgba(139,92,246,0.5)"
+          shadowColor="rgba(37,99,235,0.45)"
           shadowBlur={20}
           shadowOffsetX={5}
           shadowOffsetY={5}

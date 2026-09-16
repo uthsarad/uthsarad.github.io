@@ -11,6 +11,39 @@ type NavItem = {
 
 export function SidebarNav() {
   const [active, setActive] = useState('hero')
+  const [isIdle, setIsIdle] = useState(false)
+  const [isHovered, setIsHovered] = useState(false)
+
+  // Auto-hide during activity; show when idle (or hovered)
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout>
+
+    const onActivity = () => {
+      setIsIdle(false)
+      clearTimeout(timer)
+      timer = setTimeout(() => {
+        setIsIdle(true)
+      }, 1500)
+    }
+
+    // Default to idle shortly after initial mount
+    timer = setTimeout(() => {
+      setIsIdle(true)
+    }, 1500)
+
+    window.addEventListener('mousemove', onActivity, { passive: true })
+    window.addEventListener('scroll', onActivity, { passive: true })
+    window.addEventListener('keydown', onActivity, { passive: true })
+    window.addEventListener('touchstart', onActivity, { passive: true })
+
+    return () => {
+      clearTimeout(timer)
+      window.removeEventListener('mousemove', onActivity)
+      window.removeEventListener('scroll', onActivity)
+      window.removeEventListener('keydown', onActivity)
+      window.removeEventListener('touchstart', onActivity)
+    }
+  }, [])
 
   useEffect(() => {
     const sections = ['hero', 'about', 'showcase', 'featured', 'contact']
@@ -112,49 +145,66 @@ export function SidebarNav() {
     },
   ]
 
+  const isVisible = isIdle || isHovered
+
   return (
-    <nav
-      aria-label="Section navigation"
-      className="fixed left-6 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col gap-4"
-    >
-      <div className="glass rounded-3xl p-3 backdrop-blur-xl border border-white/5 shadow-2xl">
-        {items.map(({ id, label, href, icon }) => {
-          const isActive = active === id
-          return (
-            <a
-              key={id}
-              href={href}
-              className={cn(
-                'group relative flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-300',
-                isActive ? 'text-white' : 'text-slate-400 hover:text-slate-100'
-              )}
-              onClick={(e) => {
-                e.preventDefault()
-                document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
-              }}
-            >
-              <div
+    <>
+      {/* Invisible edge trigger: hovering near left edge reveals sidebar */}
+      <div
+        className="fixed left-0 top-0 bottom-0 w-8 z-30 hidden lg:block"
+        onMouseEnter={() => setIsHovered(true)}
+      />
+
+      <nav
+        aria-label="Section navigation"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        className={cn(
+          'fixed left-6 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col gap-4 transition-all duration-500 ease-out',
+          isVisible
+            ? 'opacity-100 translate-x-0 pointer-events-auto'
+            : 'opacity-0 -translate-x-10 pointer-events-none'
+        )}
+      >
+        <div className="glass rounded-3xl p-3 backdrop-blur-xl border border-blue-900/30 bg-black/85 shadow-2xl shadow-black">
+          {items.map(({ id, label, href, icon }) => {
+            const isActive = active === id
+            return (
+              <a
+                key={id}
+                href={href}
                 className={cn(
-                  'w-11 h-11 rounded-xl flex items-center justify-center transition-all',
-                  isActive
-                    ? 'bg-gradient-to-br from-brand-blue to-brand-purple shadow-lg shadow-brand-purple/30'
-                    : 'bg-slate-800/50 group-hover:bg-slate-700/50'
+                  'group relative flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-300',
+                  isActive ? 'text-white' : 'text-slate-400 hover:text-blue-200'
                 )}
+                onClick={(e) => {
+                  e.preventDefault()
+                  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+                }}
               >
-                {icon(isActive)}
-              </div>
-              <span className="font-medium hidden xl:block">{label}</span>
-              {isActive && (
-                <Sparkles
-                  className="absolute -inset-2"
-                  density={16}
-                  color="rgba(168,85,247,0.5)"
-                />
-              )}
-            </a>
-          )
-        })}
-      </div>
-    </nav>
+                <div
+                  className={cn(
+                    'w-11 h-11 rounded-xl flex items-center justify-center transition-all',
+                    isActive
+                      ? 'bg-gradient-to-br from-blue-700 to-blue-900 shadow-lg shadow-blue-950/60'
+                      : 'bg-slate-900/70 border border-white/5 group-hover:bg-blue-950/50 group-hover:border-blue-800/40'
+                  )}
+                >
+                  {icon(isActive)}
+                </div>
+                <span className="font-medium hidden xl:block">{label}</span>
+                {isActive && (
+                  <Sparkles
+                    className="absolute -inset-2"
+                    density={16}
+                    color="rgba(59,130,246,0.5)"
+                  />
+                )}
+              </a>
+            )
+          })}
+        </div>
+      </nav>
+    </>
   )
 }

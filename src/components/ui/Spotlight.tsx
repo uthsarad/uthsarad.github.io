@@ -34,7 +34,7 @@ export function Spotlight({
         className="pointer-events-none absolute inset-0 transition-opacity duration-300"
         style={{
           opacity: pos.active ? intensity : 0,
-          background: `radial-gradient(${radius}px circle at ${pos.x}px ${pos.y}px, rgba(139,92,246,0.28), transparent 70%)`,
+          background: `radial-gradient(${radius}px circle at ${pos.x}px ${pos.y}px, rgba(37,99,235,0.28), transparent 70%)`,
         }}
       />
     </div>

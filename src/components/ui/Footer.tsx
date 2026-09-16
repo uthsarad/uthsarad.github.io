@@ -4,7 +4,7 @@ export function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="relative border-t border-white/5 bg-slate-950/80 backdrop-blur supports-backdrop-blur:bg-slate-950/60">
+    <footer className="relative border-t border-blue-950/40 bg-black/90 backdrop-blur">
       <div className="mx-auto max-w-7xl px-6 py-12">
         <div className="flex flex-col items-center gap-6">
           <div className="flex flex-wrap justify-center gap-6 text-sm text-slate-400">
@@ -12,7 +12,7 @@ export function Footer() {
               href={profile.links.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-brand-violet transition-colors"
+              className="hover:text-blue-400 transition-colors"
             >
               GitHub
             </a>
@@ -20,7 +20,7 @@ export function Footer() {
               href={profile.links.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-brand-violet transition-colors"
+              className="hover:text-blue-400 transition-colors"
             >
               LinkedIn
             </a>
@@ -28,13 +28,13 @@ export function Footer() {
               href={profile.links.resume}
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-brand-violet transition-colors"
+              className="hover:text-blue-400 transition-colors"
             >
               View Resume
             </a>
             <a
               href={`mailto:${profile.email}`}
-              className="hover:text-brand-violet transition-colors"
+              className="hover:text-blue-400 transition-colors"
             >
               Email
             </a>

@@ -11,7 +11,7 @@ export function Contact() {
         <Reveal>
           <FadeContent blur={false} duration={1200} threshold={0.2}>
             <div className="glass rounded-4xl p-10 md:p-14 text-center relative overflow-hidden">
-              <Sparkles className="absolute -inset-6" density={28} color="rgba(168,85,247,0.35)" />
+              <Sparkles className="absolute -inset-6" density={28} color="rgba(37,99,235,0.35)" />
 
               <h2 className="text-3xl md:text-5xl font-bold mb-6 relative z-10">
                 Let's work together
@@ -24,7 +24,7 @@ export function Contact() {
               <div className="flex flex-wrap justify-center items-center gap-4 relative z-10">
                 <a
                   href={`mailto:${profile.email}`}
-                  className="px-8 py-4 bg-gradient-to-r from-brand-blue to-brand-purple rounded-xl font-semibold text-white shadow-lg hover:shadow-brand-violet/30 transition-all hover:-translate-y-1 inline-flex items-center gap-2"
+                  className="px-8 py-4 bg-gradient-to-r from-blue-700 to-blue-900 rounded-xl font-semibold text-white shadow-lg hover:shadow-blue-600/30 transition-all hover:-translate-y-1 inline-flex items-center gap-2"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -34,7 +34,7 @@ export function Contact() {
 
                 <CopyEmailButton
                   email={profile.email}
-                  className="px-6 py-4 bg-white/5 backdrop-blur-md border border-white/10 rounded-xl font-semibold text-slate-200 hover:bg-white/10 hover:border-brand-violet/40 transition-all hover:-translate-y-1 inline-flex items-center gap-2 cursor-pointer"
+                  className="px-6 py-4 bg-white/5 backdrop-blur-md border border-white/10 rounded-xl font-semibold text-slate-200 hover:bg-white/10 hover:border-blue-500/40 transition-all hover:-translate-y-1 inline-flex items-center gap-2 cursor-pointer"
                 />
 
                 <div className="flex gap-3">
@@ -42,7 +42,7 @@ export function Contact() {
                     href={profile.links.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-14 h-14 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center hover:bg-brand-violet/20 hover:border-brand-violet/40 transition-all text-slate-300 hover:text-white"
+                    className="w-14 h-14 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center hover:bg-blue-950/40 hover:border-blue-700/50 transition-all text-slate-300 hover:text-white"
                     aria-label="GitHub Profile"
                   >
                     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -53,7 +53,7 @@ export function Contact() {
                     href={profile.links.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-14 h-14 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center hover:bg-brand-violet/20 hover:border-brand-violet/40 transition-all text-slate-300 hover:text-white"
+                    className="w-14 h-14 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center hover:bg-blue-950/40 hover:border-blue-700/50 transition-all text-slate-300 hover:text-white"
                     aria-label="LinkedIn Profile"
                   >
                     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">

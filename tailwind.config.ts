@@ -7,11 +7,14 @@ export default {
     extend: {
       colors: {
         brand: {
-          bg: '#0a0612',
-          bg2: '#120a1e',
-          blue: '#6366f1',
-          purple: '#a855f7',
-          violet: '#8b5cf6',
+          bg: '#000000',
+          bg2: '#030712',
+          dark: '#050a18',
+          blue: '#1d4ed8',
+          purple: '#1e3a8a',
+          violet: '#3b82f6',
+          accent: '#2563eb',
+          cyan: '#38bdf8',
         },
       },
       fontFamily: {

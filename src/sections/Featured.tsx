@@ -15,13 +15,13 @@ export function Featured() {
         </Reveal>
 
         <div className="relative group">
-          <Sparkles className="absolute -inset-8" density={32} color="rgba(139,92,246,0.45)" />
+          <Sparkles className="absolute -inset-8" density={32} color="rgba(37,99,235,0.45)" />
 
           <div className="glass rounded-4xl p-10 md:p-14 relative overflow-hidden">
             <BackgroundBeams />
 
             <div className="relative z-10">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-violet/10 border border-brand-violet/20 text-brand-violet text-sm font-medium mb-6">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-950/40 border border-blue-900/40 text-blue-400 text-sm font-medium mb-6">
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                   <polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9" />
                 </svg>
@@ -46,7 +46,7 @@ export function Featured() {
                     href="https://github.com/uthsarad"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-8 py-4 bg-gradient-to-r from-brand-blue to-brand-purple rounded-xl font-semibold text-white shadow-lg hover:shadow-brand-violet/30 transition-all hover:-translate-y-1 inline-block"
+                    className="px-8 py-4 bg-gradient-to-r from-blue-700 to-blue-900 rounded-xl font-semibold text-white shadow-lg hover:shadow-blue-600/30 transition-all hover:-translate-y-1 inline-block"
                   >
                     View GitHub
                   </a>
@@ -54,7 +54,7 @@ export function Featured() {
                 <Magnetic>
                   <a
                     href={`mailto:${profile.email}`}
-                    className="px-8 py-4 bg-white/5 backdrop-blur-md border border-white/10 rounded-xl font-semibold text-slate-200 hover:bg-white/10 transition-all hover:-translate-y-1 inline-block"
+                    className="px-8 py-4 bg-white/5 backdrop-blur-md border border-white/10 rounded-xl font-semibold text-slate-200 hover:bg-white/10 hover:border-blue-500/40 transition-all hover:-translate-y-1 inline-block"
                   >
                     Get In Touch
                   </a>

@@ -12,7 +12,7 @@ type SparklesProps = {
 export function Sparkles({
   className,
   density = 48,
-  color = 'rgba(168,85,247,0.9)',
+  color = 'rgba(59,130,246,0.85)',
 }: SparklesProps) {
   const ref = useRef<HTMLCanvasElement>(null)
   const reduce = useReducedMotion()

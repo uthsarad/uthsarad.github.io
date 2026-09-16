@@ -117,7 +117,7 @@ export function MobileNav() {
       aria-label="Mobile Navigation"
       className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 lg:hidden"
     >
-      <div className="flex items-center gap-1.5 px-3 py-2 rounded-full bg-slate-950/85 backdrop-blur-xl border border-white/10 shadow-2xl shadow-black/80">
+      <div className="flex items-center gap-1.5 px-3 py-2 rounded-full bg-black/90 backdrop-blur-xl border border-blue-900/30 shadow-2xl shadow-black">
         {items.map(({ id, label, href, icon }) => {
           const isActive = active === id
           return (
@@ -127,7 +127,7 @@ export function MobileNav() {
               aria-label={label}
               className={cn(
                 'relative flex flex-col items-center justify-center w-11 h-11 rounded-full transition-colors',
-                isActive ? 'text-white' : 'text-slate-400 hover:text-slate-200'
+                isActive ? 'text-white' : 'text-slate-400 hover:text-blue-200'
               )}
               onClick={(e) => {
                 e.preventDefault()
@@ -137,7 +137,7 @@ export function MobileNav() {
               {isActive && (
                 <motion.div
                   layoutId="mobile-nav-pill"
-                  className="absolute inset-0 rounded-full bg-gradient-to-tr from-brand-blue/80 to-brand-purple/80 shadow-md shadow-brand-violet/30"
+                  className="absolute inset-0 rounded-full bg-gradient-to-tr from-blue-700 to-blue-900 shadow-md shadow-blue-950/60"
                   transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                 />
               )}
