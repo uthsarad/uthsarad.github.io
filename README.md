@@ -1,83 +1,80 @@
-# uthsarad.github.io
+# Uthsara Dahanaike — portfolio
 
-## Modernized Portfolio Website
+Personal portfolio for cybersecurity and data science + AI, built with React 18, TypeScript, Vite, and CSS. Published at [uthsarad.github.io](https://uthsarad.github.io).
 
-A stunning, scroll-driven portfolio site built with Vite + React + TypeScript + Tailwind CSS, featuring premium animations from Motion (motion.dev) and Aceternity UI components. The site implements ScrollCraft principles with one signature interaction and one visual peak for a memorable user experience.
+The homepage has two interest tabs: Cybersecurity uses Ghost Fibers with dimensional type; Data Science + AI uses React Bits–derived particles that gather into three illustrative clusters. Shiny lettering and a slowly pulsing blue background connect the pages. Copy is kept short, with 16px or larger main body text and one-column project cards on phones. Independent projects and coursework have separate collections with illustrations, filters, and optional details.
 
-### ✨ Key Features
+A blue neon COBE globe sits behind the content, with illustrative connections from Colombo. Its orientation, tilt, zoom, and arcs respond to topics; scrolling adds a smooth turn. The header label and browser-tab title preview hovered/focused titles, hold clicked selections until another selection or navigation, and otherwise follow the section in view. Browser-tab titles include Uthsara's name; generated HTML retains each page's descriptive metadata. Clickable headings are real keyboard-accessible buttons. Blocks enter with a short, staggered downward movement. The green hero status dot has been removed.
 
-- **Modern Tech Stack**: Vite, React 18, TypeScript, Tailwind CSS
-- **Premium Animations**: Motion (motion.dev) scroll-linked effects, native ScrollTimeline where possible
-- **Aceternity UI**: 200+ copy-paste animated components with glassmorphism design
-- **React Bits**: 165+ animated React components by David Haz (GlitchText, GlassSurface, FadeContent, BlobCursor)
-- **ScrollCraft Quality Bar**: Signature scroll interaction, one visual peak, no "AI slop" aesthetics
-- **Dark Glassmorphism Theme**: Indigo/violet palette with animated backgrounds and orbs
-- **Responsive Design**: Left sidebar navigation on desktop, mobile-optimized
-- **Performance Optimized**: Hardware-accelerated animations, reduced motion support
+## Pages
 
-### 🏗️ Architecture
+| URL            | Content                                                           |
+| -------------- | ----------------------------------------------------------------- |
+| `/`            | Introduction, interactive interests, and links into the portfolio |
+| `/projects/`   | Five independent projects; systems and tools/data filters         |
+| `/coursework/` | Three academic studies; security, data + AI, and systems filters  |
+| `/about/`      | Biography, background, and skills                                 |
+| `/contact/`    | Email, copy-email control, and social links                       |
 
-```
-src/
-├── App.tsx                    // Main layout with sections
-├── components/ui/             // Aceternity UI copies
-├── sections/                  // Hero, About, Showcase, Featured, Contact
-├── lib/                       // Shared utils, motion variants
-├── data/                      // Profile & projects JSON
-├── styles/                    // Global CSS + Tailwind
-```
+Navigation uses ordinary links. `scripts/build-pages.mjs` generates an HTML document for each URL with its own metadata and a shared fingerprinted JavaScript/CSS bundle. Direct visits and refreshes therefore have actual files on GitHub Pages. Page definitions live in `src/data/pages.json`; no server routing or redirect-based 404 workaround is required.
 
-### 📋 Sections
+## Development
 
-1. **Hero** – Scroll-scrubbed aurora background with gradient name and typewriter effect
-2. **About** – Bento grid bio card with info rows and tech stack badges
-3. **Showcase** – 3D-project cards with spotlight hover and masonry layout
-4. **Featured** – "Currently Focused On" panel with animated CTA
-5. **Contact** – Social links and email with magnetic interactions
+Use Node.js 22 and npm. On Windows PowerShell, use `npm.cmd` if script execution policy blocks `npm`.
 
-### 🛠️ Tech Details
-
-- **Build Tool**: Vite (zero-config, fast HMR)
-- **Animations**: Framer Motion (useScroll, useTransform, layout/gesture/exit)
-- **Styling**: Tailwind CSS with custom design tokens
-- **Components**: Aceternity UI (aurora, spotlight, sparkles, 3D card, bento grid), React Bits (GlitchText, GlassSurface, FadeContent, BlobCursor)
-- **Deployment**: GitHub Actions → GitHub Pages (static site)
-
-### 🚀 Quick Start
-
-```bash
-# Clone the repo
-cd uthsarad.github.io
-
-# Install dependencies
-npm install
-
-# Start development server
-npm run dev
-
-# Build for production
+```sh
+npm ci
+npm run dev -- --host 127.0.0.1 --port 5173 --strictPort
 npm run build
+npm run check:pages
+npm run preview
 ```
 
-The site is automatically deployed to GitHub Pages via Actions on every push to `main`.
+Development uses port **5173**; production preview uses **4173**. The build runs strict TypeScript checks, bundles into `dist/`, and generates the page documents and sitemap. `check:pages` verifies page metadata, canonical URLs, referenced assets, sitemap coverage, and the 404 file. GitHub Actions runs these checks before deployment on relevant changes pushed to `main`, or through its manual workflow. Local edits do not change the published site.
 
-### 🎨 Design Philosophy
+## Content and structure
 
-- Keep the original dark indigo/violet glass theme
-- Add depth with layered glass effects and soft glows
-- One memorable visual peak (Showcase 3D cards)
-- Respect `prefers-reduced-motion`
-- Mobile-first responsive navigation
+| File                                   | Purpose                                                     |
+| -------------------------------------- | ----------------------------------------------------------- |
+| `src/App.tsx`                          | Page selection and persistent global motion preference      |
+| `src/data/pages.json`                  | Page URLs, navigation labels, and SEO metadata              |
+| `scripts/build-pages.mjs`              | Static HTML documents and sitemap for GitHub Pages          |
+| `src/data/profile.ts`                  | Biography, contact information, links                       |
+| `src/data/projects.ts`                 | Existing project facts, technologies, repository links      |
+| `src/data/project-details.ts`          | Short, typed project summaries                              |
+| `src/components/ui/InterestLab.tsx`    | Two keyboard-accessible interest tabs                       |
+| `src/components/ui/reactbits/`         | Locally adapted React Bits effects                          |
+| `src/components/ui/ProjectArtwork.tsx` | Decorative project illustrations; these are not screenshots |
+| `src/sections/`                        | Hero, work, background, interests, contact                  |
+| `src/styles/`                          | Layout, responsive rules, theme, visual effects             |
+| `public/`                              | Favicon, robots file, licenses, standalone 404 page         |
 
-### 📝 Notes
+The particle scene uses deterministic synthetic points and predefined clusters. It illustrates grouping; it does not run a trained model or report real measurements. Academic/private projects are labelled explicitly. There is no résumé download until a real file is supplied.
 
-- The old `index.html` has been preserved as `legacy-index.html` for fallback
-- Content (profile, projects) lives in `src/data/` for easy updates
-- All Aceternity UI components are copied locally for control
-- ScrollCraft ensures the site stands out from typical AI-generated templates
+## Static animation
 
-### 🔗 Links
+`NeonGlobe.tsx` lazily imports **COBE 2.0.1** from `https://cdn.jsdelivr.net/npm/cobe@2.0.1/dist/index.esm.js`. Rendering is capped at 30 fps with a maximum 760px canvas and device pixel ratio 1. It stops when the document is hidden or motion is off, cleans up its context, and provides a local SVG sphere if loading/WebGL fails. The arcs express global reach, not client locations or employment history. COBE's canvas/wrapper is isolated from React's managed DOM. Supported browsers also crossfade the globe between the real page documents using CSS view transitions.
 
-- **Live Site**: *[Coming soon after deployment]*
-- **GitHub Repo**: https://github.com/uthsarad/uthsarad.github.io
-- **GitHub Actions**: *[Workflow in .github/workflows/deploy.yml]*
+The globe and Anime.js are external runtime downloads, not part of Vite's bundle-size totals. The site still deploys as static files, with no server or API requirement.
+
+`DataParticles.tsx` is loaded only when the data tab is first opened. Its WebGL2 renderer adapts React Bits Particles. Anime.js **4.1.3** is imported on demand from `https://cdn.jsdelivr.net/npm/animejs@4.1.3/lib/anime.esm.js` to tween the clustering transition; it runs entirely in the browser, without a backend. The version is pinned. A local tween handles the transition if the CDN is unavailable, and an SVG illustration remains usable without WebGL2.
+
+Package downloads were unavailable during this change, so Anime.js uses that explicit CDN import rather than an npm dependency. It is not included in Vite's reported bundle sizes. Self-hosting the pinned module is an option if removing this external request becomes a requirement. Framer Motion was removed; visibility and reduced-motion hooks use browser APIs.
+
+## Motion and accessibility
+
+- Persistent navigation, skip link, visible focus states, native disclosure controls, and a mobile menu with Escape handling.
+- Interest tabs support arrow keys, Home, and End. Project filters announce the updated result count.
+- A small switch in the footer controls motion and remembers its setting between pages. System reduced-motion preference takes priority.
+- Background glow uses slow CSS opacity/transform animations and stops with the footer switch or reduced-motion preference.
+- Both WebGL2 scenes cap rendering at 30 fps and bound canvas resolution. They pause offscreen or when the document is hidden, dispose resources on unmount, and have SVG fallbacks.
+- Shiny text pauses offscreen. Data/AI controls still communicate their state when animation is disabled.
+- Copy-email reports success or failure and leaves the visible email link available.
+
+## Component sources
+
+React Bits supplies the basis for Ghost Fibers, Particles, Depth Text, Shiny Text, and Spotlight Card; local adaptations keep the dependency footprint small and add motion controls. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for source links and the included upstream license.
+
+The shadcn registry MCP was used to discover React Bits components. HeroUI and Lightswind MCP documentation informed navigation/disclosure patterns. Their component packages are not bundled; Reshaped documentation was consulted without a connected Reshaped MCP server.
+
+See [REVIEW.md](REVIEW.md) for the original findings, fixes, validation, and remaining content suggestions.

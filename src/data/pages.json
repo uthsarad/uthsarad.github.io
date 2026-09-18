@@ -1,0 +1,32 @@
+{
+  "home": {
+    "label": "Home",
+    "href": "/",
+    "title": "Uthsara Dahanaike — Cybersecurity, Data Science & AI",
+    "description": "Uthsara Dahanaike, a cybersecurity undergraduate in Colombo exploring data science, AI, systems, and geospatial tools."
+  },
+  "projects": {
+    "label": "Projects",
+    "href": "/projects/",
+    "title": "Projects — Uthsara Dahanaike",
+    "description": "Independent projects by Uthsara Dahanaike: Linux systems, Rust desktop applications, geospatial analysis, and developer tools."
+  },
+  "coursework": {
+    "label": "Coursework",
+    "href": "/coursework/",
+    "title": "Coursework — Uthsara Dahanaike",
+    "description": "Academic work in digital forensics, AI model evaluation, and distributed systems by Uthsara Dahanaike."
+  },
+  "about": {
+    "label": "About",
+    "href": "/about/",
+    "title": "About — Uthsara Dahanaike",
+    "description": "Meet Uthsara Dahanaike: Computer Science undergraduate, cybersecurity major, IT intern, and curious builder exploring data science and AI."
+  },
+  "contact": {
+    "label": "Contact",
+    "href": "/contact/",
+    "title": "Contact — Uthsara Dahanaike",
+    "description": "Get in touch with Uthsara Dahanaike about internships, collaborations, and projects in cybersecurity, data science, AI, and systems."
+  }
+}

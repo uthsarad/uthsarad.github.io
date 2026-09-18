@@ -1,82 +1,69 @@
-import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useEffect, useRef, useState } from 'react'
+import { Icon } from './Icon'
 
 export function CopyEmailButton({
   email,
-  className = '',
+  className = 'button button-secondary',
 }: {
   email: string
   className?: string
 }) {
-  const [copied, setCopied] = useState(false)
+  const [status, setStatus] = useState<'idle' | 'copying' | 'copied' | 'error'>(
+    'idle',
+  )
+  const timer = useRef<ReturnType<typeof setTimeout>>()
+  const mounted = useRef(true)
+  useEffect(() => {
+    mounted.current = true
+    return () => {
+      mounted.current = false
+      clearTimeout(timer.current)
+    }
+  }, [])
 
-  const handleCopy = async (e: React.MouseEvent) => {
-    e.preventDefault()
+  async function copy() {
+    clearTimeout(timer.current)
+    setStatus('copying')
     try {
       await navigator.clipboard.writeText(email)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2200)
-    } catch (err) {
-      console.error('Failed to copy', err)
+      if (mounted.current) {
+        setStatus('copied')
+        timer.current = setTimeout(() => setStatus('idle'), 2600)
+      }
+    } catch {
+      if (mounted.current) setStatus('error')
     }
   }
 
   return (
-    <div className="relative inline-block">
+    <div className="copy-control">
       <button
         type="button"
-        onClick={handleCopy}
         className={className}
-        aria-label="Copy email address to clipboard"
+        disabled={status === 'copying'}
+        onClick={copy}
       >
-        <span className="relative z-10 flex items-center gap-2">
-          {copied ? (
-            <svg
-              className="w-4 h-4 text-green-400"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2.5}
-                d="M5 13l4 4L19 7"
-              />
-            </svg>
-          ) : (
-            <svg
-              className="w-4 h-4 text-slate-400 group-hover:text-white transition-colors"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
-              />
-            </svg>
-          )}
-          <span>{copied ? 'Copied to clipboard!' : 'Copy email'}</span>
-        </span>
+        <Icon
+          name={status === 'copied' ? 'check' : 'copy'}
+          width="17"
+          height="17"
+        />
+        {status === 'copied'
+          ? 'Email copied'
+          : status === 'copying'
+            ? 'Copying…'
+            : 'Copy email'}
       </button>
-
-      <AnimatePresence>
-        {copied && (
-          <motion.div
-            initial={{ opacity: 0, y: 10, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -10, scale: 0.95 }}
-            className="absolute left-1/2 -translate-x-1/2 -top-11 px-3 py-1.5 rounded-lg bg-slate-900/95 border border-white/10 text-xs font-medium text-green-400 shadow-xl backdrop-blur pointer-events-none whitespace-nowrap z-30"
-          >
-            ✓ Copied to clipboard!
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <span
+        className={status === 'error' ? 'copy-message' : 'sr-only'}
+        role="status"
+      >
+        {status === 'error'
+          ? 'Couldn’t copy. Select the address above, or use the email link.'
+          : status === 'copied'
+            ? 'Email address copied to clipboard.'
+            : ''}
+      </span>
     </div>
   )
 }

@@ -1,47 +1,77 @@
+import { Icon } from './Icon'
 import { profile } from '@/data/profile'
+import { pageEntries, type PageId } from '@/lib/pages'
 
-export function Footer() {
-  const currentYear = new Date().getFullYear()
-
+export function Footer({
+  page,
+  motionEnabled,
+  motionLocked,
+  onToggleMotion,
+}: {
+  page: PageId | undefined
+  motionEnabled: boolean
+  motionLocked: boolean
+  onToggleMotion: () => void
+}) {
   return (
-    <footer className="relative border-t border-blue-950/40 bg-black/90 backdrop-blur">
-      <div className="mx-auto max-w-7xl px-6 py-12">
-        <div className="flex flex-col items-center gap-6">
-          <div className="flex flex-wrap justify-center gap-6 text-sm text-slate-400">
-            <a
-              href={profile.links.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-blue-400 transition-colors"
+    <footer className="site-footer">
+      <div className="container">
+        <div className="footer-main">
+          <a className="wordmark" href="/" aria-label="Uthsara Dahanaike, home">
+            <span className="monogram">
+              u<span>.</span>
+            </span>
+            <span>Uthsara Dahanaike</span>
+          </a>
+          <nav className="footer-nav" aria-label="Footer navigation">
+            {pageEntries
+              .filter(([id]) => id !== 'home')
+              .map(([id, item]) => (
+                <a
+                  key={id}
+                  href={item.href}
+                  aria-current={page === id ? 'page' : undefined}
+                >
+                  {item.label}
+                </a>
+              ))}
+          </nav>
+        </div>
+        <div className="footer-bottom">
+          <p>
+            © {new Date().getFullYear()} {profile.name}
+          </p>
+          <div className="footer-controls">
+            <button
+              type="button"
+              className="motion-switch"
+              role="switch"
+              aria-label="Visual animations"
+              aria-checked={motionEnabled}
+              aria-describedby={motionLocked ? 'motion-preference' : undefined}
+              disabled={motionLocked}
+              onClick={onToggleMotion}
+              title={
+                motionLocked
+                  ? 'Your system prefers reduced motion'
+                  : 'Turn visual animations on or off'
+              }
             >
-              GitHub
-            </a>
-            <a
-              href={profile.links.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-blue-400 transition-colors"
-            >
-              LinkedIn
-            </a>
-            <a
-              href={profile.links.resume}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-blue-400 transition-colors"
-            >
-              View Resume
-            </a>
-            <a
-              href={`mailto:${profile.email}`}
-              className="hover:text-blue-400 transition-colors"
-            >
-              Email
+              <span className="switch-track" aria-hidden="true">
+                <span />
+              </span>
+              <span>Motion {motionEnabled ? 'on' : 'off'}</span>
+            </button>
+            {motionLocked && (
+              <span id="motion-preference" className="sr-only">
+                Animations are disabled by your system’s reduced-motion
+                preference.
+              </span>
+            )}
+            <a className="text-link" href="#top">
+              Back to top <Icon name="arrow" width="13" height="13" />
             </a>
           </div>
-          <p className="text-sm text-slate-500 text-center">
-            Built with curiosity and coffee. © {currentYear} Uthsara Dahanaike.
-          </p>
         </div>
       </div>
     </footer>

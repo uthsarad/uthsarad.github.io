@@ -1,5 +1,15 @@
+export type ProjectId =
+  | 'neos'
+  | 'ferrumcalc'
+  | 'megis'
+  | 'museek'
+  | 'hsfix'
+  | 'forensics'
+  | 'osteoporosis'
+  | 'dsrpc'
+
 export type Project = {
-  id: string
+  id: ProjectId
   emoji: string
   title: string
   desc: string
