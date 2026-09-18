@@ -79,6 +79,7 @@ html[data-motion='on'] .header-topic:hover .topic-symbol {
   height: 2px;
   pointer-events: none;
   transform-origin: left;
+  transform: scaleX(0);
   background: linear-gradient(90deg, #467ee0, #b1d4ff);
   box-shadow: 0 0 12px #5495ff80;
   transition: transform 160ms ease-out;
@@ -98,17 +99,71 @@ html[data-motion='on'] .header-topic:hover .topic-symbol {
   text-shadow: 0 0 22px #86b5ff60;
 }
 .neon-globe {
+  --globe-x: 76vw;
+  --globe-y: 52vh;
+  --globe-scale: 1;
   position: absolute;
-  width: min(1000px, 92vw);
+  width: min(880px, 82vw);
   aspect-ratio: 1;
-  top: 52%;
-  right: -14%;
-  transform: translateY(-50%);
+  top: 0;
+  left: 0;
+  transform: translate3d(
+      calc(var(--globe-x) - 50%),
+      calc(var(--globe-y) - 50%),
+      0
+    )
+    scale(var(--globe-scale));
+  transition: transform 1100ms cubic-bezier(0.22, 0.7, 0.2, 1);
   opacity: 0.6;
   pointer-events: none;
   view-transition-name: portfolio-globe;
-  filter: drop-shadow(0 0 28px #367de829);
   contain: layout style;
+}
+.neon-globe[data-page='projects'] {
+  --globe-x: 19vw;
+  --globe-y: 64vh;
+  --globe-scale: 0.9;
+}
+.neon-globe[data-page='coursework'] {
+  --globe-x: 80vw;
+  --globe-y: 69vh;
+  --globe-scale: 0.88;
+}
+.neon-globe[data-page='about'] {
+  --globe-x: 24vw;
+  --globe-y: 48vh;
+  --globe-scale: 1.06;
+}
+.neon-globe[data-page='contact'] {
+  --globe-x: 72vw;
+  --globe-y: 47vh;
+  --globe-scale: 0.94;
+}
+.globe-aura {
+  position: absolute;
+  inset: -7%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    transparent 31%,
+    #3d7de816 40%,
+    #5e9bff30 46%,
+    #447cf51c 52%,
+    #214aa408 61%,
+    transparent 70%
+  );
+  opacity: 0.75;
+  animation: globe-breathe 9s ease-in-out infinite alternate;
+}
+@keyframes globe-breathe {
+  from {
+    opacity: 0.5;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 0.9;
+    transform: scale(1.035);
+  }
 }
 .globe-canvas,
 .globe-fallback {
@@ -129,6 +184,7 @@ html[data-motion='on'] .header-topic:hover .topic-symbol {
   opacity: 0.25;
 }
 .neon-globe:has(.globe-canvas[data-render-state='running']) .globe-fallback,
+.neon-globe:has(.globe-canvas[data-render-state='settled']) .globe-fallback,
 .neon-globe:has(.globe-canvas[data-render-state='paused']) .globe-fallback {
   opacity: 0;
 }
@@ -217,11 +273,27 @@ html[data-motion='on'] .header-topic:hover .topic-symbol {
     gap: 8px;
   }
   .neon-globe {
-    width: 148vw;
-    right: -65vw;
-    top: 45%;
+    --globe-x: 99vw;
+    --globe-y: 42vh;
+    width: 136vw;
     opacity: 0.36;
-    mask-image: linear-gradient(90deg, transparent 8%, #000 65%);
+    mask-image: radial-gradient(ellipse, #000 42%, transparent 71%);
+  }
+  .neon-globe[data-page='projects'] {
+    --globe-x: 14vw;
+    --globe-y: 61vh;
+  }
+  .neon-globe[data-page='coursework'] {
+    --globe-x: 91vw;
+    --globe-y: 64vh;
+  }
+  .neon-globe[data-page='about'] {
+    --globe-x: 13vw;
+    --globe-y: 44vh;
+  }
+  .neon-globe[data-page='contact'] {
+    --globe-x: 90vw;
+    --globe-y: 49vh;
   }
 }
 html[data-motion='off'] [data-revealed],

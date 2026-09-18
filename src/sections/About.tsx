@@ -37,7 +37,7 @@ export function About() {
     >
       <div className="container">
         <div className="about-layout">
-          <div data-reveal>
+          <div>
             <h1 id="about-title">
               <TopicTitle label="About" scene="about">
                 About <ShinyText text="me." />

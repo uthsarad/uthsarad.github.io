@@ -64,7 +64,7 @@ export function Showcase({
       data-scene={collection}
     >
       <div className="container">
-        <div className="collection-heading" data-reveal>
+        <div className="collection-heading">
           <div>
             <h1 id="work-title">
               <TopicTitle

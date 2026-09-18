@@ -2,18 +2,14 @@ import { useEffect, useState } from 'react'
 import { useReducedMotion } from './lib/motion'
 import { Navigation } from './components/ui/Navigation'
 import { Footer } from './components/ui/Footer'
-import { Hero } from './sections/Hero'
-import { About } from './sections/About'
-import { Showcase } from './sections/Showcase'
-import { Contact } from './sections/Contact'
-import { WorkGateway } from './sections/WorkGateway'
 import { AmbientBackground } from './components/ui/AmbientBackground'
-import { getPage, pages } from './lib/pages'
+import { pages } from './lib/pages'
+import { PageContent } from './lib/page-content'
+import { usePageNavigation } from './lib/navigation'
 import { useScene, useContentEntrance } from './lib/scene'
 import { profile } from './data/profile'
 import { sceneFavicon } from './lib/branding'
 
-const page = getPage(window.location.pathname)
 const motionKey = 'portfolio:motion-paused'
 
 function readMotionPreference() {
@@ -25,6 +21,7 @@ function readMotionPreference() {
 }
 
 export default function App() {
+  const { page, pending, navigate } = usePageNavigation()
   const reduceMotion = useReducedMotion()
   const [paused, setPaused] = useState(readMotionPreference)
   const motionEnabled = !reduceMotion && !paused
@@ -57,7 +54,7 @@ export default function App() {
 
   useEffect(() => {
     document.title = `${page ? scene.label : 'Page not found'} | ${profile.name}`
-  }, [scene.label])
+  }, [page, scene.label])
 
   useEffect(() => {
     document
@@ -74,7 +71,18 @@ export default function App() {
     document
       .querySelector('link[rel="canonical"]')
       ?.setAttribute('href', 'https://uthsarad.github.io' + metadata.href)
-  }, [])
+    for (const [key, value] of Object.entries({
+      'og:title': metadata.title,
+      'og:description': metadata.description,
+      'og:url': 'https://uthsarad.github.io' + metadata.href,
+      'twitter:title': metadata.title,
+      'twitter:description': metadata.description,
+    })) {
+      document
+        .querySelector(`meta[property="${key}"], meta[name="${key}"]`)
+        ?.setAttribute('content', value)
+    }
+  }, [page])
 
   useEffect(() => {
     document.documentElement.dataset.motion = motionEnabled ? 'on' : 'off'
@@ -84,8 +92,12 @@ export default function App() {
   }, [motionEnabled])
 
   return (
-    <div className="site-shell" id="top" {...scene.handlers}>
-      <AmbientBackground scene={scene.scene} motionEnabled={motionEnabled} />
+    <div className="site-shell" id="top" {...scene.handlers} onClick={navigate}>
+      <AmbientBackground
+        page={page ?? 'home'}
+        scene={scene.scene}
+        motionEnabled={motionEnabled}
+      />
       <a className="skip-link" href="#main">
         Skip to content
       </a>
@@ -94,40 +106,16 @@ export default function App() {
         topic={scene.label}
         pinned={scene.pinned}
         scene={scene.scene}
-        progress={scene.progress}
+        progressRef={scene.progressRef}
         onTogglePin={scene.togglePin}
       />
       <main
         id="main"
         className={'page page-' + (page ?? 'not-found')}
         tabIndex={-1}
+        aria-busy={pending || undefined}
       >
-        {page === 'home' && (
-          <>
-            <Hero motionEnabled={motionEnabled} />
-            <WorkGateway />
-          </>
-        )}
-        {page === 'projects' && (
-          <Showcase collection="projects" motionEnabled={motionEnabled} />
-        )}
-        {page === 'coursework' && (
-          <Showcase collection="coursework" motionEnabled={motionEnabled} />
-        )}
-        {page === 'about' && <About />}
-        {page === 'contact' && <Contact />}
-        {!page && (
-          <section className="section container not-found">
-            <p className="eyebrow section-index">404 / OFF THE MAP</p>
-            <h1>This page wandered off.</h1>
-            <p>
-              My projects, coursework, and contact details are a click away.
-            </p>
-            <a className="button button-primary" href="/">
-              Back to the portfolio
-            </a>
-          </section>
-        )}
+        <PageContent page={page} motionEnabled={motionEnabled} />
       </main>
       <Footer
         page={page}

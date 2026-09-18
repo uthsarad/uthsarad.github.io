@@ -2,6 +2,16 @@
 
 Reviewed on 18 September 2026. The live portfolio and existing implementation were reviewed before changes were made. This report describes the local redesign; publishing it is a separate step.
 
+## Performance pass and moving globe
+
+The globe now persists across enhanced local navigation and glides to a different position on each page. Its subtle blue aura uses CSS opacity/scale, without a full-canvas blur. All five static page documents remain available for direct visits, refreshes, and native navigation.
+
+The code review found scroll progress stored in top-level React state, repeated section layout reads during scrolling, full page rerenders during topic previews, and fiber shader reconstruction whenever visibility changed. Progress now updates one DOM element, section bounds are cached until layout/content changes, page content is memoized, and fiber resources persist through pauses. The globe renders during transitions and stops its requestAnimationFrame loop when settled. Its canvas cap fell from 760px to 640px desktop / 440px mobile; map sampling fell from 14,000 to 12,000 / 8,000. Decorative globe initialization waits for idle time, fonts no longer block rendering, and primary headings no longer wait through an entrance fade.
+
+Page modules are split and preloaded only for the requested route. The build checks enforce gzip budgets and prevent unrelated pages or optional graphics from entering those preloads. The shared runtime is approximately **162 kB / 53 kB gzip**, versus **185 kB / 60 kB gzip** before this pass. Runtime plus initial page modules total **178 kB / 59 kB gzip on Home**, **177 kB / 58 kB on Projects/Coursework**, and **165 kB / 54 kB on About/Contact**. The lazy globe wrapper adds **4.9 kB / 2.1 kB gzip**; the optional data scene adds **5.4 kB / 2.6 kB gzip**. CSS is **37 kB / 9.2 kB gzip**. External COBE, Anime.js, and fonts are additional. These are build artifact sizes, not measured load times or Core Web Vitals.
+
+Validation for this pass: all five pages checked at 320, 390, 768, and 1440px with no horizontal page overflow or clipping in checked headings, card bodies, tabs, filters, biography, and email. Mobile menus close after page changes. The globe stays at one canvas, respects its resolution caps, changes position by page, and reaches its idle `settled` state. The footer switch pauses the aura, transforms, and WebGL across navigation, then resumes them. Browser Back restored a recorded reading position; the top anchor also retained history behavior. The data tab, clustering control, contextual title, and favicon worked on mobile. Browser checks used the development server on 5173; production artifacts were checked on disk. Physical-device/Core Web Vitals measurements and forced network/context-loss scenarios remain unmeasured.
+
 ## Current version: contextual titles and neon globe
 
 The green hero dot is removed. The contextual header and browser-tab title preview topics on hover/keyboard focus and keep a clicked title selected; without a selection they follow the reading position. The tab title includes the owner's name. The header remains visible on mobile. Topic titles use native buttons. A COBE 2.0.1 globe provides blue neon connections from Colombo, smooth topic orientations, and scroll movement. The connections are illustrative, not client/work-history claims. A short downward entrance staggers the content, and supported browsers transition the globe between static documents. The footer switch and reduced-motion preference apply to these additions.
@@ -18,7 +28,7 @@ Cybersecurity retains Ghost Fibers and dimensional text. The combined data/AI sc
 
 A small motion switch lives only in the footer and persists across pages; system reduced-motion settings take priority. Three slow blue glow layers animate behind every page. Browser APIs replace Framer Motion. Button backgrounds are explicitly reset, and screen-reader-only labels have a local CSS rule instead of relying on absent utility output.
 
-Current verification:
+Verification before the performance pass:
 
 - Production build and both generated-page checks pass. All five documents have unique titles/canonical URLs, page-specific descriptions/social URLs, valid bundled assets, and sitemap entries. CI runs these checks before deployment.
 - All five pages remeasured at 320, 390, 768, and 1440px after the copy/type changes. No horizontal page overflow or overflow in the checked headings, cards, tags, tabs, filters, email, background/skills panels, or footer controls. Main paragraphs measured at 16–18px.

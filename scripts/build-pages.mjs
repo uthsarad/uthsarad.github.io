@@ -8,6 +8,36 @@ const pages = JSON.parse(
   await readFile(new URL('src/data/pages.json', root), 'utf8'),
 )
 const template = await readFile(new URL('dist/index.html', root), 'utf8')
+const manifest = JSON.parse(
+  await readFile(new URL('dist/.vite/manifest.json', root), 'utf8'),
+)
+const pageChunks = {
+  '/': 'src/sections/Home.tsx',
+  '/projects/': 'src/sections/Showcase.tsx',
+  '/coursework/': 'src/sections/Showcase.tsx',
+  '/about/': 'src/sections/About.tsx',
+  '/contact/': 'src/sections/Contact.tsx',
+}
+function preloadPage(entry) {
+  const files = new Set()
+  const visit = (key) => {
+    const chunk = manifest[key]
+    if (!chunk || files.has(chunk.file)) return
+    files.add(chunk.file)
+    for (const dependency of chunk.imports ?? []) visit(dependency)
+  }
+  visit(entry)
+  return [...files]
+    .filter(
+      (file) =>
+        !template.includes(`href="/${file}"`) &&
+        !template.includes(`src="/${file}"`),
+    )
+    .map(
+      (file) => `    <link rel="modulepreload" crossorigin href="/${file}" />`,
+    )
+    .join('\n')
+}
 const origin = 'https://uthsarad.github.io'
 const escapeHtml = (value) =>
   value
@@ -39,6 +69,12 @@ for (const page of Object.values(pages)) {
   html = html.replace(
     /<link\b[^>]*rel="canonical"[^>]*>/,
     `<link rel="canonical" href="${url}" />`,
+  )
+  // Fetch only this page's content in parallel with the runtime, avoiding a
+  // lazy-import waterfall on direct visits without downloading every page.
+  html = html.replace(
+    '</head>',
+    preloadPage(pageChunks[page.href]) + '\n  </head>',
   )
   const directory = new URL('dist' + page.href, root)
   await mkdir(directory, { recursive: true })

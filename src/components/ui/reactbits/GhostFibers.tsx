@@ -46,6 +46,12 @@ void main() {
 export function GhostFibers({ enabled }: { enabled: boolean }) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [generation, setGeneration] = useState(0)
+  const enabledRef = useRef(enabled)
+  const refresh = useRef<() => void>()
+  useEffect(() => {
+    enabledRef.current = enabled
+    refresh.current?.()
+  }, [enabled])
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -122,7 +128,7 @@ export function GhostFibers({ enabled }: { enabled: boolean }) {
     }
     const tick = (now: number) => {
       frame = 0
-      if (!enabled || !visible || document.hidden || lost) return
+      if (!enabledRef.current || !visible || document.hidden || lost) return
       elapsed += Math.min((now - previous) / 1000, 0.1)
       previous = now
       if (now - lastDraw >= 1000 / 30) {
@@ -133,7 +139,7 @@ export function GhostFibers({ enabled }: { enabled: boolean }) {
     }
     const sync = () => {
       stop()
-      if (enabled && visible && !document.hidden && !lost) {
+      if (enabledRef.current && visible && !document.hidden && !lost) {
         canvas.dataset.renderState = 'running'
         previous = performance.now()
         frame = requestAnimationFrame(tick)
@@ -141,11 +147,14 @@ export function GhostFibers({ enabled }: { enabled: boolean }) {
     }
     const resize = () => {
       const rect = canvas.getBoundingClientRect()
-      canvas.width = Math.max(1, Math.round(Math.min(rect.width, 900)))
-      canvas.height = Math.max(
+      const width = Math.max(1, Math.round(Math.min(rect.width, 640)))
+      const height = Math.max(
         1,
-        Math.round((rect.height * canvas.width) / Math.max(1, rect.width)),
+        Math.round((rect.height * width) / Math.max(1, rect.width)),
       )
+      if (canvas.width === width && canvas.height === height) return
+      canvas.width = width
+      canvas.height = height
       draw()
     }
     const resizeObserver = new ResizeObserver(resize)
@@ -162,12 +171,14 @@ export function GhostFibers({ enabled }: { enabled: boolean }) {
     canvas.addEventListener('webglcontextlost', onLost)
     canvas.addEventListener('webglcontextrestored', onRestored)
     document.addEventListener('visibilitychange', sync)
+    refresh.current = sync
     resizeObserver.observe(canvas)
     observer.observe(canvas)
     resize()
     sync()
     return () => {
       stop()
+      refresh.current = undefined
       resizeObserver.disconnect()
       observer.disconnect()
       document.removeEventListener('visibilitychange', sync)
@@ -176,7 +187,7 @@ export function GhostFibers({ enabled }: { enabled: boolean }) {
       release()
       delete canvas.dataset.renderState
     }
-  }, [enabled, generation])
+  }, [generation])
 
   return (
     <div className="ghost-fibers" aria-hidden="true">

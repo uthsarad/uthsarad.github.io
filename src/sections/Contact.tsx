@@ -15,7 +15,7 @@ export function Contact() {
       data-topic="Contact"
       data-scene="contact"
     >
-      <div className="container" data-reveal>
+      <div className="container">
         <h1 id="contact-title">
           <TopicTitle label="Contact" scene="contact">
             Get in <ShinyText text="touch." />

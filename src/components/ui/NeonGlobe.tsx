@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import type { SceneId } from '@/lib/scene'
+import type { PageId } from '@/lib/pages'
 
 type Globe = {
   update: (options: Record<string, unknown>) => void
@@ -45,9 +46,11 @@ const views: Record<
 }
 
 export function NeonGlobe({
+  page,
   scene,
   enabled,
 }: {
+  page: PageId
   scene: SceneId
   enabled: boolean
 }) {
@@ -69,8 +72,7 @@ export function NeonGlobe({
     let disposed = false,
       lost = false,
       frame = 0,
-      previous = 0,
-      drift = 0
+      previous = 0
     let globe: Globe | undefined
     let contextHandle: WebGLRenderingContext | WebGL2RenderingContext | null =
       null
@@ -79,13 +81,14 @@ export function NeonGlobe({
     const current = { ...views[activeScene] }
     let scroll = 0,
       currentScroll = 0
+    let scrollHeight = document.documentElement.scrollHeight - innerHeight
     const measureScroll = () => {
-      const height = document.documentElement.scrollHeight - innerHeight
-      scroll = height > 0 ? Math.min(1, Math.max(0, scrollY / height)) : 0
+      scroll =
+        scrollHeight > 0 ? Math.min(1, Math.max(0, scrollY / scrollHeight)) : 0
     }
     const draw = () => {
       globe?.update({
-        phi: current.phi + currentScroll * 0.7 + drift,
+        phi: current.phi + currentScroll * 0.7,
         theta: current.theta - currentScroll * 0.12,
         scale: current.scale,
       })
@@ -103,7 +106,18 @@ export function NeonGlobe({
         current.phi += (target.phi - current.phi) * blend
         current.theta += (target.theta - current.theta) * blend
         current.scale += (target.scale - current.scale) * blend
-        drift = Math.sin(now / 26000) * 0.09
+        const remaining =
+          Math.abs(scroll - currentScroll) +
+          Math.abs(target.phi - current.phi) +
+          Math.abs(target.theta - current.theta) +
+          Math.abs(target.scale - current.scale)
+        if (remaining < 0.002) {
+          Object.assign(current, target)
+          currentScroll = scroll
+          draw()
+          container.dataset.renderState = 'settled'
+          return // COBE v2 renders on update; no WebGL work or RAF while idle.
+        }
         draw()
       }
       frame = requestAnimationFrame(tick)
@@ -125,6 +139,7 @@ export function NeonGlobe({
       cancelAnimationFrame(frame)
       frame = 0
       if (!globe || disposed || lost) return
+      measureScroll()
       if (activeScene !== props.current.scene) {
         activeScene = props.current.scene
         updateConnections()
@@ -137,13 +152,19 @@ export function NeonGlobe({
       } else {
         // Settle to the selected view without movement when motion is disabled.
         Object.assign(current, views[props.current.scene])
-        drift = 0
+        currentScroll = scroll
         draw()
       }
     }
     const onScroll = () => {
       if (!props.current.enabled) return
       measureScroll()
+      if (!frame) sync()
+    }
+    const onResize = () => {
+      scrollHeight = document.documentElement.scrollHeight - innerHeight
+      measureScroll()
+      if (!frame) sync()
     }
     const onLost = (event: Event) => {
       event.preventDefault()
@@ -156,65 +177,86 @@ export function NeonGlobe({
     canvas.addEventListener('webglcontextrestored', onRestored)
     document.addEventListener('visibilitychange', sync)
     window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onResize)
     refresh.current = sync
     measureScroll()
-    void loadCobe().then((createGlobe) => {
-      if (disposed || !createGlobe) return
-      try {
-        const context = {
-          alpha: true,
-          antialias: false,
-          powerPreference: 'low-power' as const,
+    const initialize = () => {
+      void loadCobe().then((createGlobe) => {
+        if (disposed || !createGlobe) return
+        try {
+          const context = {
+            alpha: true,
+            antialias: false,
+            powerPreference: 'low-power' as const,
+          }
+          const gl =
+            canvas.getContext('webgl2', context) ??
+            canvas.getContext('webgl', context)
+          if (!gl || !('getExtension' in gl)) return
+          contextHandle = gl
+          const canvasSize = () =>
+            Math.min(
+              innerWidth < 760 ? 440 : 640,
+              Math.max(1, Math.round(container.clientWidth)),
+            )
+          let size = canvasSize()
+          globe = createGlobe(canvas, {
+            width: size,
+            height: size,
+            devicePixelRatio: 1,
+            ...current,
+            dark: 1,
+            diffuse: 1.6,
+            mapSamples: innerWidth < 760 ? 8000 : 12000,
+            mapBrightness: 9,
+            mapBaseBrightness: 0,
+            baseColor: [0.18, 0.4, 0.9],
+            markerColor: [0.5, 0.75, 1],
+            glowColor: [0.12, 0.3, 0.8],
+            arcColor: [0.25, 0.6, 1],
+            arcWidth: 0.65,
+            arcHeight: 0.24,
+            markerElevation: 0.035,
+            context,
+          })
+          container.dataset.engine = 'cobe'
+          updateConnections()
+          resizeObserver = new ResizeObserver(() => {
+            const width = canvasSize()
+            if (size !== width) {
+              size = width
+              globe?.update({
+                width,
+                height: width,
+                mapSamples: innerWidth < 760 ? 8000 : 12000,
+              })
+            }
+            scrollHeight = document.documentElement.scrollHeight - innerHeight
+            measureScroll()
+            draw()
+            if (!frame) sync()
+          })
+          resizeObserver.observe(container)
+          resizeObserver.observe(document.body)
+          sync()
+        } catch {
+          globe?.destroy()
+          globe = undefined
+          container.dataset.renderState = 'fallback'
         }
-        const gl =
-          canvas.getContext('webgl2', context) ??
-          canvas.getContext('webgl', context)
-        if (!gl || !('getExtension' in gl)) return
-        contextHandle = gl
-        const size = Math.min(
-          760,
-          Math.max(1, Math.round(container.clientWidth)),
-        )
-        globe = createGlobe(canvas, {
-          width: size,
-          height: size,
-          devicePixelRatio: 1,
-          ...current,
-          dark: 1,
-          diffuse: 1.6,
-          mapSamples: 14000,
-          mapBrightness: 9,
-          mapBaseBrightness: 0,
-          baseColor: [0.18, 0.4, 0.9],
-          markerColor: [0.5, 0.75, 1],
-          glowColor: [0.12, 0.3, 0.8],
-          arcColor: [0.25, 0.6, 1],
-          arcWidth: 0.65,
-          arcHeight: 0.24,
-          markerElevation: 0.035,
-          context,
-        })
-        container.dataset.engine = 'cobe'
-        updateConnections()
-        resizeObserver = new ResizeObserver(() => {
-          const width = Math.min(
-            760,
-            Math.max(1, Math.round(container.clientWidth)),
-          )
-          globe?.update({ width, height: width })
-          measureScroll()
-          draw()
-        })
-        resizeObserver.observe(container)
-        sync()
-      } catch {
-        globe?.destroy()
-        globe = undefined
-        container.dataset.renderState = 'fallback'
-      }
-    })
+      })
+    }
+    // The local sphere/aura paints immediately; decorative WebGL waits for idle.
+    const idle =
+      'requestIdleCallback' in window
+        ? window.requestIdleCallback(initialize, { timeout: 1200 })
+        : undefined
+    const timer =
+      idle === undefined ? window.setTimeout(initialize, 150) : undefined
     return () => {
       disposed = true
+      if (idle !== undefined) window.cancelIdleCallback(idle)
+      if (timer !== undefined) window.clearTimeout(timer)
       refresh.current = undefined
       cancelAnimationFrame(frame)
       resizeObserver?.disconnect()
@@ -222,6 +264,7 @@ export function NeonGlobe({
       canvas.removeEventListener('webglcontextrestored', onRestored)
       document.removeEventListener('visibilitychange', sync)
       window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onResize)
       globe?.destroy()
       // Also release the texture/context retained by COBE after destroy().
       contextHandle?.getExtension('WEBGL_lose_context')?.loseContext()
@@ -232,7 +275,8 @@ export function NeonGlobe({
   }, [generation])
 
   return (
-    <div className="neon-globe" data-scene={scene}>
+    <div className="neon-globe" data-page={page} data-scene={scene}>
+      <div className="globe-aura" />
       <svg className="globe-fallback" viewBox="0 0 500 500" aria-hidden="true">
         <circle cx="250" cy="250" r="190" />
         <ellipse cx="250" cy="250" rx="95" ry="190" />

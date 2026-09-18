@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type RefObject } from 'react'
 import { Icon } from './Icon'
 import { pageEntries, type PageId } from '@/lib/pages'
 import type { SceneId } from '@/lib/scene'
@@ -9,19 +9,20 @@ export function Navigation({
   topic,
   pinned,
   scene,
-  progress,
+  progressRef,
   onTogglePin,
 }: {
   page: PageId | undefined
   topic: string
   pinned: boolean
   scene: SceneId
-  progress: number
+  progressRef: RefObject<HTMLSpanElement>
   onTogglePin: () => void
 }) {
   const [open, setOpen] = useState(false)
   const menuButton = useRef<HTMLButtonElement>(null)
   const header = useRef<HTMLElement>(null)
+  useEffect(() => setOpen(false), [page])
 
   useEffect(() => {
     if (!open) return
@@ -148,11 +149,7 @@ export function Navigation({
           ))}
         </nav>
       </div>
-      <span
-        className="header-progress"
-        aria-hidden="true"
-        style={{ transform: `scaleX(${progress / 100})` }}
-      />
+      <span className="header-progress" ref={progressRef} aria-hidden="true" />
     </header>
   )
 }

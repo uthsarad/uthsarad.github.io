@@ -1,6 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import { readFile, access } from 'node:fs/promises'
+import { gzipSync } from 'node:zlib'
 
 const root = new URL('../', import.meta.url)
 const pages = JSON.parse(
@@ -73,4 +74,61 @@ test('Sitemap includes all five pages and the static 404 remains available', asy
   const notFound = await readFile(new URL('dist/404.html', root), 'utf8')
   assert.ok(notFound.includes('href="/"'))
   assert.ok(notFound.includes('noindex'))
+})
+
+test('Direct visits preload their page only, with bounded JavaScript cost', async () => {
+  const manifest = JSON.parse(
+    await readFile(new URL('dist/.vite/manifest.json', root), 'utf8'),
+  )
+  const routes = {
+    '/': 'Home',
+    '/projects/': 'Showcase',
+    '/coursework/': 'Showcase',
+    '/about/': 'About',
+    '/contact/': 'Contact',
+  }
+  const entry = await readFile(
+    new URL('dist/' + manifest['index.html'].file, root),
+  )
+  assert.ok(
+    gzipSync(entry).length < 56000,
+    'Shared runtime exceeded 56 kB gzip',
+  )
+  for (const [href, section] of Object.entries(routes)) {
+    const html = await readFile(
+      new URL('dist' + href + 'index.html', root),
+      'utf8',
+    )
+    const assets = new Set(
+      [...html.matchAll(/(?:src|href)="(\/assets\/[^"?#]+\.js)"/g)].map(
+        (match) => match[1],
+      ),
+    )
+    const pageFile = manifest[`src/sections/${section}.tsx`].file
+    assert.ok(
+      assets.has('/' + pageFile),
+      href + ' needs its page module preloaded',
+    )
+    for (const [key, chunk] of Object.entries(manifest)) {
+      if (key.startsWith('src/sections/') && chunk.file !== pageFile)
+        assert.ok(
+          !assets.has('/' + chunk.file),
+          href + ' preloads unrelated page ' + key,
+        )
+      if (key.includes('NeonGlobe') || key.includes('DataParticles'))
+        assert.ok(
+          !assets.has('/' + chunk.file),
+          'Decorative renderers must stay outside the critical preload path',
+        )
+    }
+    let gzipBytes = 0
+    for (const asset of assets)
+      gzipBytes += gzipSync(
+        await readFile(new URL('dist' + asset, root)),
+      ).length
+    assert.ok(
+      gzipBytes < 62000,
+      href + ' initial page JavaScript exceeded 62 kB gzip',
+    )
+  }
 })

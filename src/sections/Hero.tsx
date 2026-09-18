@@ -18,7 +18,7 @@ export function Hero({ motionEnabled }: { motionEnabled: boolean }) {
       <div className="hero-grid" aria-hidden="true" />
       <div className="container">
         <div className="hero-layout">
-          <div className="hero-copy" data-reveal>
+          <div className="hero-copy">
             <p className="eyebrow">{profile.badge}</p>
             <h1 id="hero-title">
               <TopicTitle label="Portfolio" scene="home">

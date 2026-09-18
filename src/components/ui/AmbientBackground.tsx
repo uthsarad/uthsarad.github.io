@@ -1,13 +1,16 @@
 import { lazy, Suspense } from 'react'
 import type { SceneId } from '@/lib/scene'
+import type { PageId } from '@/lib/pages'
 const NeonGlobe = lazy(() =>
   import('./NeonGlobe').then((module) => ({ default: module.NeonGlobe })),
 )
 
 export function AmbientBackground({
+  page,
   scene,
   motionEnabled,
 }: {
+  page: PageId
   scene: SceneId
   motionEnabled: boolean
 }) {
@@ -18,7 +21,7 @@ export function AmbientBackground({
       <div className="ambient-glow glow-deep" />
       <div className="ambient-grid" />
       <Suspense fallback={null}>
-        <NeonGlobe scene={scene} enabled={motionEnabled} />
+        <NeonGlobe page={page} scene={scene} enabled={motionEnabled} />
       </Suspense>
     </div>
   )

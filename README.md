@@ -18,7 +18,7 @@ The header title is a pin/unpin button, with a blue reading-progress line below 
 | `/about/`      | Biography, background, and skills                                 |
 | `/contact/`    | Email, copy-email control, and social links                       |
 
-Navigation uses ordinary links. `scripts/build-pages.mjs` generates an HTML document for each URL with its own metadata and a shared fingerprinted JavaScript/CSS bundle. Direct visits and refreshes therefore have actual files on GitHub Pages. Page definitions live in `src/data/pages.json`; no server routing or redirect-based 404 workaround is required.
+Navigation uses ordinary links, enhanced for local page clicks to retain the React shell and globe. Each page loads its own content module; the shell and previously visited modules are reused. Browser Back/Forward restores reading positions, page changes focus the main content, and modifier clicks, downloads, external links, and failed module loads retain native navigation. `scripts/build-pages.mjs` generates real HTML files with page-specific metadata and module preloads, so direct visits and refreshes work on GitHub Pages without server routing.
 
 ## Development
 
@@ -32,13 +32,15 @@ npm run check:pages
 npm run preview
 ```
 
-Development uses port **5173**; production preview uses **4173**. The build runs strict TypeScript checks, bundles into `dist/`, and generates the page documents and sitemap. `check:pages` verifies page metadata, canonical URLs, referenced assets, sitemap coverage, and the 404 file. GitHub Actions runs these checks before deployment on relevant changes pushed to `main`, or through its manual workflow. Local edits do not change the published site.
+Development uses port **5173**; production preview uses **4173**. The build runs strict TypeScript checks, bundles into `dist/`, and generates the page documents and sitemap. `check:pages` verifies metadata, canonical URLs, assets, sitemap, the 404 file, route-specific preloads, and gzip budgets (56 kB shared runtime; 62 kB runtime plus initial page modules). GitHub Actions runs these checks before deployment. Local edits do not change the published site.
 
 ## Content and structure
 
 | File                                   | Purpose                                                     |
 | -------------------------------------- | ----------------------------------------------------------- |
 | `src/App.tsx`                          | Page selection and persistent global motion preference      |
+| `src/lib/navigation.ts`                | Enhanced local navigation, history, scroll, and focus       |
+| `src/lib/page-content.tsx`             | Isolated, lazy page content                                 |
 | `src/data/pages.json`                  | Page URLs, navigation labels, and SEO metadata              |
 | `scripts/build-pages.mjs`              | Static HTML documents and sitemap for GitHub Pages          |
 | `src/data/profile.ts`                  | Biography, contact information, links                       |
@@ -55,7 +57,9 @@ The particle scene uses deterministic synthetic points and predefined clusters. 
 
 ## Static animation
 
-`NeonGlobe.tsx` lazily imports **COBE 2.0.1** from `https://cdn.jsdelivr.net/npm/cobe@2.0.1/dist/index.esm.js`. Rendering is capped at 30 fps with a maximum 760px canvas and device pixel ratio 1. It stops when the document is hidden or motion is off, cleans up its context, and provides a local SVG sphere if loading/WebGL fails. The arcs express global reach, not client locations or employment history. COBE's canvas/wrapper is isolated from React's managed DOM. Supported browsers also crossfade the globe between the real page documents using CSS view transitions.
+`NeonGlobe.tsx` lazily imports **COBE 2.0.1** from `https://cdn.jsdelivr.net/npm/cobe@2.0.1/dist/index.esm.js`, with initialization deferred until browser idle time (bounded to 1.2 seconds). The same canvas glides between five page-specific positions using a CSS transform. A radial blue aura breathes around it using opacity and scale, without a large blur filter. Topic selection and scrolling still change the globe's orientation and connections.
+
+WebGL draws at up to 30 fps during transitions, then stops its animation frame loop once settled. Hidden documents and motion-off also suspend it. The canvas is capped at **640px desktop / 440px mobile**, DPR 1, with **12,000 / 8,000 map samples**. Resize work skips unchanged canvas dimensions. A local SVG sphere and aura cover loading or unavailable WebGL/CDN. The arcs express global reach, not client locations or employment history. COBE's canvas/wrapper is isolated from React's managed DOM and its resources are released on unmount.
 
 The globe and Anime.js are external runtime downloads, not part of Vite's bundle-size totals. The site still deploys as static files, with no server or API requirement.
 
@@ -71,6 +75,9 @@ Package downloads were unavailable during this change, so Anime.js uses that exp
 - Background glow uses slow CSS opacity/transform animations and stops with the footer switch or reduced-motion preference.
 - Both WebGL2 scenes cap rendering at 30 fps and bound canvas resolution. They pause offscreen or when the document is hidden, dispose resources on unmount, and have SVG fallbacks.
 - Shiny text pauses offscreen. Data/AI controls still communicate their state when animation is disabled.
+- Scroll progress updates a single element without React state. Section geometry is cached until content/layout changes, and topic previews do not rerender the page content.
+- Ghost Fibers retains its shader resources when paused or moved offscreen, with a 640px maximum width. Critical page headings appear immediately; the falling entrances remain on secondary content.
+- Google Fonts loads without blocking first paint; system fonts remain available during loading or failure.
 - Copy-email reports success or failure and leaves the visible email link available.
 
 ## Component sources
