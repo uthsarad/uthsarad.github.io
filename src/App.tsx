@@ -11,6 +11,7 @@ import { AmbientBackground } from './components/ui/AmbientBackground'
 import { getPage, pages } from './lib/pages'
 import { useScene, useContentEntrance } from './lib/scene'
 import { profile } from './data/profile'
+import { sceneFavicon } from './lib/branding'
 
 const page = getPage(window.location.pathname)
 const motionKey = 'portfolio:motion-paused'
@@ -55,8 +56,14 @@ export default function App() {
   }, [])
 
   useEffect(() => {
-    document.title = `${page ? scene.label : 'Page not found'} — ${profile.name}`
+    document.title = `${page ? scene.label : 'Page not found'} | ${profile.name}`
   }, [scene.label])
+
+  useEffect(() => {
+    document
+      .querySelector<HTMLLinkElement>('#portfolio-favicon')
+      ?.setAttribute('href', sceneFavicon(scene.scene))
+  }, [scene.scene])
 
   useEffect(() => {
     if (!page) return
@@ -82,7 +89,14 @@ export default function App() {
       <a className="skip-link" href="#main">
         Skip to content
       </a>
-      <Navigation page={page} topic={scene.label} pinned={scene.pinned} />
+      <Navigation
+        page={page}
+        topic={scene.label}
+        pinned={scene.pinned}
+        scene={scene.scene}
+        progress={scene.progress}
+        onTogglePin={scene.togglePin}
+      />
       <main
         id="main"
         className={'page page-' + (page ?? 'not-found')}

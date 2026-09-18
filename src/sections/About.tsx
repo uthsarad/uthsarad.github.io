@@ -61,7 +61,7 @@ export function About() {
             <div className="timeline">
               <div className="timeline-item">
                 <span className="timeline-dot" />
-                <p className="eyebrow">MAY 2026 — PRESENT</p>
+                <p className="eyebrow">MAY 2026 TO PRESENT</p>
                 <h3>IT Intern</h3>
                 <p>Sala Enterprises</p>
               </div>

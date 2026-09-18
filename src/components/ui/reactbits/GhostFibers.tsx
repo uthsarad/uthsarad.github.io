@@ -1,5 +1,5 @@
 // Shader adapted from React Bits GhostFibers by David Haz.
-// https://reactbits.dev/backgrounds/ghost-fibers — see THIRD_PARTY_NOTICES.md.
+// https://reactbits.dev/backgrounds/ghost-fibers; see THIRD_PARTY_NOTICES.md.
 // Native WebGL adapter: no extra renderer dependency, capped resolution and FPS,
 // offscreen/hidden-tab suspension, static fallback, and context recovery.
 import { useEffect, useRef, useState } from 'react'

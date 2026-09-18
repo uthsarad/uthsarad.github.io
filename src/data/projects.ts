@@ -92,7 +92,7 @@ export const coursework: Project[] = [
   {
     id: 'osteoporosis',
     emoji: '🧠',
-    title: 'AI Model Evaluation — Osteoporosis Detection',
+    title: 'AI Model Evaluation: Osteoporosis Detection',
     desc: 'A group notebook project evaluating MLP and CNN models for osteoporosis detection, including data preprocessing, model comparison, and performance evaluation.',
     kind: 'Coursework',
     stack: 'MLP · CNN',

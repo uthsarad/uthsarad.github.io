@@ -1,15 +1,23 @@
 import { useEffect, useRef, useState } from 'react'
 import { Icon } from './Icon'
 import { pageEntries, type PageId } from '@/lib/pages'
+import type { SceneId } from '@/lib/scene'
+import { sceneFavicon } from '@/lib/branding'
 
 export function Navigation({
   page,
   topic,
   pinned,
+  scene,
+  progress,
+  onTogglePin,
 }: {
   page: PageId | undefined
   topic: string
   pinned: boolean
+  scene: SceneId
+  progress: number
+  onTogglePin: () => void
 }) {
   const [open, setOpen] = useState(false)
   const menuButton = useRef<HTMLButtonElement>(null)
@@ -63,9 +71,43 @@ export function Navigation({
           <span className="header-divider" aria-hidden="true">
             /
           </span>
-          <span className="header-topic" data-pinned={pinned} title={topic}>
-            <span key={topic}>{topic}</span>
-          </span>
+          <button
+            type="button"
+            className="header-topic"
+            data-pinned={pinned}
+            aria-pressed={pinned}
+            aria-label={
+              pinned
+                ? 'Unpin ' + topic + ' and follow the page'
+                : 'Pin ' + topic + ' title'
+            }
+            title={
+              pinned
+                ? 'Click to follow the page'
+                : 'Click to keep this title selected'
+            }
+            onClick={onTogglePin}
+          >
+            <img
+              className="topic-symbol"
+              src={sceneFavicon(scene)}
+              width="24"
+              height="24"
+              alt=""
+            />
+            <span className="topic-label" key={topic}>
+              {topic}
+            </span>
+            <svg
+              className="topic-pin"
+              viewBox="0 0 16 16"
+              width="14"
+              height="14"
+              aria-hidden="true"
+            >
+              <path d="m6 2 6 6-2 1-1 3-2-2-4 4m4-4-3-3 3-1 1-2" />
+            </svg>
+          </button>
         </div>
         <div className="header-actions">
           <button
@@ -106,6 +148,11 @@ export function Navigation({
           ))}
         </nav>
       </div>
+      <span
+        className="header-progress"
+        aria-hidden="true"
+        style={{ transform: `scaleX(${progress / 100})` }}
+      />
     </header>
   )
 }

@@ -6,6 +6,8 @@ Reviewed on 18 September 2026. The live portfolio and existing implementation we
 
 The green hero dot is removed. The contextual header and browser-tab title preview topics on hover/keyboard focus and keep a clicked title selected; without a selection they follow the reading position. The tab title includes the owner's name. The header remains visible on mobile. Topic titles use native buttons. A COBE 2.0.1 globe provides blue neon connections from Colombo, smooth topic orientations, and scroll movement. The connections are illustrative, not client/work-history claims. A short downward entrance staggers the content, and supported browsers transition the globe between static documents. The footer switch and reduced-motion preference apply to these additions.
 
+The header title itself now toggles between pinning and following the page, with an announced pressed state and a blue reading-progress line. Globe, shield, and connected-node favicons follow the selected topic. All site copy and page metadata use punctuation without em dashes; browser titles follow `Topic | Uthsara Dahanaike`.
+
 COBE loaded and rendered successfully in the browser. Hover rollback, click persistence, keyboard tab selection, scroll-driven labels, and motion pause were checked. CDN/WebGL failure and context restoration were reviewed in code; those failure states were not forced in the browser.
 
 The portfolio has **Home, Projects, Coursework, About, and Contact** pages. Projects contains five independent builds; Coursework contains three academic studies with security, data + AI, and systems filters. Navigation follows the page URL. The homepage now has two interest tabs: **Cybersecurity** and **Data Science + AI**.
@@ -23,7 +25,7 @@ Current verification:
 - Data scene checked at 320px and desktop. Its cluster/scatter control and Home/End tab navigation work; Anime.js loaded successfully. Project systems and coursework data + AI filtering were checked.
 - Footer switch works by pointer and keyboard, pauses the blue glow, and retains its setting across full-page navigation. Header has no motion control.
 - Mobile navigation verified for Escape focus restoration and navigation to another page.
-- Initial JavaScript is approximately **184 kB / 59 kB gzip**, plus **4.2 kB / 1.9 kB gzip** for the globe wrapper and **5.4 kB / 2.6 kB gzip** for the lazy data scene. CSS is approximately **34 kB / 9 kB gzip**. External COBE and Anime.js downloads are additional and excluded from Vite's sizes. These are artifact sizes, not runtime speed measurements.
+- Initial JavaScript is approximately **185 kB / 60 kB gzip**, plus **4.2 kB / 1.9 kB gzip** for the globe wrapper and **5.4 kB / 2.6 kB gzip** for the lazy data scene. CSS is approximately **36 kB / 9 kB gzip**. External COBE and Anime.js downloads are additional and excluded from Vite's sizes. These are artifact sizes, not runtime speed measurements.
 - Browser checks used the development server on port 5173. Generated production documents were checked from the filesystem; deployment remains unperformed.
 
 ## Original code assessment and first-pass fixes

@@ -39,11 +39,21 @@ export function useScene(page: PageId | undefined) {
   const [pinned, setPinned] = useState<Topic | null>(null)
   const [hovered, setHovered] = useState<Topic | null>(null)
   const [focused, setFocused] = useState<Topic | null>(null)
+  const [progress, setProgress] = useState(0)
 
   useEffect(() => {
     let frame = 0
     const measure = () => {
       frame = 0
+      const scrollable =
+        document.documentElement.scrollHeight - window.innerHeight
+      setProgress(
+        scrollable > 0
+          ? Math.round(
+              Math.max(0, Math.min(1, window.scrollY / scrollable)) * 100,
+            )
+          : 0,
+      )
       const line = Math.min(window.innerHeight * 0.42, 360)
       const sections = [
         ...document.querySelectorAll<HTMLElement>('[data-scene-section]'),
@@ -64,10 +74,13 @@ export function useScene(page: PageId | undefined) {
       if (!frame) frame = requestAnimationFrame(measure)
     }
     measure()
+    const resize = new ResizeObserver(scroll)
+    resize.observe(document.body)
     window.addEventListener('scroll', scroll, { passive: true })
     window.addEventListener('resize', scroll)
     return () => {
       cancelAnimationFrame(frame)
+      resize.disconnect()
       window.removeEventListener('scroll', scroll)
       window.removeEventListener('resize', scroll)
     }
@@ -76,7 +89,13 @@ export function useScene(page: PageId | undefined) {
   const active = hovered ?? focused ?? pinned ?? reading
   return {
     ...active,
+    progress,
     pinned: pinned?.label === active.label,
+    togglePin: () => {
+      setPinned(pinned ? null : active)
+      setHovered(null)
+      setFocused(null)
+    },
     handlers: {
       onPointerOver: (event: PointerEvent<HTMLDivElement>) => {
         if (event.pointerType === 'mouse')

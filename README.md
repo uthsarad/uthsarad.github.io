@@ -1,4 +1,4 @@
-# Uthsara Dahanaike — portfolio
+# Uthsara Dahanaike | portfolio
 
 Personal portfolio for cybersecurity and data science + AI, built with React 18, TypeScript, Vite, and CSS. Published at [uthsarad.github.io](https://uthsarad.github.io).
 
@@ -7,6 +7,8 @@ The homepage has two interest tabs: Cybersecurity uses Ghost Fibers with dimensi
 A blue neon COBE globe sits behind the content, with illustrative connections from Colombo. Its orientation, tilt, zoom, and arcs respond to topics; scrolling adds a smooth turn. The header label and browser-tab title preview hovered/focused titles, hold clicked selections until another selection or navigation, and otherwise follow the section in view. Browser-tab titles include Uthsara's name; generated HTML retains each page's descriptive metadata. Clickable headings are real keyboard-accessible buttons. Blocks enter with a short, staggered downward movement. The green hero status dot has been removed.
 
 ## Pages
+
+The header title is a pin/unpin button, with a blue reading-progress line below the header. Hover/focus previews, clicks, and scroll position keep the header, browser title, and scene favicon in sync. Favicons use a globe for the portfolio, a shield for cybersecurity, and connected nodes for data science + AI. Clicking a pinned header title resumes following the page. Browser titles use `Topic | Uthsara Dahanaike`; site copy and metadata contain no em dashes.
 
 | URL            | Content                                                           |
 | -------------- | ----------------------------------------------------------------- |

@@ -1,5 +1,5 @@
 // Adapted from React Bits SpotlightCard by David Haz.
-// https://reactbits.dev/components/spotlight-card — see THIRD_PARTY_NOTICES.md.
+// https://reactbits.dev/components/spotlight-card; see THIRD_PARTY_NOTICES.md.
 import { useRef, type PointerEvent, type PropsWithChildren } from 'react'
 
 export function SpotlightCard({

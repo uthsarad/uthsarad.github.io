@@ -12,14 +12,28 @@
   color: #607b9d;
 }
 .header-topic {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   min-width: 0;
-  width: 190px;
+  width: 220px;
+  min-height: 44px;
+  padding: 6px 8px;
+  text-align: left;
+  border: 1px solid transparent;
+  border-radius: 8px;
   font-size: 14px;
   line-height: 1.4;
   color: #b9cce8;
   overflow: hidden;
+  transition:
+    border-color 180ms,
+    background 180ms,
+    box-shadow 180ms;
 }
-.header-topic > span {
+.header-topic .topic-label {
+  flex: 1;
+  min-width: 0;
   display: block;
   white-space: nowrap;
   overflow: hidden;
@@ -28,6 +42,46 @@
 }
 .header-topic[data-pinned='true'] {
   color: #96bdff;
+  border-color: #4669a680;
+  background: #152b4c70;
+}
+.header-topic:hover,
+.header-topic:focus-visible {
+  color: #e0edff;
+  background: #19396680;
+  border-color: #547fb7;
+  box-shadow: 0 0 24px #477cf024;
+}
+.topic-symbol {
+  flex-shrink: 0;
+  border-radius: 5px;
+  transition: transform 200ms ease;
+}
+html[data-motion='on'] .header-topic:hover .topic-symbol {
+  transform: rotate(-12deg) scale(1.08);
+}
+.topic-pin {
+  color: #809bbf;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.55;
+}
+.header-topic[data-pinned='true'] .topic-pin {
+  color: #bcd7ff;
+  opacity: 1;
+}
+.header-progress {
+  position: absolute;
+  inset: auto 0 0;
+  height: 2px;
+  pointer-events: none;
+  transform-origin: left;
+  background: linear-gradient(90deg, #467ee0, #b1d4ff);
+  box-shadow: 0 0 12px #5495ff80;
+  transition: transform 160ms ease-out;
 }
 .topic-title {
   display: inline-block;
@@ -121,13 +175,29 @@
 }
 @media (max-width: 1050px) and (min-width: 760px) {
   .header-topic {
-    width: 108px;
+    width: 160px;
   }
   .header-brand {
     gap: 7px;
   }
   .header-brand .wordmark > span:last-child {
     display: none;
+  }
+}
+@media (max-width: 420px) {
+  .header-brand .wordmark > span:last-child {
+    display: none;
+  }
+  .header-brand {
+    gap: 6px;
+  }
+  .header-topic {
+    gap: 6px;
+    padding-inline: 6px;
+  }
+  .topic-symbol {
+    width: 20px;
+    height: 20px;
   }
 }
 @media (max-width: 759px) {
@@ -157,6 +227,11 @@
 html[data-motion='off'] [data-revealed],
 html[data-motion='off'] .header-topic > span {
   animation: none;
+}
+@media (max-width: 359px) {
+  .header-topic .topic-pin {
+    display: none;
+  }
 }
 html[data-motion='off']::view-transition-group(*),
 html[data-motion='off']::view-transition-old(*),
