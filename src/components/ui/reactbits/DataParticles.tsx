@@ -163,12 +163,7 @@ export default function DataParticles({ enabled }: { enabled: boolean }) {
     let animate: Animate | null = null
     let tween: Tween | undefined
     let transition: { from: number; start: number } | undefined
-    void loadAnime().then((value) => {
-      if (!disposed) {
-        animate = value
-        canvas.dataset.engine = value ? 'animejs' : 'local'
-      }
-    })
+    canvas.dataset.engine = 'local'
     const draw = () => {
       if (lost) return
       gl.viewport(0, 0, canvas.width, canvas.height)
@@ -195,6 +190,15 @@ export default function DataParticles({ enabled }: { enabled: boolean }) {
         draw()
         lastDraw = now
       }
+      // Once grouped, leave a stable data plot without a perpetual GPU loop.
+      if (target === 1 && !transition && Math.abs(model.mix - 1) < 0.0001) {
+        tween?.cancel()
+        tween = undefined
+        model.mix = 1
+        draw()
+        canvas.dataset.renderState = 'settled'
+        return
+      }
       frame = requestAnimationFrame(tick)
     }
     const stop = () => {
@@ -213,13 +217,20 @@ export default function DataParticles({ enabled }: { enabled: boolean }) {
           ? 'running'
           : 'paused'
       if (running) {
-        if (animate)
+        if (Math.abs(model.mix - target) <= 0.001) model.mix = target
+        if (target === 1 && model.mix === 1) {
+          draw()
+          canvas.dataset.renderState = 'settled'
+          return
+        }
+        if (animate && Math.abs(model.mix - target) > 0.001)
           tween = animate(model, {
             mix: target,
             duration: 1100,
             ease: 'inOutCubic',
           })
-        else transition = { from: model.mix, start: performance.now() }
+        else if (Math.abs(model.mix - target) > 0.001)
+          transition = { from: model.mix, start: performance.now() }
         previous = performance.now()
         frame = requestAnimationFrame(tick)
       } else {
@@ -229,6 +240,16 @@ export default function DataParticles({ enabled }: { enabled: boolean }) {
     }
     control.current = {
       update: (value, grouped) => {
+        if (value && grouped && !animate) {
+          // Fetch the optional engine only after a clustering interaction.
+          // The local tween responds immediately while that request resolves.
+          void loadAnime().then((engine) => {
+            if (!disposed) {
+              animate = engine
+              canvas.dataset.engine = engine ? 'animejs' : 'local'
+            }
+          })
+        }
         active = value
         target = grouped ? 1 : 0
         sync()
@@ -236,11 +257,14 @@ export default function DataParticles({ enabled }: { enabled: boolean }) {
     }
     const resize = () => {
       const rect = canvas.getBoundingClientRect()
-      canvas.width = Math.max(1, Math.round(Math.min(720, rect.width)))
-      canvas.height = Math.max(
+      const width = Math.max(1, Math.round(Math.min(640, rect.width)))
+      const height = Math.max(
         1,
-        Math.round((rect.height * canvas.width) / Math.max(rect.width, 1)),
+        Math.round((rect.height * width) / Math.max(rect.width, 1)),
       )
+      if (canvas.width === width && canvas.height === height) return
+      canvas.width = width
+      canvas.height = height
       draw()
     }
     const observer = new ResizeObserver(resize)

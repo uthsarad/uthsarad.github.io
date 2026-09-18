@@ -18,7 +18,7 @@ The header title is a pin/unpin button, with a blue reading-progress line below 
 | `/about/`      | Biography, background, and skills                                 |
 | `/contact/`    | Email, copy-email control, and social links                       |
 
-Navigation uses ordinary links, enhanced for local page clicks to retain the React shell and globe. Each page loads its own content module; the shell and previously visited modules are reused. Browser Back/Forward restores reading positions, page changes focus the main content, and modifier clicks, downloads, external links, and failed module loads retain native navigation. `scripts/build-pages.mjs` generates real HTML files with page-specific metadata and module preloads, so direct visits and refreshes work on GitHub Pages without server routing.
+Navigation uses ordinary links, enhanced for local page clicks to retain the React shell and globe. Each page loads its own content module; the shell and previously visited modules are reused. Browser Back/Forward restores reading positions, page changes focus the main content, and modifier clicks, downloads, external links, and failed module loads retain native navigation. `scripts/build-pages.mjs` prerenders the complete React page into HTML, with page-specific metadata and module preloads. Text, ordinary links, and project disclosures are available before JavaScript; React hydrates them to enable filters and visual controls. GitHub Pages serves only static files.
 
 ## Development
 
@@ -32,7 +32,7 @@ npm run check:pages
 npm run preview
 ```
 
-Development uses port **5173**; production preview uses **4173**. The build runs strict TypeScript checks, bundles into `dist/`, and generates the page documents and sitemap. `check:pages` verifies metadata, canonical URLs, assets, sitemap, the 404 file, route-specific preloads, and gzip budgets (56 kB shared runtime; 62 kB runtime plus initial page modules). GitHub Actions runs these checks before deployment. Local edits do not change the published site.
+Development uses port **5173**; production preview uses **4173**. The development server renders source pages into HTML to exercise the same hydration path. The build runs strict TypeScript checks, bundles the client into `dist/` and a build-only React renderer into `dist-ssr/`, then generates complete page documents and the sitemap. Only `dist/` is published; no server runs in production. `check:pages` runs four checks covering rendered content, metadata, canonical URLs, assets, sitemap, the 404 file, route-specific preloads, and gzip budgets (12 kB per HTML document; 56 kB shared runtime; 62 kB runtime plus initial page modules). GitHub Actions runs these checks before deployment. Local edits do not change the published site.
 
 ## Content and structure
 
@@ -42,6 +42,8 @@ Development uses port **5173**; production preview uses **4173**. The build runs
 | `src/lib/navigation.ts`                | Enhanced local navigation, history, scroll, and focus       |
 | `src/lib/page-content.tsx`             | Isolated, lazy page content                                 |
 | `src/data/pages.json`                  | Page URLs, navigation labels, and SEO metadata              |
+| `src/entry-server.tsx`                 | Build-time page tree used for prerendering                  |
+| `scripts/render-page.mjs`             | Waits for lazy React content before serializing HTML        |
 | `scripts/build-pages.mjs`              | Static HTML documents and sitemap for GitHub Pages          |
 | `src/data/profile.ts`                  | Biography, contact information, links                       |
 | `src/data/projects.ts`                 | Existing project facts, technologies, repository links      |
@@ -57,13 +59,13 @@ The particle scene uses deterministic synthetic points and predefined clusters. 
 
 ## Static animation
 
-`NeonGlobe.tsx` lazily imports **COBE 2.0.1** from `https://cdn.jsdelivr.net/npm/cobe@2.0.1/dist/index.esm.js`, with initialization deferred until browser idle time (bounded to 1.2 seconds). The same canvas glides between five page-specific positions using a CSS transform. A radial blue aura breathes around it using opacity and scale, without a large blur filter. Topic selection and scrolling still change the globe's orientation and connections.
+`NeonGlobe.tsx` lazily imports **COBE 2.0.1** from `https://cdn.jsdelivr.net/npm/cobe@2.0.1/dist/index.esm.js`, with initialization deferred until browser idle time (bounded to 1.2 seconds). The same canvas travels left/right and zooms over a 1.5-second CSS transform: Home to Projects pulls out toward the left, Coursework moves right into a close view, and About/Contact continue the alternating composition. Mobile positions and scales are tuned separately. The radial blue aura moves with the globe and breathes using opacity and scale, without a large blur filter. Topic selection and scrolling still change its orientation and connections.
 
 WebGL draws at up to 30 fps during transitions, then stops its animation frame loop once settled. Hidden documents and motion-off also suspend it. The canvas is capped at **640px desktop / 440px mobile**, DPR 1, with **12,000 / 8,000 map samples**. Resize work skips unchanged canvas dimensions. A local SVG sphere and aura cover loading or unavailable WebGL/CDN. The arcs express global reach, not client locations or employment history. COBE's canvas/wrapper is isolated from React's managed DOM and its resources are released on unmount.
 
 The globe and Anime.js are external runtime downloads, not part of Vite's bundle-size totals. The site still deploys as static files, with no server or API requirement.
 
-`DataParticles.tsx` is loaded only when the data tab is first opened. Its WebGL2 renderer adapts React Bits Particles. Anime.js **4.1.3** is imported on demand from `https://cdn.jsdelivr.net/npm/animejs@4.1.3/lib/anime.esm.js` to tween the clustering transition; it runs entirely in the browser, without a backend. The version is pinned. A local tween handles the transition if the CDN is unavailable, and an SVG illustration remains usable without WebGL2.
+`DataParticles.tsx` is loaded only when the data tab is first opened. Its WebGL2 renderer adapts React Bits Particles, capped at 640px width. Anime.js **4.1.3** is imported from `https://cdn.jsdelivr.net/npm/animejs@4.1.3/lib/anime.esm.js` only after an animated clustering interaction. The first transition responds immediately with a local tween while the engine loads; subsequent transitions use Anime.js when available. Once grouped, the plot stops its animation frame loop entirely until another interaction. The version is pinned, the local tween also covers CDN failure, and an SVG illustration remains usable without WebGL2.
 
 Package downloads were unavailable during this change, so Anime.js uses that explicit CDN import rather than an npm dependency. It is not included in Vite's reported bundle sizes. Self-hosting the pinned module is an option if removing this external request becomes a requirement. Framer Motion was removed; visibility and reduced-motion hooks use browser APIs.
 
@@ -72,6 +74,7 @@ Package downloads were unavailable during this change, so Anime.js uses that exp
 - Persistent navigation, skip link, visible focus states, native disclosure controls, and a mobile menu with Escape handling.
 - Interest tabs support arrow keys, Home, and End. Project filters announce the updated result count.
 - A small switch in the footer controls motion and remembers its setting between pages. System reduced-motion preference takes priority.
+- An early preference script suppresses CSS motion before hydration; browser preferences restore after React attaches to the prerendered markup. Content entrance observers attach inside hydrated page components.
 - Background glow uses slow CSS opacity/transform animations and stops with the footer switch or reduced-motion preference.
 - Both WebGL2 scenes cap rendering at 30 fps and bound canvas resolution. They pause offscreen or when the document is hidden, dispose resources on unmount, and have SVG fallbacks.
 - Shiny text pauses offscreen. Data/AI controls still communicate their state when animation is disabled.

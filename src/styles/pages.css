@@ -628,10 +628,12 @@ details summary {
   opacity: 0;
 }
 .particle-scene canvas[data-render-state='running'],
+.particle-scene canvas[data-render-state='settled'],
 .particle-scene canvas[data-render-state='paused'] {
   opacity: 1;
 }
 .particle-scene:has(canvas[data-render-state='running']) .particle-fallback,
+.particle-scene:has(canvas[data-render-state='settled']) .particle-fallback,
 .particle-scene:has(canvas[data-render-state='paused']) .particle-fallback {
   opacity: 0;
 }

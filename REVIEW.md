@@ -2,6 +2,18 @@
 
 Reviewed on 18 September 2026. The live portfolio and existing implementation were reviewed before changes were made. This report describes the local redesign; publishing it is a separate step.
 
+## Prerendering and camera transitions, 19 September 2026
+
+The globe now travels visibly between the left and right sides and changes size over a 1.5-second transition. Home to Projects zooms out to 64% of its base wrapper size on the left; Coursework brings it right and closer at 118%. About and Contact continue the alternating composition. Mobile uses separate positions/scales. One CSS transform moves both the globe and its aura, while the existing WebGL renderer still stops when settled.
+
+The build now writes the actual React content into all five HTML documents, resolving lazy components before serialization. Headings, page links, and native project disclosures no longer depend on JavaScript to appear. React hydrates that markup; CSS loads directly from the document. The renderer runs only during the build, and GitHub Pages still serves static files. The development server renders source pages for hydration checks and preserves the original URL before Vite's HTML fallback rewrites it.
+
+The initial review of this change caught an entrance observer mutating unhydrated markup and the development server rendering Home for nested URLs. Both were fixed. Saved motion preferences are applied before CSS starts animating and restored in React after hydration. The optional Anime.js download now waits for a clustering interaction. Local interpolation responds immediately, and a completed cluster plot stops its animation frame loop. Its canvas width is capped at 640px.
+
+Final generated HTML is **2.8–4.8 kB gzip per page**, containing the full page content. The shared client runtime is **162.61 kB / 53.11 kB gzip**, CSS **37.09 kB / 9.19 kB**, and the optional data scene **5.77 kB / 2.76 kB**. This pass improves the content-loading path and idle rendering work; it does not materially shrink the shared JavaScript runtime. External libraries/fonts remain additional. No new dependencies were added, and these figures are artifact sizes, not Core Web Vitals measurements.
+
+Validation: production build and all four generated-page checks passed. All five routes were checked through navigation and direct reloads with clean hydration logs. Layouts at 320px and 1440px had no horizontal page overflow; checked headings, paragraphs, cards, tabs, and filters also had no clipping at 320px. Desktop navigation retained one globe canvas. Saved motion-off survived a full reload with the globe/aura paused and no hydration warning. The data scene reported its local engine before interaction, loaded Anime.js after clustering, and reached its idle state on both initial and subsequent clustering transitions. Browser interaction checks used source development pages on port 5173; production HTML was validated on disk. Physical-device performance and forced CDN/context-loss tests remain unmeasured.
+
 ## Performance pass and moving globe
 
 The globe now persists across enhanced local navigation and glides to a different position on each page. Its subtle blue aura uses CSS opacity/scale, without a full-canvas blur. All five static page documents remain available for direct visits, refreshes, and native navigation.

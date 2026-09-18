@@ -4,9 +4,9 @@ import { loadPage } from './page-content'
 
 // Real hrefs and generated HTML remain the fallback. Only ordinary local page
 // clicks are enhanced, keeping the globe, CSS, and React runtime alive.
-export function usePageNavigation() {
+export function usePageNavigation(initialPath: string) {
   const [location, setLocation] = useState(() => ({
-    page: getPage(window.location.pathname),
+    page: getPage(initialPath),
     key: '',
     y: 0,
     hash: '',

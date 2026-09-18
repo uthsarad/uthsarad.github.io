@@ -181,7 +181,8 @@ function sameTopic(previous: Topic | null, next: Topic | null) {
     : next
 }
 
-// Content remains visible without JS. Each block gets a single gentle falling entrance.
+// Called inside the loaded page so it cannot mutate HTML before hydration.
+// Content remains visible before JS. Each block gets one falling entrance.
 export function useContentEntrance(enabled: boolean) {
   useEffect(() => {
     if (!enabled) return

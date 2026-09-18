@@ -71,7 +71,7 @@ export const PageContent = memo(function PageContent({
             motionEnabled={motionEnabled}
           />
         )}
-        {page === 'about' && <About />}
+        {page === 'about' && <About motionEnabled={motionEnabled} />}
         {page === 'contact' && <Contact />}
         {!page && (
           <section className="section container not-found">

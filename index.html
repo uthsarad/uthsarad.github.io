@@ -4,6 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#060d1c" />
+    <script>
+      // Honor motion preferences before the prerendered background can animate.
+      ;(() => {
+        let paused = false
+        try {
+          paused = localStorage.getItem('portfolio:motion-paused') === 'true'
+        } catch {}
+        document.documentElement.dataset.motion =
+          paused || matchMedia('(prefers-reduced-motion: reduce)').matches
+            ? 'off'
+            : 'on'
+      })()
+    </script>
+    <link rel="stylesheet" href="/src/styles/index.css" />
+    <link rel="stylesheet" href="/src/styles/storytelling.css" />
+    <link rel="stylesheet" href="/src/styles/pages.css" />
+    <link rel="stylesheet" href="/src/styles/globe.css" />
     <title>Uthsara Dahanaike | Cybersecurity, Data Science &amp; AI</title>
     <meta
       name="description"
@@ -68,26 +85,20 @@
   </head>
   <body>
     <div id="root"></div>
-    <noscript
-      ><p
-        style="
-          padding: 2rem;
-          font: 1rem system-ui;
-          background: #060d1c;
-          color: #edf2fa;
-        "
-      >
-        Uthsara Dahanaike, cybersecurity undergraduate exploring data science
-        and AI. Enable JavaScript to explore the interactive portfolio, or visit
-        <a style="color: #8db7ff" href="https://github.com/uthsarad"
-          >my GitHub</a
-        >
-        and
-        <a style="color: #8db7ff" href="mailto:uthsarad@gmail.com"
-          >get in touch by email</a
-        >.
-      </p></noscript
-    >
+    <noscript>
+      <style>
+        *,
+        *::before,
+        *::after {
+          animation: none !important;
+          transition: none !important;
+        }
+      </style>
+      <p class="container" style="padding-block: 1rem; color: #b9cce8">
+        Interactive controls require JavaScript. Page links and project details
+        remain available.
+      </p>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

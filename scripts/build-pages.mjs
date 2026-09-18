@@ -1,5 +1,7 @@
 import { readFile, writeFile, mkdir } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
+import { pageTree } from '../dist-ssr/entry-server.js'
+import { renderPage } from './render-page.mjs'
 
 // Each route gets a real HTML document for GitHub Pages, including on refresh.
 // All documents share Vite's fingerprinted assets and the same React shell.
@@ -47,6 +49,7 @@ const escapeHtml = (value) =>
     .replaceAll('>', '&gt;')
 
 for (const page of Object.values(pages)) {
+  const content = await renderPage(pageTree(page.href))
   const url = origin + page.href
   const metadata = {
     description: page.description,
@@ -69,6 +72,10 @@ for (const page of Object.values(pages)) {
   html = html.replace(
     /<link\b[^>]*rel="canonical"[^>]*>/,
     `<link rel="canonical" href="${url}" />`,
+  )
+  html = html.replace(
+    '<div id="root"></div>',
+    () => `<div id="root">${content}</div>`,
   )
   // Fetch only this page's content in parallel with the runtime, avoiding a
   // lazy-import waterfall on direct visits without downloading every page.

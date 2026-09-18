@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { startTransition, useEffect, useState } from 'react'
 import { useReducedMotion } from './lib/motion'
 import { Navigation } from './components/ui/Navigation'
 import { Footer } from './components/ui/Footer'
@@ -6,7 +6,7 @@ import { AmbientBackground } from './components/ui/AmbientBackground'
 import { pages } from './lib/pages'
 import { PageContent } from './lib/page-content'
 import { usePageNavigation } from './lib/navigation'
-import { useScene, useContentEntrance } from './lib/scene'
+import { useScene } from './lib/scene'
 import { profile } from './data/profile'
 import { sceneFavicon } from './lib/branding'
 
@@ -20,13 +20,17 @@ function readMotionPreference() {
   }
 }
 
-export default function App() {
-  const { page, pending, navigate } = usePageNavigation()
+export default function App({
+  initialPath = typeof window === 'undefined' ? '/' : window.location.pathname,
+}: {
+  initialPath?: string
+}) {
+  const { page, pending, navigate } = usePageNavigation(initialPath)
   const reduceMotion = useReducedMotion()
-  const [paused, setPaused] = useState(readMotionPreference)
+  // Match the generated HTML, then restore browser preferences after hydration.
+  const [paused, setPaused] = useState(false)
   const motionEnabled = !reduceMotion && !paused
   const scene = useScene(page)
-  useContentEntrance(motionEnabled)
 
   function toggleMotion() {
     const next = !paused
@@ -39,7 +43,9 @@ export default function App() {
   }
 
   useEffect(() => {
-    const restore = () => setPaused(readMotionPreference())
+    const restore = () =>
+      startTransition(() => setPaused(readMotionPreference()))
+    restore()
     const changed = (event: StorageEvent) => {
       if (event.key === motionKey) restore()
     }
@@ -85,7 +91,13 @@ export default function App() {
   }, [page])
 
   useEffect(() => {
-    document.documentElement.dataset.motion = motionEnabled ? 'on' : 'off'
+    // The first hydration render matches the HTML. Keep the early preference
+    // script's pause in place until browser state has finished restoring.
+    const allowed =
+      motionEnabled &&
+      !readMotionPreference() &&
+      !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    document.documentElement.dataset.motion = allowed ? 'on' : 'off'
     return () => {
       delete document.documentElement.dataset.motion
     }

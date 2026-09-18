@@ -6,6 +6,7 @@ import { ProjectArtwork } from '@/components/ui/ProjectArtwork'
 import { SpotlightCard } from '@/components/ui/reactbits/SpotlightCard'
 import { ShinyText } from '@/components/ui/reactbits/ShinyText'
 import { TopicTitle } from '@/components/ui/TopicTitle'
+import { useContentEntrance } from '@/lib/scene'
 
 const projectFilters = [
   { id: 'all', label: 'All projects', matches: (_project: Project) => true },
@@ -46,6 +47,7 @@ export function Showcase({
   collection: 'projects' | 'coursework'
   motionEnabled: boolean
 }) {
+  useContentEntrance(motionEnabled)
   const academic = collection === 'coursework'
   const allProjects = academic ? coursework : projects
   const filters = academic ? courseworkFilters : projectFilters

@@ -76,6 +76,42 @@ test('Sitemap includes all five pages and the static 404 remains available', asy
   assert.ok(notFound.includes('noindex'))
 })
 
+test('Every route ships complete readable HTML before JavaScript executes', async () => {
+  const expected = {
+    '/': { text: 'Computer Science student in Colombo', articles: 0 },
+    '/projects/': { text: 'FerrumCalc', articles: 5 },
+    '/coursework/': { text: 'Osteoporosis Detection', articles: 3 },
+    '/about/': { text: 'Edith Cowan University', articles: 0 },
+    '/contact/': { text: 'mailto:uthsarad@gmail.com', articles: 0 },
+  }
+  for (const [href, content] of Object.entries(expected)) {
+    const html = await readFile(
+      new URL('dist' + href + 'index.html', root),
+      'utf8',
+    )
+    const main = html.match(/<main\b[^>]*>([\s\S]*?)<\/main>/)?.[1]
+    assert.ok(
+      main?.includes(content.text),
+      href + ' must contain its actual page content',
+    )
+    assert.equal(
+      (main.match(/<h1\b/g) ?? []).length,
+      1,
+      'Each route needs one rendered main heading',
+    )
+    assert.equal((main.match(/<article\b/g) ?? []).length, content.articles)
+    assert.ok(
+      !html.includes('<!--$!-->'),
+      'Static render must not contain aborted Suspense boundaries',
+    )
+    assert.ok(
+      !html.includes('data-revealed='),
+      'HTML must stay visible without waiting for an entrance animation',
+    )
+    assert.ok(gzipSync(html).length < 12000, href + ' HTML exceeded 12 kB gzip')
+  }
+})
+
 test('Direct visits preload their page only, with bounded JavaScript cost', async () => {
   const manifest = JSON.parse(
     await readFile(new URL('dist/.vite/manifest.json', root), 'utf8'),

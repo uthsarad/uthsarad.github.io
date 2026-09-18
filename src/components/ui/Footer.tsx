@@ -38,7 +38,7 @@ export function Footer({
           </nav>
         </div>
         <div className="footer-bottom">
-          <p>
+          <p suppressHydrationWarning>
             © {new Date().getFullYear()} {profile.name}
           </p>
           <div className="footer-controls">

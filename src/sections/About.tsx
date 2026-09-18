@@ -2,6 +2,7 @@ import { profile } from '@/data/profile'
 import { Icon } from '@/components/ui/Icon'
 import { ShinyText } from '@/components/ui/reactbits/ShinyText'
 import { TopicTitle } from '@/components/ui/TopicTitle'
+import { useContentEntrance } from '@/lib/scene'
 
 const skills = [
   {
@@ -24,7 +25,8 @@ const skills = [
   },
 ] as const
 
-export function About() {
+export function About({ motionEnabled }: { motionEnabled: boolean }) {
+  useContentEntrance(motionEnabled)
   return (
     <section
       id="about"
