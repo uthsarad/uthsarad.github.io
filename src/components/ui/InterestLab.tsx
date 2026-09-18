@@ -1,9 +1,9 @@
 import { lazy, Suspense, useRef, useState, type KeyboardEvent } from 'react'
 import { useVisible } from '@/lib/motion'
 import { GhostFibers } from './reactbits/GhostFibers'
-import { DepthText } from './reactbits/DepthText'
+import { SecurityLock } from './SecurityLock'
 
-const DataParticles = lazy(() => import('./reactbits/DataParticles'))
+const Antigravity = lazy(() => import('./reactbits/Antigravity'))
 const interests = [
   { id: 'security', label: 'Cybersecurity' },
   { id: 'data', label: 'Data Science + AI' },
@@ -62,9 +62,7 @@ export function InterestLab({ motionEnabled }: { motionEnabled: boolean }) {
           <>
             <div className="interest-scene">
               <GhostFibers enabled={animate} />
-              <div className="security-depth">
-                <DepthText text="UNSEEN" enabled={animate} />
-              </div>
+              <SecurityLock enabled={animate} />
             </div>
             <p className="scene-caption">
               Reverse engineering &amp; digital forensics
@@ -78,7 +76,7 @@ export function InterestLab({ motionEnabled }: { motionEnabled: boolean }) {
               </div>
             }
           >
-            <DataParticles enabled={animate} />
+            <Antigravity enabled={animate} />
           </Suspense>
         )}
       </div>

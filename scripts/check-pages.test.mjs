@@ -151,7 +151,7 @@ test('Direct visits preload their page only, with bounded JavaScript cost', asyn
           !assets.has('/' + chunk.file),
           href + ' preloads unrelated page ' + key,
         )
-      if (key.includes('NeonGlobe') || key.includes('DataParticles'))
+      if (key.includes('NeonGlobe') || key.includes('Aurora') || key.includes('Antigravity'))
         assert.ok(
           !assets.has('/' + chunk.file),
           'Decorative renderers must stay outside the critical preload path',

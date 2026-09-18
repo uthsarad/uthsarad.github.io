@@ -134,56 +134,59 @@ body {
   opacity: 0.3;
   fill: none;
 }
-.security-depth {
+.security-lock {
   position: absolute;
   inset: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  gap: 0;
-}
-.depth-text {
-  display: inline-block;
-  perspective: 800px;
-  isolation: isolate;
-  padding: 15px 12px 23px;
-}
-.depth-text-stage {
-  display: inline-grid;
+  display: grid;
   place-items: center;
-  position: relative;
-  transform-style: preserve-3d;
-  transform: rotateX(var(--depth-x, -12deg)) rotateY(var(--depth-y, 16deg));
-  transition: transform 0.3s ease-out;
-}
-.depth-text[data-enabled='false'] .depth-text-stage {
-  transform: rotateX(-12deg) rotateY(16deg);
-}
-.depth-text-layer,
-.depth-text-face {
-  grid-area: 1/1;
-  display: inline-block;
-  font-size: clamp(42px, 4.9vw, 70px);
-  font-weight: 850;
-  line-height: 0.86;
-  letter-spacing: -0.065em;
-  white-space: nowrap;
-  transform-style: preserve-3d;
-  backface-visibility: hidden;
-}
-.depth-text-layer {
-  position: absolute;
-  inset: 0;
   pointer-events: none;
+  background: radial-gradient(ellipse, #285cac1c, transparent 65%);
 }
-.depth-text-face {
-  position: relative;
-  transform: translateZ(0.6px);
-  color: #deecff;
-  text-shadow:
-    0 1px 0 #fff,
-    0 18px 36px #377bdf55;
+.security-lock svg {
+  width: min(84%, 370px);
+  overflow: visible;
+}
+.lock-circuits { opacity: 0.45; }
+.lock-shackle-shadow,
+.lock-shackle {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.lock-shackle-shadow { stroke: #18529b; stroke-width: 17; }
+.lock-shackle { stroke: #c1e1ff; stroke-width: 8; }
+.lock-outline { fill: #19376338; stroke: #a8d3ff; stroke-width: 1.5; }
+.lock-piece { transform-box: fill-box; transform-origin: center; }
+.security-lock[data-intro='true'] .lock-piece {
+  animation: lock-assemble 1500ms cubic-bezier(0.2, 0.75, 0.2, 1) var(--piece-delay) both;
+}
+.security-lock[data-intro='true'] .lock-shackle {
+  stroke-dasharray: 1;
+  animation: lock-trace 1300ms ease 500ms both;
+}
+.security-lock[data-intro='true'] .lock-shackle-shadow,
+.security-lock[data-intro='true'] .lock-outline,
+.security-lock[data-intro='true'] .lock-keyhole {
+  animation: lock-solidify 800ms ease 1200ms both;
+}
+.security-lock[data-intro='true'] .lock-circuits {
+  animation: lock-solidify 1000ms ease 1700ms both;
+}
+.security-lock[data-enabled='false'] * { animation-play-state: paused; }
+@keyframes lock-assemble {
+  from { opacity: 0; transform: translate(var(--piece-x), var(--piece-y)) rotate(var(--piece-turn)) scale(0.4); }
+  to { opacity: 1; transform: translate(0, 0) rotate(0) scale(1); }
+}
+@keyframes lock-trace {
+  from { stroke-dashoffset: 1; opacity: 0; transform: translateY(-14px); }
+  to { stroke-dashoffset: 0; opacity: 1; transform: translateY(0); }
+}
+@keyframes lock-solidify { from { opacity: 0; } to { opacity: 1; } }
+html[data-motion='off'] .security-lock * {
+  animation: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .security-lock * { animation: none !important; }
 }
 .lab-action {
   display: inline-flex;
@@ -223,13 +226,6 @@ body {
   .hero-layout {
     gap: 30px;
   }
-  .depth-text-layer,
-  .depth-text-face {
-    font-size: 50px;
-  }
-  .security-depth {
-    gap: 20px;
-  }
   .interest-tabs button {
     font-size: 14px;
   }
@@ -242,13 +238,6 @@ body {
   .interest-lab {
     width: min(100%, 500px);
     margin-inline: auto;
-  }
-  .depth-text-layer,
-  .depth-text-face {
-    font-size: clamp(45px, 12vw, 70px);
-  }
-  .security-depth {
-    gap: 22px;
   }
   .interest-tabs button {
     font-size: 14px;

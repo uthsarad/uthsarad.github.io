@@ -126,9 +126,9 @@ html[data-motion='on'] .header-topic:hover .topic-symbol {
   --globe-scale: 0.64;
 }
 .neon-globe[data-page='coursework'] {
-  --globe-x: 82vw;
-  --globe-y: 60vh;
-  --globe-scale: 1.18;
+  --globe-x: 10vw;
+  --globe-y: 91vh;
+  --globe-scale: 0.88;
 }
 .neon-globe[data-page='about'] {
   --globe-x: 20vw;
@@ -286,9 +286,9 @@ html[data-motion='on'] .header-topic:hover .topic-symbol {
     --globe-scale: 0.72;
   }
   .neon-globe[data-page='coursework'] {
-    --globe-x: 88vw;
-    --globe-y: 52vh;
-    --globe-scale: 1.12;
+    --globe-x: 8vw;
+    --globe-y: 89vh;
+    --globe-scale: 0.86;
   }
   .neon-globe[data-page='about'] {
     --globe-x: 18vw;

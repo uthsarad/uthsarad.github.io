@@ -64,7 +64,7 @@ export function About({ motionEnabled }: { motionEnabled: boolean }) {
               <div className="timeline-item">
                 <span className="timeline-dot" />
                 <p className="eyebrow">MAY 2026 TO PRESENT</p>
-                <h3>IT Intern</h3>
+                <h3>Data Science Intern</h3>
                 <p>Sala Enterprises</p>
               </div>
               <div className="timeline-item">

@@ -2,6 +2,16 @@
 
 Reviewed on 18 September 2026. The live portfolio and existing implementation were reviewed before changes were made. This report describes the local redesign; publishing it is a separate step.
 
+## Aurora, Antigravity, and lock scene, 19 September 2026
+
+The owner corrected the current position to **Data Science Intern**. The hero badge, biography, About timeline, page metadata, and structured data now use that role. Coursework moves the globe into the lower-left corner on desktop and mobile, retaining its travel/zoom transition and aura.
+
+React Bits Aurora now provides a blue noise curtain with a six-second opacity pulse. Its local WebGL2 adaptation is capped at 20 fps, 720px desktop / 480px mobile width, and 480px height. Antigravity replaces the previous clustering scene: 224 capsule particles bend around a moving focus using React Bits' magnetic-ring and projection calculations, adapted to Canvas2D at up to 30 fps and 640px width. Pointer movement, taps, and a keyboard-accessible Shift field button control it. Both components pause with motion-off and document visibility; the interest scene also pauses offscreen. Aurora is an additional continuous background effect while motion is on, rather than an idle-only renderer.
+
+The cybersecurity panel retains Ghost Fibers but replaces the word UNSEEN with a local SVG lock. Twelve glass fragments assemble, its shackle traces closed, and circuit lines appear. This is a one-time entrance per panel mount. A paused or reduced-motion visit shows the completed illustration immediately. The unused Depth Text and DataParticles files were removed; Anime.js is no longer downloaded. No package dependencies were added. Source attribution is recorded in THIRD_PARTY_NOTICES.md.
+
+Production build and all four generated-page checks pass. The shared runtime is **162.73 kB / 53.14 kB gzip**; the new Aurora and Antigravity chunks are **4.10 / 2.02 kB** and **4.01 / 2.05 kB** respectively. CSS is **37.23 kB / 9.09 kB gzip**. These are artifact sizes, not device performance measurements. Browser checks cover the desktop visuals, Antigravity pointer/button interaction, keyboard tab selection, 320px interest-panel layout, offscreen pause, and the footer switch stopping both renderers and the Aurora pulse. A paused reload keeps the completed lock visible with clean hydration logs. Coursework's lower-left globe and the corrected About role/metadata were also checked on mobile. Production artifacts are checked on disk; the browser uses the source development server on port 5173.
+
 ## Prerendering and camera transitions, 19 September 2026
 
 The globe now travels visibly between the left and right sides and changes size over a 1.5-second transition. Home to Projects zooms out to 64% of its base wrapper size on the left; Coursework brings it right and closer at 118%. About and Contact continue the alternating composition. Mobile uses separate positions/scales. One CSS transform moves both the globe and its aura, while the existing WebGL renderer still stops when settled.
