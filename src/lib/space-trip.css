@@ -1,0 +1,20 @@
+/* Only active during a local route journey. Layout remains in normal flow. */
+html[data-transit] {
+  overflow-x: clip;
+}
+html[data-transit] .site-shell {
+  overflow-x: clip;
+}
+html[data-transit] [data-revealed],
+html[data-transit] .header-topic > span {
+  animation: none !important;
+}
+html[data-transit='swapping'] #main,
+html[data-transit='swapping'] .site-shell > header,
+html[data-transit='swapping'] .site-shell > footer {
+  opacity: 0;
+}
+/* Native cross-document transitions must not add a second journey. */
+@view-transition {
+  navigation: none;
+}

@@ -25,11 +25,11 @@ export default function App({
 }: {
   initialPath?: string
 }) {
-  const { page, pending, navigate } = usePageNavigation(initialPath)
   const reduceMotion = useReducedMotion()
   // Match the generated HTML, then restore browser preferences after hydration.
   const [paused, setPaused] = useState(false)
   const motionEnabled = !reduceMotion && !paused
+  const { page, pending, navigate } = usePageNavigation(initialPath, motionEnabled)
   const scene = useScene(page)
 
   function toggleMotion() {
