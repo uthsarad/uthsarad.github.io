@@ -1,0 +1,37 @@
+Physical black hole renderer and assets
+
+Upstream: https://github.com/Ouranos27/kam-ui
+Pinned commit: 52502944dddb50cdca8e497b1d9ee620e3c82b3b
+Retrieved: 2026-09-28
+
+The following source files are vendored from that commit:
+src/lib/blackHolePhysical/model.ts
+src/lib/blackHolePhysical/discParticleGlsl.ts
+src/lib/blackHolePhysical/webgl.ts
+src/shaders/blackHolePhysicalCore.glsl
+src/shaders/blackHolePhysicalFragment.glsl
+
+The model, deterministic disc particle generator and both GLSL files are
+unmodified. The WebGL host has local lifecycle, abort, frame-rate and
+resolution safeguards, a one-frame presentation method, and no new renderer
+dependency. React integration is local and compatible with React 18.
+
+Original physical model: https://github.com/ebruneton/black_hole_shader
+Paper: https://arxiv.org/abs/2010.08735
+Copyright (c) 2020 Eric Bruneton, BSD-3-Clause. See black-hole-BSD-3-Clause.txt.
+kam-ui adaptations: MIT. See kam-ui-MIT.txt, retained from pinned upstream.
+
+Selfhosted, unmodified assets from the same pinned kam-ui commit:
+public/black-hole/black_body.dat
+public/black-hole/deflection.dat
+public/black-hole/doppler.dat
+public/black-hole/inverse_radius.dat
+public/black-hole/noise_texture.png
+public/previews/black-hole.jpg -> public/black-hole/preview.jpg
+
+No runtime CDN fetches. No replacement or approximated physics tables.
+The renderer preserves Schwarzschild beam tracing, gravitational lensing,
+Doppler shift, black-body disc temperature, and original precomputed tables.
+The observer is stationary, with camera distance index 850 and time scale
+0.35. Upstream defaults for disc density, opacity and temperature are kept.
+As in kam-ui, tone mapping is used without the original full bloom pipeline.

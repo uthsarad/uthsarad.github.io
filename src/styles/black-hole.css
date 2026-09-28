@@ -1,0 +1,60 @@
+.black-hole {
+  --hole-x: 70vw;
+  --hole-y: 48vh;
+  position: fixed;
+  left: var(--hole-x);
+  top: var(--hole-y);
+  width: min(1060px, 92vw);
+  aspect-ratio: 1.6;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  isolation: isolate;
+}
+
+.black-hole__visual {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 50%;
+  transition: transform 700ms cubic-bezier(.22, .8, .2, 1), opacity 700ms ease;
+  /* Fade only the rectangular outer edge, never the physically dark event horizon. */
+  mask-image: radial-gradient(ellipse at center, #000 42%, transparent 73%);
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 42%, transparent 73%);
+}
+
+.black-hole__fallback,
+.black-hole__canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 400ms ease;
+}
+
+.black-hole__canvas { opacity: 0; }
+.black-hole[data-ready="true"] .black-hole__canvas { opacity: 1; }
+.black-hole[data-ready="true"] .black-hole__fallback { opacity: 0; }
+
+/* Only magnify around the same visible center while the content is ingested. */
+:root[data-transit="ingesting"] .black-hole[data-motion="true"] .black-hole__visual {
+  transform: scale(1.12);
+}
+:root[data-transit="emerging"] .black-hole[data-motion="true"] .black-hole__visual {
+  transform: scale(1);
+}
+
+@media (max-width: 700px) {
+  .black-hole {
+    --hole-x: 70vw;
+    --hole-y: 48vh;
+    width: 130vw;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .black-hole__visual,
+  .black-hole__fallback,
+  .black-hole__canvas { transition: none; }
+  .black-hole__visual { transform: none !important; }
+}
