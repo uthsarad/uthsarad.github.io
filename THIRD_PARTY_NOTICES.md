@@ -16,8 +16,23 @@ The following files are adapted from [React Bits](https://github.com/DavidHDev/r
 
 These adaptations and their corresponding CSS are used as part of this portfolio website. The upstream **MIT + Commons Clause License Condition v1.0** is included in [public/licenses/react-bits.txt](public/licenses/react-bits.txt), which is also distributed in the production site.
 
-The SecurityLock SVG illustration and project artwork are authored for this site. Particle positions and globe connections are illustrative; they do not depict real measurements or product screenshots. Other npm dependencies retain their respective package licenses.
+The SecurityLock SVG illustration and project artwork are authored for this site. Particle positions are illustrative; they do not depict real measurements or product screenshots. Other npm dependencies retain their respective package licenses.
 
-## COBE
+## Black hole shader (Eric Bruneton, BSD-3-Clause)
 
-[COBE](https://github.com/shuding/cobe), copyright (c) 2021 Shu Ding, is used under its [MIT license](https://github.com/shuding/cobe/blob/main/LICENSE). `NeonGlobe.tsx` imports version **2.0.1** from jsDelivr. The package is not vendored. Topic/scroll transitions, blue styling, the local SVG fallback, and the illustrative connection layout are local additions. The connection endpoints do not assert clients, employment, or measured network activity.
+The persistent black hole scene renders [Eric Bruneton's physically based black hole shader](https://github.com/ebruneton/black_hole_shader), described in [arXiv:2010.08735](https://arxiv.org/abs/2010.08735), used under its [BSD 3-Clause license](https://github.com/ebruneton/black_hole_shader/blob/master/LICENSE):
+
+| Local file                                             | Upstream role                                                                                         |
+| ------------------------------------------------------ | ----------------------------------------------------------------------------------------------------- |
+| `src/lib/blackHolePhysical/model.ts`                   | Schwarzschild camera/orbit model and physical constants                                               |
+| `src/lib/blackHolePhysical/discParticleGlsl.ts`        | Deterministic accretion disc particle generator                                                       |
+| `src/shaders/blackHolePhysicalCore.glsl`               | Core lensing, disc, Doppler, and black-body lighting equations                                        |
+| `src/shaders/blackHolePhysicalFragment.glsl`           | Fragment shader entry point and output shading                                                        |
+| `src/lib/blackHolePhysical/webgl.ts`                   | Renderer host with local lifecycle, frame-rate, and resolution safeguards                              |
+| `public/black-hole/*.dat`, `public/black-hole/noise_texture.png` | Precomputed deflection, inverse-radius, Doppler, and black-body tables plus disc noise      |
+
+The original physical equations are unchanged. Local additions are the React component and its lifecycle (`BlackHole.tsx`), the WebGL host safeguards, one-frame presentation, tone mapping without the upstream bloom pipeline, and the stationary observer used for a website. The scene is decorative: the lensing, disc, and Doppler rendering is physical, while the page-transition suck-in and spit-out is artistic choreography, not a simulated trajectory. The full license text is included in [public/licenses/black-hole-BSD-3-Clause.txt](public/licenses/black-hole-BSD-3-Clause.txt), which is also distributed in the production site.
+
+## kam-ui (MIT)
+
+The black hole scene is vendored from [kam-ui](https://github.com/Ouranos27/kam-ui), used under its MIT license. The pinned upstream commit and the full provenance record, including which files are modified or unmodified, are kept in [public/licenses/black-hole-SOURCES.txt](public/licenses/black-hole-SOURCES.txt). The MIT text is included in [public/licenses/kam-ui-MIT.txt](public/licenses/kam-ui-MIT.txt), which is also distributed in the production site.
