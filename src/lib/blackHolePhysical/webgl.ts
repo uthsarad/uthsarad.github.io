@@ -344,7 +344,8 @@ export function createPhysicalBlackHoleRenderer(
 	function createBlackCubeMap(): WebGLTexture {
 		const tex = gl.createTexture()!;
 		gl.bindTexture(gl.TEXTURE_CUBE_MAP, tex);
-		const zeros = new Uint8Array(4);
+		// 2x2 R8 rows are padded to UNPACK_ALIGNMENT (4), so WebGL needs 4 + 2 bytes.
+		const zeros = new Uint8Array(8);
 		for (const t of cubeTargets(gl)) {
 			gl.texImage2D(t, 0, gl.R8, 2, 2, 0, gl.RED, gl.UNSIGNED_BYTE, zeros);
 		}

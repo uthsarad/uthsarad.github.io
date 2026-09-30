@@ -12,6 +12,8 @@ function fragments() {
     '#main .background-panel', '#main .contact-links', '#main dl', '#main ul',
   ].join(',')
   const candidates = [...document.querySelectorAll<HTMLElement>(selector)]
+  // Cap AFTER dropping off-screen blocks, or a long page's first 32 matches
+  // would all be scrolled-past content and nothing visible would move.
   return candidates.filter((element) => {
     if (candidates.some((parent) => parent !== element && parent.contains(element))) return false
     const box = element.getBoundingClientRect()
@@ -37,12 +39,20 @@ export async function playSpaceTrip(commit: () => void, signal: AbortSignal) {
   let skipped = false
   let animations: Animation[] = []
   let timer = 0
+  let settle: (() => void) | undefined
   const allowed = () => !skipped && !signal.aborted && !document.hidden &&
     !media.matches && root.dataset.motion !== 'off' && typeof Element.prototype.animate === 'function'
   const clearAnimations = () => {
     window.clearTimeout(timer)
     animations.forEach((animation) => animation.cancel())
     animations = []
+  }
+  const skip = () => {
+    skipped = true
+    clearAnimations()
+    // A cancelled animation never resolves `finished`; release the race now so
+    // Escape ends the trip immediately instead of holding until the timeout.
+    settle?.()
   }
   const restore = () => {
     clearAnimations()
@@ -51,10 +61,6 @@ export async function playSpaceTrip(commit: () => void, signal: AbortSignal) {
       activeTrip = undefined
       if (main) main.inert = wasInert
     }
-  }
-  const skip = () => {
-    skipped = true
-    clearAnimations()
   }
   const onVisibility = () => { if (document.hidden) skip() }
   const onKey = (event: KeyboardEvent) => { if (event.key === 'Escape') skip() }
@@ -100,8 +106,9 @@ export async function playSpaceTrip(commit: () => void, signal: AbortSignal) {
     ))
     const completed = Promise.all(animations.map((animation) => animation.finished.catch(() => {})))
     // Background throttling, disabled animations or a browser bug must never trap navigation.
-    await Promise.race([completed, new Promise<void>((resolve) => { timer = window.setTimeout(resolve, 1000) })])
+    await Promise.race([completed, new Promise<void>((resolve) => { settle = () => resolve(); timer = window.setTimeout(resolve, 900) })])
     window.clearTimeout(timer)
+    settle = undefined
   }
   try {
     await animate(false)
