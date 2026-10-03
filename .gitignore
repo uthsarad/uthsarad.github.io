@@ -21,3 +21,6 @@ Thumbs.db
 
 # Plan / planning artifacts (not part of the published site)
 plan.md
+
+# Codebase graphing tool output
+graphify-out/
