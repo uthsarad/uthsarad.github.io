@@ -3,8 +3,10 @@ import { Icon } from '@/components/ui/Icon'
 import { CopyEmailButton } from '@/components/ui/CopyButton'
 import { ShinyText } from '@/components/ui/reactbits/ShinyText'
 import { TopicTitle } from '@/components/ui/TopicTitle'
+import { ResumeButton } from '@/components/ui/ResumeButton'
 
-export function Contact() {
+export function Contact({ embedded = false }: { embedded?: boolean }) {
+  const Heading = embedded ? 'h2' : 'h1'
   return (
     <section
       id="contact"
@@ -16,11 +18,12 @@ export function Contact() {
       data-scene="contact"
     >
       <div className="container">
-        <h1 id="contact-title">
+        {embedded && <p className="eyebrow section-index">06 / CONTACT</p>}
+        <Heading id="contact-title">
           <TopicTitle label="Contact" scene="contact">
             Get in <ShinyText text="touch." />
           </TopicTitle>
-        </h1>
+        </Heading>
         <p className="contact-description">
           Open to internships and collaborations.
         </p>
@@ -33,6 +36,7 @@ export function Contact() {
             Email me <Icon name="mail" width="18" height="18" />
           </a>
           <CopyEmailButton email={profile.email} />
+          <ResumeButton id="contact-resume" />
         </div>
         <div className="social-links">
           <a href={profile.links.github} target="_blank" rel="noreferrer">

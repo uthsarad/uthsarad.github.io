@@ -3,11 +3,21 @@ import { flushSync } from 'react-dom'
 import { getPage, type PageId } from './pages'
 import { loadPage } from './page-content'
 
+function hashTarget(hash: string) {
+  try { return hash ? document.getElementById(decodeURIComponent(hash.slice(1))) : null }
+  catch { return null /* A malformed URL must never trap navigation. */ }
+}
+
+function focusDestination(hash: string) {
+  const target = hashTarget(hash) ?? document.getElementById('main')
+  target?.focus({ preventScroll: true })
+}
+
 // Real hrefs and generated HTML remain the fallback. Only ordinary local page
 // clicks are enhanced, keeping the physical canvas and React runtime alive.
 export function usePageNavigation(initialPath: string, motionEnabled: boolean) {
   const [location, setLocation] = useState(() => ({
-    page: getPage(initialPath), key: '', y: 0, hash: '',
+    page: getPage(initialPath), key: '', y: 0, hash: '', restoreOffset: false,
   }))
   const [pending, setPending] = useState(false)
   const activeKey = useRef('')
@@ -22,7 +32,7 @@ export function usePageNavigation(initialPath: string, motionEnabled: boolean) {
 
   const changePage = async (
     page: PageId | undefined,
-    destination: { key: string; y: number; hash: string },
+    destination: { key: string; y: number; hash: string; restoreOffset?: boolean },
     url?: URL,
   ) => {
     const id = ++request.current
@@ -50,7 +60,7 @@ export function usePageNavigation(initialPath: string, motionEnabled: boolean) {
       committed = true
       // The outgoing blocks have reached the horizon. Swap React content while
       // hidden, then measure the destination only after scroll restoration.
-      flushSync(() => setLocation({ page, ...destination }))
+      flushSync(() => setLocation({ page, restoreOffset: false, ...destination }))
     }
     try {
       if (page) await loadPage(page)
@@ -68,14 +78,14 @@ export function usePageNavigation(initialPath: string, motionEnabled: boolean) {
     } catch {
       // Animation is progressive enhancement, never a navigation dependency.
       if (id === request.current) {
-        if (committed) document.getElementById('main')?.focus({ preventScroll: true })
+        if (committed) focusDestination(destination.hash)
         // The URL is already current, so a reload shows the right document.
         else window.location.reload()
       }
     } finally {
       if (id === request.current) {
         setPending(false)
-        if (committed) document.getElementById('main')?.focus({ preventScroll: true })
+        if (committed) focusDestination(destination.hash)
       }
     }
   }
@@ -94,7 +104,8 @@ export function usePageNavigation(initialPath: string, motionEnabled: boolean) {
       uncommittedPush.current = false
       const key = history.state?.portfolioEntry ?? crypto.randomUUID()
       void changeRef.current(getPage(window.location.pathname), {
-        key, y: positions.current.get(key) ?? 0, hash: window.location.hash,
+        key, y: positions.current.get(key) ?? 0,
+        hash: window.location.hash, restoreOffset: positions.current.has(key),
       })
     }
     window.addEventListener('popstate', pop)
@@ -107,15 +118,16 @@ export function usePageNavigation(initialPath: string, motionEnabled: boolean) {
   }, [])
 
   useEffect(() => {
-    if (!location.key) return // Preserve native scroll restoration on a direct visit.
+    // Preserve native direct-visit scrolling, but move keyboard focus to its section.
+    if (!location.key) {
+      if (!window.location.hash) return
+      const frame = requestAnimationFrame(() => focusDestination(window.location.hash))
+      return () => cancelAnimationFrame(frame)
+    }
     const frame = requestAnimationFrame(() => {
-      if (!document.getElementById('main')?.inert)
-        document.getElementById('main')?.focus({ preventScroll: true })
-      let target: HTMLElement | null = null
-      try {
-        target = location.hash ? document.getElementById(decodeURIComponent(location.hash.slice(1))) : null
-      } catch { /* Malformed escapes such as #% fall back to the stored offset. */ }
-      if (target) target.scrollIntoView({ behavior: 'instant', block: 'start' })
+      if (!document.getElementById('main')?.inert) focusDestination(location.hash)
+      const target = hashTarget(location.hash)
+      if (target && !location.restoreOffset) target.scrollIntoView({ behavior: 'instant', block: 'start' })
       else window.scrollTo({ top: location.y, behavior: 'instant' })
     })
     return () => cancelAnimationFrame(frame)
@@ -130,8 +142,28 @@ export function usePageNavigation(initialPath: string, motionEnabled: boolean) {
     const url = new URL(anchor.href)
     const page = getPage(url.pathname)
     if (url.origin !== window.location.origin || !page || url.search) return
-    // Let in-page anchors, including the skip link, retain native behavior.
-    if (url.pathname === window.location.pathname) return
+    if (getPage(window.location.pathname) === page && page === renderedPage.current) {
+      const target = hashTarget(url.hash)
+      if (!target) return // Unknown anchors retain native behavior.
+      event.preventDefault()
+      controller.current?.abort()
+      ++request.current
+      setPending(false)
+      positions.current.set(activeKey.current, window.scrollY)
+      if (url.hash !== window.location.hash) {
+        activeKey.current = crypto.randomUUID()
+        history.pushState({ portfolioEntry: activeKey.current }, '', url.pathname + url.hash)
+      }
+      uncommittedPush.current = false
+      target.focus({ preventScroll: true })
+      // Keep one page and one canvas. No ingest/emerge trip between subsections.
+      target.scrollIntoView({
+        behavior: motion.current && document.documentElement.dataset.motion !== 'off' &&
+          !matchMedia('(prefers-reduced-motion: reduce)').matches ? 'smooth' : 'instant',
+        block: 'start',
+      })
+      return
+    }
     event.preventDefault()
     await changePage(page, { key: crypto.randomUUID(), y: 0, hash: url.hash }, url)
   }

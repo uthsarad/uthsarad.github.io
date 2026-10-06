@@ -1,6 +1,7 @@
 import { Icon } from './Icon'
 import { profile } from '@/data/profile'
-import { pageEntries, type PageId } from '@/lib/pages'
+import type { PageId } from '@/lib/pages'
+import { sectionEntries } from '@/data/sections'
 
 export function Footer({
   page,
@@ -24,13 +25,13 @@ export function Footer({
             <span>Uthsara Dahanaike</span>
           </a>
           <nav className="footer-nav" aria-label="Footer navigation">
-            {pageEntries
-              .filter(([id]) => id !== 'home')
-              .map(([id, item]) => (
+            {sectionEntries
+              .filter((item) => item.id !== 'hero')
+              .map((item) => (
                 <a
-                  key={id}
-                  href={item.href}
-                  aria-current={page === id ? 'page' : undefined}
+                  key={item.id}
+                  href={'/#' + item.id}
+                  aria-current={page === item.id ? 'location' : undefined}
                 >
                   {item.label}
                 </a>

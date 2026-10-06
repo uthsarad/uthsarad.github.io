@@ -2,13 +2,21 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { fileURLToPath, URL } from 'node:url'
 import { readFile } from 'node:fs/promises'
+import { existsSync, readFileSync } from 'node:fs'
 import pages from './src/data/pages.json'
 import { renderPage } from './scripts/render-page.mjs'
+
+// Only enable downloads when an approved, real PDF has been added to public/.
+const resumeFile = new URL('./public/resume.pdf', import.meta.url)
+const resumeAvailable = existsSync(resumeFile)
+if (resumeAvailable && !readFileSync(resumeFile).subarray(0, 5).equals(Buffer.from('%PDF-')))
+  throw new Error('public/resume.pdf must be a valid PDF, not a placeholder.')
 
 // https://vite.dev/config/
 export default defineConfig({
   // Root GitHub Pages repo (uthsarad.github.io) is served from '/', so keep base '/'.
   base: '/',
+  define: { __RESUME_AVAILABLE__: JSON.stringify(resumeAvailable) },
   plugins: [
     react(),
     {

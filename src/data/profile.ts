@@ -4,6 +4,10 @@ export const profile = {
   hero: 'Computer Science student in Colombo. I work on cybersecurity, data science + AI, and the tools around them.',
   bio: 'I’m studying Computer Science at Edith Cowan University, majoring in Cybersecurity, and working as a Data Science Intern at Sala Enterprises. My projects span Linux, digital forensics, geospatial data, and machine learning.',
   email: 'uthsarad@gmail.com',
+  // Drop an approved PDF into public/resume.pdf and rebuild to enable download.
+  resume: __RESUME_AVAILABLE__
+    ? { href: '/resume.pdf', filename: 'Uthsara-Dahanaike-Resume.pdf' }
+    : null,
   links: {
     github: 'https://github.com/uthsarad',
     linkedin: 'https://www.linkedin.com/in/uthsara-dahanaike',

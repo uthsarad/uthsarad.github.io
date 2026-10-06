@@ -1,4 +1,4 @@
-/* Shared topic label across the five static pages. */
+/* Topic interactions and content entrances shared across the static pages. */
 .header-brand {
   display: flex;
   align-items: center;
@@ -123,7 +123,7 @@ html[data-motion='on'] .header-topic:hover .topic-symbol {
 @keyframes content-arrive {
   from {
     opacity: 0;
-    transform: translateY(-26px);
+    transform: translateY(24px);
   }
   to {
     opacity: 1;

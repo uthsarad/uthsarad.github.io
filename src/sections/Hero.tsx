@@ -1,10 +1,10 @@
 import { profile } from '@/data/profile'
 import { Icon } from '@/components/ui/Icon'
 import { ShinyText } from '@/components/ui/reactbits/ShinyText'
-import { InterestLab } from '@/components/ui/InterestLab'
+import { ResumeButton } from '@/components/ui/ResumeButton'
 import { TopicTitle } from '@/components/ui/TopicTitle'
 
-export function Hero({ motionEnabled }: { motionEnabled: boolean }) {
+export function Hero() {
   return (
     <section
       id="hero"
@@ -19,6 +19,7 @@ export function Hero({ motionEnabled }: { motionEnabled: boolean }) {
       <div className="container">
         <div className="hero-layout">
           <div className="hero-copy">
+            <p className="eyebrow section-index">01 / INTRODUCTION</p>
             <p className="eyebrow">{profile.badge}</p>
             <h1 id="hero-title">
               <TopicTitle label="Portfolio" scene="home">
@@ -31,23 +32,20 @@ export function Hero({ motionEnabled }: { motionEnabled: boolean }) {
             <div className="button-row">
               <a
                 className="button button-primary"
-                href="/projects/"
-                data-topic="Projects"
-                data-scene="projects"
+                href="/#projects"
               >
                 Projects <Icon name="arrow" width="17" height="17" />
               </a>
-              <a
-                className="button button-secondary"
-                href="/about/"
-                data-topic="About"
-                data-scene="about"
-              >
-                About me <Icon name="arrow" width="17" height="17" />
-              </a>
+              <ResumeButton id="hero-resume" />
             </div>
           </div>
-          <InterestLab motionEnabled={motionEnabled} />
+          <div className="hero-aside">
+            <p className="eyebrow">COLOMBO, SRI LANKA</p>
+            <p>Curiosity.<br />Investigation.<br /><span>Building.</span></p>
+            <a className="text-link scroll-cue" href="/#interests">
+              Scroll to explore <Icon name="down" width="18" height="18" />
+            </a>
+          </div>
         </div>
       </div>
     </section>

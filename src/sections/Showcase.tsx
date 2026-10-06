@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { projects, coursework, type Project } from '@/data/projects'
+import { projects, coursework, type Project, type ProjectLifecycle } from '@/data/projects'
 import { projectDetails } from '@/data/project-details'
 import { Icon } from '@/components/ui/Icon'
 import { ProjectArtwork } from '@/components/ui/ProjectArtwork'
@@ -40,27 +40,49 @@ const courseworkFilters = [
   },
 ]
 
+const lifecycleLabels: Record<ProjectLifecycle, string> = {
+  ongoing: 'Ongoing',
+  completed: 'Completed',
+  unknown: 'Status not confirmed',
+}
+const lifecycleFilters: { id: 'all' | ProjectLifecycle; label: string }[] = [
+  { id: 'all', label: 'All statuses' },
+  { id: 'ongoing', label: lifecycleLabels.ongoing },
+  { id: 'completed', label: lifecycleLabels.completed },
+  { id: 'unknown', label: lifecycleLabels.unknown },
+]
+
 export function Showcase({
   collection,
   motionEnabled,
+  embedded = false,
 }: {
   collection: 'projects' | 'coursework'
   motionEnabled: boolean
+  embedded?: boolean
 }) {
-  useContentEntrance(motionEnabled)
+  useContentEntrance(motionEnabled && !embedded)
   const academic = collection === 'coursework'
   const allProjects = academic ? coursework : projects
   const filters = academic ? courseworkFilters : projectFilters
   const [selected, setSelected] = useState('all')
+  const [selectedLifecycle, setSelectedLifecycle] = useState<'all' | ProjectLifecycle>('all')
+  const Heading = embedded ? 'h2' : 'h1'
+  const titleId = `${collection}-title`
+  const gridId = `${collection}-grid`
   const filter = filters.find((item) => item.id === selected) ?? filters[0]
-  const visible = allProjects.filter(filter.matches)
+  const lifecycleFilter = lifecycleFilters.find((item) => item.id === selectedLifecycle)!
+  const visible = allProjects.filter((project) =>
+    filter.matches(project) &&
+    (selectedLifecycle === 'all' || project.lifecycle === selectedLifecycle),
+  )
 
   return (
     <section
       id={collection}
       className="section section-anchor collection-section"
       tabIndex={-1}
-      aria-labelledby="work-title"
+      aria-labelledby={titleId}
       data-scene-section
       data-topic={academic ? 'Coursework' : 'Projects'}
       data-scene={collection}
@@ -68,14 +90,17 @@ export function Showcase({
       <div className="container">
         <div className="collection-heading">
           <div>
-            <h1 id="work-title">
+            {embedded && (
+              <p className="eyebrow section-index">{academic ? '04 / COURSEWORK' : '03 / PROJECTS'}</p>
+            )}
+            <Heading id={titleId}>
               <TopicTitle
                 label={academic ? 'Coursework' : 'Projects'}
                 scene={collection}
               >
                 <ShinyText text={academic ? 'Coursework.' : 'Projects.'} />
               </TopicTitle>
-            </h1>
+            </Heading>
           </div>
           <p className="page-description">
             {academic
@@ -87,14 +112,14 @@ export function Showcase({
           <div
             className="filters"
             role="group"
-            aria-label={academic ? 'Filter coursework' : 'Filter projects'}
+            aria-label={academic ? 'Filter coursework by category' : 'Filter projects by category'}
           >
             {filters.map((item) => (
               <button
                 type="button"
                 key={item.id}
                 aria-pressed={selected === item.id}
-                aria-controls="project-grid"
+                aria-controls={gridId}
                 data-topic={
                   item.id === 'all'
                     ? academic
@@ -116,6 +141,18 @@ export function Showcase({
               </button>
             ))}
           </div>
+          <label className="status-filter">
+            <span>{academic ? 'Filter coursework by status' : 'Filter projects by status'}</span>
+            <select
+              value={selectedLifecycle}
+              aria-controls={gridId}
+              onChange={(event) => setSelectedLifecycle(event.target.value as 'all' | ProjectLifecycle)}
+            >
+              {lifecycleFilters.map((item) => (
+                <option key={item.id} value={item.id}>{item.label}</option>
+              ))}
+            </select>
+          </label>
           <p className="result-count" role="status" aria-live="polite">
             {visible.length}{' '}
             {academic
@@ -125,10 +162,16 @@ export function Showcase({
               : visible.length === 1
                 ? 'project'
                 : 'projects'}
-            <span className="sr-only"> shown, {filter.label}</span>
+            <span className="sr-only"> shown, {filter.label}, {lifecycleFilter.label}</span>
           </p>
         </div>
-        <div className="project-grid" id="project-grid">
+        <div className="project-grid" id={gridId}>
+          {visible.length === 0 && (
+            <p className="collection-empty-state">
+              No {academic ? 'coursework' : 'projects'} match {filter.label} and {lifecycleFilter.label}.
+              Try another category or lifecycle status.
+            </p>
+          )}
           {visible.map((project) => {
             const detail = projectDetails[project.id]
             return (
@@ -155,17 +198,13 @@ export function Showcase({
                   <div className="project-body">
                     <div className="project-meta">
                       <span
-                        className={
-                          'project-status ' +
-                          (project.status === 'Active development'
-                            ? 'is-active'
-                            : '')
-                        }
+                        className={`project-status project-lifecycle is-${project.lifecycle}${project.lifecycle === 'ongoing' ? ' is-active' : ''}`}
                       >
-                        {project.status === 'Active development'
-                          ? 'In progress'
-                          : project.status}
+                        {lifecycleLabels[project.lifecycle]}
                       </span>
+                      {project.lifecycle === 'unknown' && (
+                        <span className="project-status">{project.status}</span>
+                      )}
                     </div>
                     <h3 id={'title-' + project.id}>
                       <TopicTitle

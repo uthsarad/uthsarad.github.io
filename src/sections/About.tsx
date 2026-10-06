@@ -25,8 +25,9 @@ const skills = [
   },
 ] as const
 
-export function About({ motionEnabled }: { motionEnabled: boolean }) {
-  useContentEntrance(motionEnabled)
+export function About({ motionEnabled, embedded = false }: { motionEnabled: boolean; embedded?: boolean }) {
+  useContentEntrance(motionEnabled && !embedded)
+  const Heading = embedded ? 'h2' : 'h1'
   return (
     <section
       id="about"
@@ -40,11 +41,12 @@ export function About({ motionEnabled }: { motionEnabled: boolean }) {
       <div className="container">
         <div className="about-layout">
           <div>
-            <h1 id="about-title">
+            {embedded && <p className="eyebrow section-index">05 / ABOUT</p>}
+            <Heading id="about-title">
               <TopicTitle label="About" scene="about">
                 About <ShinyText text="me." />
               </TopicTitle>
-            </h1>
+            </Heading>
             <p className="body-copy">{profile.bio}</p>
             <a
               className="text-link"

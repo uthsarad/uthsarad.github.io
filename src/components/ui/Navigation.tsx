@@ -1,155 +1,123 @@
 import { useEffect, useRef, useState, type RefObject } from 'react'
 import { Icon } from './Icon'
-import { pageEntries, type PageId } from '@/lib/pages'
-import type { SceneId } from '@/lib/scene'
-import { sceneFavicon } from '@/lib/branding'
+import { ResumeButton } from './ResumeButton'
+import { sectionEntries, type SectionId } from '@/data/sections'
 
 export function Navigation({
-  page,
-  topic,
-  pinned,
-  scene,
+  section,
   progressRef,
-  onTogglePin,
 }: {
-  page: PageId | undefined
-  topic: string
-  pinned: boolean
-  scene: SceneId
+  section: SectionId | undefined
   progressRef: RefObject<HTMLSpanElement>
-  onTogglePin: () => void
 }) {
+  const [enhanced, setEnhanced] = useState(false)
   const [open, setOpen] = useState(false)
   const menuButton = useRef<HTMLButtonElement>(null)
-  const header = useRef<HTMLElement>(null)
-  useEffect(() => setOpen(false), [page])
+  const dialog = useRef<HTMLDialogElement>(null)
+  const active = sectionEntries.find((item) => item.id === section)
 
+  useEffect(() => setEnhanced(true), [])
   useEffect(() => {
-    if (!open) return
-    const escape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        setOpen(false)
-        menuButton.current?.focus()
-      }
-    }
-    const outside = (event: PointerEvent) => {
-      if (
-        event.target instanceof Node &&
-        !header.current?.contains(event.target)
-      )
-        setOpen(false)
-    }
-    const desktop = window.matchMedia('(min-width: 760px)')
-    const closeOnDesktop = () => {
-      if (desktop.matches) setOpen(false)
-    }
-    document.addEventListener('keydown', escape)
-    document.addEventListener('pointerdown', outside)
-    desktop.addEventListener('change', closeOnDesktop)
-    return () => {
-      document.removeEventListener('keydown', escape)
-      document.removeEventListener('pointerdown', outside)
-      desktop.removeEventListener('change', closeOnDesktop)
-    }
+    const drawer = dialog.current
+    if (!drawer) return
+    if (open && !drawer.open) drawer.showModal()
+    else if (!open && drawer.open) drawer.close()
   }, [open])
 
+  function close() {
+    // Close synchronously so the section receiving focus is no longer inert.
+    dialog.current?.close()
+    setOpen(false)
+  }
+
+  function links() {
+    return sectionEntries.map((item) => (
+      <a
+        key={item.id}
+        href={'/#' + item.id}
+        aria-current={section === item.id ? 'location' : undefined}
+        data-section-link
+      >
+        <span className="nav-number" aria-hidden="true">{item.number}</span>
+        <span>{item.label}</span>
+        <Icon name="arrow" width="18" height="18" />
+      </a>
+    ))
+  }
+
   return (
-    <header className="site-header" ref={header}>
-      <div className="container header-inner">
-        <div className="header-brand">
-          <a
-            className="wordmark"
-            href="/"
-            aria-label="Uthsara Dahanaike, home"
-            data-topic="Portfolio"
-            data-scene="home"
-          >
-            <span className="monogram">
-              u<span>.</span>
-            </span>
-            <span>uthsara</span>
-          </a>
-          <span className="header-divider" aria-hidden="true">
-            /
-          </span>
-          <button
-            type="button"
-            className="header-topic"
-            data-pinned={pinned}
-            aria-pressed={pinned}
-            aria-label={
-              pinned
-                ? 'Unpin ' + topic + ' and follow the page'
-                : 'Pin ' + topic + ' title'
-            }
-            title={
-              pinned
-                ? 'Click to follow the page'
-                : 'Click to keep this title selected'
-            }
-            onClick={onTogglePin}
-          >
-            <img
-              className="topic-symbol"
-              src={sceneFavicon(scene)}
-              width="24"
-              height="24"
-              alt=""
-            />
-            <span className="topic-label" key={topic}>
-              {topic}
-            </span>
-            <svg
-              className="topic-pin"
-              viewBox="0 0 16 16"
-              width="14"
-              height="14"
-              aria-hidden="true"
-            >
-              <path d="m6 2 6 6-2 1-1 3-2-2-4 4m4-4-3-3 3-1 1-2" />
-            </svg>
-          </button>
-        </div>
-        <div className="header-actions">
-          <button
-            ref={menuButton}
-            type="button"
-            className="icon-button menu-toggle"
-            aria-label={open ? 'Close navigation' : 'Open navigation'}
-            aria-expanded={open}
-            aria-controls="primary-navigation"
-            onClick={() => setOpen(!open)}
-          >
-            <Icon name={open ? 'close' : 'menu'} />
-          </button>
-        </div>
-        <nav
-          id="primary-navigation"
-          className={'primary-nav ' + (open ? 'is-open' : '')}
-          aria-label="Main navigation"
-          onBlur={(event) => {
-            if (
-              event.relatedTarget instanceof Node &&
-              !header.current?.contains(event.relatedTarget)
-            )
-              setOpen(false)
-          }}
-        >
-          {pageEntries.map(([id, item]) => (
-            <a
-              key={id}
-              href={item.href}
-              aria-current={page === id ? 'page' : undefined}
-              data-topic={id === 'home' ? 'Portfolio' : item.label}
-              data-scene={id}
-            >
-              {item.label}
-              {id === 'contact' && <Icon name="arrow" width="15" height="15" />}
-            </a>
-          ))}
-        </nav>
+    <header className="side-navigation">
+      <a className="side-brand" href="/#hero" aria-label="Uthsara Dahanaike, introduction">
+        <span className="monogram">u<span>.</span></span>
+      </a>
+      <button
+        ref={menuButton}
+        type="button"
+        className="icon-button side-menu-toggle"
+        hidden={!enhanced}
+        aria-label="Open navigation"
+        aria-expanded={open}
+        aria-controls="navigation-drawer"
+        onClick={() => setOpen(true)}
+      >
+        <Icon name="menu" />
+      </button>
+      {/* Native disclosure keeps section navigation usable without JavaScript. */}
+      <details className="menu-fallback" hidden={enhanced}>
+        <summary className="icon-button" aria-label="Open navigation">
+          <Icon name="menu" /><span className="sr-only">Open navigation</span>
+        </summary>
+        <nav className="static-section-nav" aria-label="Portfolio sections">{links()}</nav>
+      </details>
+      <div className="side-reading" aria-hidden="true">
+        <span className="side-number">{active?.number ?? '01'}</span>
+        <span className="side-progress-track">
+          <span className="side-progress" ref={progressRef} />
+        </span>
+        <span className="side-section-label">{active?.label ?? 'Portfolio'}</span>
       </div>
-      <span className="header-progress" ref={progressRef} aria-hidden="true" />
+      <dialog
+        id="navigation-drawer"
+        ref={dialog}
+        className="navigation-drawer"
+        aria-labelledby="navigation-title"
+        onCancel={(event) => { event.preventDefault(); close() }}
+        onClose={(event) => {
+          // A delayed close event from an earlier opening must not close a new one.
+          if (!event.currentTarget.open) setOpen(false)
+        }}
+        onClick={(event) => {
+          if (event.target !== event.currentTarget) return
+          const box = event.currentTarget.getBoundingClientRect()
+          if (event.clientX < box.left || event.clientX > box.right ||
+              event.clientY < box.top || event.clientY > box.bottom) close()
+        }}
+      >
+        <div className="navigation-sheet">
+          <div className="drawer-heading">
+            <p className="eyebrow" id="navigation-title">Explore the portfolio</p>
+            <button
+              type="button"
+              className="icon-button"
+              aria-label="Close navigation"
+              autoFocus
+              onClick={() => { close(); menuButton.current?.focus() }}
+            ><Icon name="close" /></button>
+          </div>
+          <nav
+            id="primary-navigation"
+            className="section-navigation"
+            aria-label="Main navigation"
+            onClick={(event) => {
+              if (event.target instanceof Element && event.target.closest('a')) close()
+            }}
+          >{links()}</nav>
+          <div className="drawer-footer">
+            <ResumeButton id="drawer-resume" />
+            <p>Cybersecurity, data science + AI.<br />A little about what I build.</p>
+          </div>
+        </div>
+      </dialog>
     </header>
   )
 }

@@ -6,7 +6,7 @@ let activeTrip: symbol | undefined
 
 function fragments() {
   const selector = [
-    '.site-shell > header', '.site-shell > footer',
+    '.site-shell > footer',
     '#main h1', '#main h2', '#main h3', '#main p', '#main article',
     '#main .interest-lab', '#main .button-row', '#main .work-toolbar',
     '#main .background-panel', '#main .contact-links', '#main dl', '#main ul',

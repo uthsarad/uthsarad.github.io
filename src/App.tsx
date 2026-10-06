@@ -109,17 +109,14 @@ export default function App({
         page={page ?? 'home'}
         scene={scene.scene}
         motionEnabled={motionEnabled}
+        section={scene.section}
       />
       <a className="skip-link" href="#main">
         Skip to content
       </a>
       <Navigation
-        page={page}
-        topic={scene.label}
-        pinned={scene.pinned}
-        scene={scene.scene}
+        section={scene.section}
         progressRef={scene.progressRef}
-        onTogglePin={scene.togglePin}
       />
       <main
         id="main"

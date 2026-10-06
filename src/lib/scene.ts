@@ -7,6 +7,7 @@ import {
   type MouseEvent,
 } from 'react'
 import { pages, type PageId } from './pages'
+import { sectionEntries, type SectionId } from '@/data/sections'
 
 export type SceneId =
   'home' | 'security' | 'data' | 'projects' | 'coursework' | 'about' | 'contact'
@@ -41,6 +42,9 @@ export function useScene(page: PageId | undefined) {
   const [hovered, setHovered] = useState<Topic | null>(null)
   const [focused, setFocused] = useState<Topic | null>(null)
   const progressRef = useRef<HTMLSpanElement>(null)
+  const [section, setSection] = useState<SectionId | undefined>(
+    page === 'home' ? 'hero' : page,
+  )
 
   useEffect(() => {
     let frame = 0
@@ -48,6 +52,9 @@ export function useScene(page: PageId | undefined) {
     let scrollable = 0
     let line = 0
     let sections: { topic: Topic; top: number; bottom: number }[] = []
+    let anchors: { id: SectionId; top: number }[] = []
+    let previousSection: SectionId | undefined
+    setSection(page === 'home' ? 'hero' : page)
     setReading(initial)
     setPinned(null)
     setHovered(null)
@@ -68,12 +75,26 @@ export function useScene(page: PageId | undefined) {
             ? [{ topic, top: box.top + y, bottom: box.bottom + y }]
             : []
         })
+        anchors = sectionEntries.flatMap(({ id }) => {
+          const element = document.getElementById(id)
+          return element ? [{ id, top: element.getBoundingClientRect().top + y }] : []
+        })
       }
       const progress =
         scrollable > 0 ? Math.max(0, Math.min(1, y / scrollable)) : 0
       // Scroll progress is visual, not React state. No whole-page render per pixel.
       if (progressRef.current)
-        progressRef.current.style.transform = `scaleX(${progress})`
+        progressRef.current.style.transform = `scaleY(${progress})`
+      let nextSection = anchors[0]?.id
+      for (const anchor of anchors)
+        if (anchor.top <= y + line) nextSection = anchor.id
+      if (scrollable > 0 && y >= scrollable - 2) nextSection = anchors[anchors.length - 1]?.id
+      if (nextSection !== previousSection) {
+        previousSection = nextSection
+        setSection(nextSection)
+        // Topic selections must not keep the background stuck in an earlier chapter.
+        setPinned(null)
+      }
       let next = sections[0]?.topic ?? initial
       for (const section of sections) {
         if (section.top <= y + line && section.bottom > y + 80)
@@ -112,6 +133,7 @@ export function useScene(page: PageId | undefined) {
   const active = hovered ?? focused ?? pinned ?? reading
   return {
     ...active,
+    section,
     progressRef,
     pinned: pinned?.label === active.label,
     togglePin: () => {
@@ -182,7 +204,7 @@ function sameTopic(previous: Topic | null, next: Topic | null) {
 }
 
 // Called inside the loaded page so it cannot mutate HTML before hydration.
-// Content remains visible before JS. Each block gets one falling entrance.
+// Content remains visible before JS. Blocks rise gently into the reading flow.
 export function useContentEntrance(enabled: boolean) {
   useEffect(() => {
     if (!enabled) return

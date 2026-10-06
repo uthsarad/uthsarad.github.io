@@ -3,6 +3,7 @@ import type { SVGProps } from 'react'
 const paths = {
   arrow: 'M7 17 17 7M7 7h10v10',
   down: 'M12 4v16m-6-6 6 6 6-6',
+  download: 'M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5',
   plus: 'M12 5v14M5 12h14',
   mail: 'M4 5h16v14H4zM4 6l8 7 8-7',
   copy: 'M9 9h11v11H9zM15 9V4H4v11h5',

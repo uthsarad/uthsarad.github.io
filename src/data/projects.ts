@@ -8,6 +8,8 @@ export type ProjectId =
   | 'osteoporosis'
   | 'dsrpc'
 
+export type ProjectLifecycle = 'ongoing' | 'completed' | 'unknown'
+
 export type Project = {
   id: ProjectId
   emoji: string
@@ -16,6 +18,7 @@ export type Project = {
   kind: string
   stack: string
   status: string
+  lifecycle: ProjectLifecycle
   url?: string
   tags?: string[]
 }
@@ -30,6 +33,7 @@ export const projects: Project[] = [
     kind: 'Personal Project',
     stack: 'Arch Linux · Shell · CI',
     status: 'Active development',
+    lifecycle: 'ongoing',
     url: 'https://github.com/uthsarad/NeOS',
     tags: ['systems', 'os', 'linux'],
   },
@@ -41,6 +45,7 @@ export const projects: Project[] = [
     kind: 'Personal Project',
     stack: 'Rust · egui',
     status: 'Complete',
+    lifecycle: 'completed',
     url: 'https://github.com/uthsarad/FerrumCalc',
     tags: ['systems', 'rust', 'tools'],
   },
@@ -52,6 +57,7 @@ export const projects: Project[] = [
     kind: 'Personal Project',
     stack: 'Python · GeoPandas · Shapely',
     status: 'Active development',
+    lifecycle: 'ongoing',
     url: 'https://github.com/uthsarad/mEgis',
     tags: ['python', 'tools', 'gis'],
   },
@@ -63,6 +69,7 @@ export const projects: Project[] = [
     kind: 'Private Project',
     stack: 'mpv · Music playback',
     status: 'Private',
+    lifecycle: 'unknown',
     tags: ['tools', 'audio'],
   },
   {
@@ -73,6 +80,7 @@ export const projects: Project[] = [
     kind: 'Developer Tool',
     stack: 'Python · Git',
     status: 'Usable',
+    lifecycle: 'unknown',
     url: 'https://github.com/uthsarad/hsfix',
     tags: ['tools', 'python', 'git'],
   },
@@ -87,6 +95,7 @@ export const coursework: Project[] = [
     kind: 'Coursework',
     stack: 'Digital forensics',
     status: 'CSG2305',
+    lifecycle: 'unknown',
     tags: ['security', 'coursework'],
   },
   {
@@ -97,6 +106,7 @@ export const coursework: Project[] = [
     kind: 'Coursework',
     stack: 'MLP · CNN',
     status: 'CSG2341',
+    lifecycle: 'unknown',
     tags: ['ai', 'coursework'],
   },
   {
@@ -107,6 +117,7 @@ export const coursework: Project[] = [
     kind: 'Coursework',
     stack: 'Python · Pyro5 · SQLite',
     status: 'Distributed systems',
+    lifecycle: 'unknown',
     url: 'https://github.com/uthsarad/dsrpc',
     tags: ['systems', 'python', 'coursework'],
   },
