@@ -2,23 +2,25 @@
 
 Personal portfolio for cybersecurity and data science + AI, built with React 18, TypeScript, Vite, and CSS. Published at [uthsarad.github.io](https://uthsarad.github.io).
 
-The homepage has two interest tabs: Cybersecurity uses Ghost Fibers behind a blue padlock that assembles from fragments on entry; Data Science + AI uses an interactive Antigravity particle field. A blue React Bits Aurora background pulses every six seconds. The profile identifies the current role as Data Science Intern. Copy is kept short, with 16px or larger main body text and one-column project cards on phones. Independent projects and coursework have separate collections with illustrations, filters, and optional details.
+The landing page is a continuous, numbered story: Introduction, Interests, Projects, Coursework, About, and Contact. A left-side hamburger opens a native modal drawer with section links at every screen size, replacing the top navigation bar. Desktop readers get a section indicator and vertical reading-progress line. Phones get a floating side menu. A native disclosure keeps navigation usable without JavaScript.
 
-A physically based Schwarzschild black hole sits behind the content, rendered by a local WebGL2 beam tracer with gravitational lensing, Doppler-shifted accretion disc, and black-body temperature. The header label and browser-tab title preview hovered/focused titles, hold clicked selections until another selection or navigation, and otherwise follow the section in view. Browser-tab titles include Uthsara's name; generated HTML retains each page's descriptive metadata. Clickable headings are real keyboard-accessible buttons. Blocks enter with a short, staggered downward movement. The green hero status dot has been removed.
+The Interests subsection retains Cybersecurity's Ghost Fibers and assembling padlock, and Data Science + AI's interactive Antigravity field. The profile identifies the current role as Data Science Intern. Both full collections now appear on the landing page, with illustrations, category filters, optional details, and an independent lifecycle filter. NeOS and mEgis are Ongoing, and FerrumCalc is Completed, based on existing content. Private/usable labels and course codes do not prove completion, so those entries say Status not confirmed. Update `lifecycle` in `src/data/projects.ts` when their status is confirmed.
+
+A physically based Schwarzschild black hole sits behind the content, rendered by a local WebGL2 beam tracer with gravitational lensing, Doppler-shifted accretion disc, and black-body temperature. The same canvas drifts gently between subsections, while secondary blocks rise into view. Browser-tab titles and favicons still follow reading context and topic interactions. A new chapter clears stale selections. Clickable headings remain keyboard-accessible buttons, and critical content is visible before JavaScript.
 
 ## Pages
 
-The header title is a pin/unpin button, with a blue reading-progress line below the header. Hover/focus previews, clicks, and scroll position keep the header, browser title, and scene favicon in sync. Favicons use a globe for the portfolio, a shield for cybersecurity, and connected nodes for data science + AI. Clicking a pinned header title resumes following the page. Browser titles use `Topic | Uthsara Dahanaike`; site copy and metadata contain no em dashes.
+The drawer uses native dialog focus containment and background inertness. Escape, the close button, a backdrop click, and selecting a section close it. Real `/#section` links focus their destination, respect motion preferences, and preserve Back/Forward reading positions. Section navigation scrolls through the story rather than playing a page-replacement transition. Favicons use a globe for the portfolio, a shield for cybersecurity, and connected nodes for data science + AI. Browser titles use `Topic | Uthsara Dahanaike`, and the prerendered metadata stays page-specific.
 
 | URL            | Content                                                           |
 | -------------- | ----------------------------------------------------------------- |
-| `/`            | Introduction, interactive interests, and links into the portfolio |
+| `/`            | Six landing subsections, including both full project collections   |
 | `/projects/`   | Five independent projects; systems and tools/data filters         |
 | `/coursework/` | Three academic studies; security, data + AI, and systems filters  |
 | `/about/`      | Biography, background, and skills                                 |
 | `/contact/`    | Email, copy-email control, and social links                       |
 
-Navigation uses ordinary links, enhanced for local page clicks to retain the React shell, the physical black hole canvas, and the React runtime. Each page loads its own content module; the shell and previously visited modules are reused. Local clicks play a short space-trip transition, described under Motion and accessibility. Browser Back/Forward restores reading positions, page changes focus the main content, and modifier clicks, downloads, external links, and failed module loads retain native navigation. `scripts/build-pages.mjs` prerenders the complete React page into HTML, with page-specific metadata and module preloads. Text, ordinary links, and project disclosures are available before JavaScript; React hydrates them to enable filters and visual controls. GitHub Pages serves only static files.
+The four standalone content pages remain available for existing links. Their side menu returns to the matching landing subsection. Ordinary local page clicks retain the React shell, physical canvas, and runtime, with space-trip choreography only for cross-page routes. Same-document section jumps never start a trip. Back/Forward restores reading positions and destination focus. Modifier clicks, downloads, external links, and failed module loads retain native navigation. `scripts/build-pages.mjs` prerenders complete React pages into HTML, with page-specific metadata and reachable static module preloads. Text, section links, and project disclosures work before JavaScript. GitHub Pages serves only static files.
 
 ## Development
 
@@ -32,7 +34,13 @@ npm run check:pages
 npm run preview
 ```
 
-Development uses port **5173**; production preview uses **4173**. The development server renders source pages into HTML to exercise the same hydration path. The build runs strict TypeScript checks, bundles the client into `dist/` and a build-only React renderer into `dist-ssr/`, then generates complete page documents and the sitemap. Only `dist/` is published; no server runs in production. `check:pages` runs four checks covering rendered content, metadata, canonical URLs, assets, sitemap, the 404 file, route-specific preloads, and gzip budgets (12 kB per HTML document; 56 kB shared runtime; 62 kB runtime plus initial page modules). GitHub Actions runs these checks before deployment. Local edits do not change the published site.
+Development uses port **5173**; production preview uses **4173**. Dev renders source pages into HTML to exercise hydration. The build runs strict TypeScript checks, bundles the client into `dist/` and a build-only React renderer into `dist-ssr/`, then generates page documents and the sitemap. Only `dist/` is published. `check:pages` runs five checks for content, section anchors, lifecycle badges, optional resume integrity, metadata, canonicals, assets, sitemap, 404, preloads, and gzip budgets: 12 kB per HTML document, 56 kB shared runtime, 70 kB runtime plus initial modules for the full landing page, and 62 kB for standalone routes. The initial full landing build measured 66,619 bytes JavaScript gzip, so only its budget was adjusted. Decorative renderers and physics tables remain deferred. GitHub Actions checks the build before deployment. Local changes do not change the published site.
+
+After starting preview, `node scripts/check-sections.mjs` checks desktop, mobile, 320px, reduced motion, no JavaScript, deep links/history, drawer dismissal/focus, filters, and hydration. `node scripts/check-space-trip.mjs` retains the heavy renderer and legacy-route regression checks. Legacy-route stress tests use temporary anchors, while the section runner exercises the actual navigation UI. If Chromium is not cached, set `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` to an installed Chrome or Edge executable. The runners never install packages.
+
+## Resume download
+
+The introduction, contact subsection, and drawer contain download controls. They are disabled with an explanation until an approved PDF is added at `public/resume.pdf`. Vite checks its PDF signature and then enables a native download link in prerendered HTML and React. Rebuild, or restart dev, after adding/removing the file. It is copied into `dist/resume.pdf`. Review personal information and accuracy before publishing it. No PDF was copied from Downloads for this change.
 
 ## Content and structure
 
@@ -42,7 +50,12 @@ Development uses port **5173**; production preview uses **4173**. The developmen
 | `src/lib/navigation.ts`                | Enhanced local navigation, history, scroll, and focus       |
 | `src/lib/space-trip.ts`                | Ingest/emerge page transition choreography                  |
 | `src/lib/page-content.tsx`             | Isolated, lazy page content                                 |
-| `src/data/pages.json`                  | Page URLs, navigation labels, and SEO metadata              |
+| `src/data/sections.ts`                 | Landing chapter order, anchor targets, and drawer labels     |
+| `src/components/ui/Navigation.tsx`     | Side rail, modal drawer, and no-JavaScript disclosure        |
+| `src/components/ui/ResumeButton.tsx`   | Native PDF download or an explained unavailable state       |
+| `src/styles/sections.css`             | Section-first layout and responsive drawer                  |
+| `scripts/check-sections.mjs`          | Landing-page browser acceptance checks                      |
+| `src/data/pages.json`                  | Standalone URLs and SEO metadata                            |
 | `src/entry-server.tsx`                 | Build-time page tree used for prerendering                  |
 | `scripts/render-page.mjs`             | Waits for lazy React content before serializing HTML        |
 | `scripts/build-pages.mjs`              | Static HTML documents and sitemap for GitHub Pages          |
@@ -79,16 +92,16 @@ The previous Particles/Anime.js scene and unused Depth Text component were remov
 
 ## Motion and accessibility
 
-- Persistent navigation, skip link, visible focus states, native disclosure controls, and a mobile menu with Escape handling.
+- Persistent side navigation, skip link, visible focus states, native disclosure controls, and a modal drawer with Escape and focus-return handling.
 - Interest tabs support arrow keys, Home, and End. Project filters announce the updated result count.
 - A small switch in the footer controls motion and remembers its setting between pages. System reduced-motion preference takes priority.
 - An early preference script suppresses CSS motion before hydration; browser preferences restore after React attaches to the prerendered markup. Content entrance observers attach inside hydrated page components.
 - Aurora pulses gently every six seconds; the aura uses slow CSS opacity/scale. Both stop with the footer switch or reduced-motion preference.
 - Canvas renderers bound their resolution and frame rate, suspend when inactive, and release resources/listeners on unmount. Local SVG, JPEG, or gradient fallbacks keep the scenes visible without their renderer.
-- Local page clicks play a space-trip transition. The visible header, footer, and content blocks follow their own curved paths toward the black hole with a tangential detour and an anisotropic stretch suggesting tidal forces, shrinking and blurring into the horizon (**ingesting**, about 600 ms plus up to 120 ms of stagger). The route swaps while everything is hidden, then the destination blocks play the same animation in reverse, settling back into place (**emerging**, about 650 ms). The real DOM is animated, not clones or rasterized text, and `main` is marked inert during the trip. Escape skips it immediately, and it is skipped entirely when motion is off, when reduced motion is preferred, when the tab is hidden, or when the Web Animations API is unavailable. A 900 ms safety timeout per phase clears stale animations even under background throttling, so animation can never trap navigation. The address bar updates as soon as a link is clicked, so pressing Back mid-trip or clicking again always lands on the page the URL shows.
+- Cross-page legacy links retain a space-trip transition. The footer and content blocks follow their own curved paths toward the black hole with a tangential detour and an anisotropic stretch suggesting tidal forces, shrinking and blurring into the horizon (**ingesting**, about 600 ms plus up to 120 ms of stagger). The route swaps while everything is hidden, then the destination blocks play the same animation in reverse, settling back into place (**emerging**, about 650 ms). The real DOM is animated, not clones or rasterized text, and `main` is marked inert during the trip. Escape skips it immediately, and it is skipped entirely when motion is off, when reduced motion is preferred, when the tab is hidden, or when the Web Animations API is unavailable. A 900 ms safety timeout per phase clears stale animations even under background throttling, so animation can never trap navigation. The address bar updates as soon as a link is clicked, so pressing Back mid-trip or clicking again always lands on the page the URL shows.
 - Shiny text pauses offscreen. Data/AI controls still communicate their state when animation is disabled.
-- Scroll progress updates a single element without React state. Section geometry is cached until content/layout changes, and topic previews do not rerender the page content.
-- Ghost Fibers retains its shader resources when paused or moved offscreen, with a 640px maximum width. Critical page headings appear immediately; the falling entrances remain on secondary content.
+- Reading progress updates a single element without React state per pixel. Section geometry is cached until content/layout changes, and topic interactions do not rerender the page content.
+- Ghost Fibers retains shader resources when paused or moved offscreen, with a 640px maximum width. Critical headings stay readable; secondary blocks rise gently into the reading flow.
 - Google Fonts loads without blocking first paint; system fonts remain available during loading or failure.
 - Copy-email reports success or failure and leaves the visible email link available.
 

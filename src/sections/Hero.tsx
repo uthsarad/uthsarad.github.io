@@ -41,7 +41,7 @@ export function Hero() {
           </div>
           <div className="hero-aside">
             <p className="eyebrow">COLOMBO, SRI LANKA</p>
-            <p>Curiosity.<br />Investigation.<br /><span>Building.</span></p>
+            <p>Curiosity.{' '}<br />Investigation.{' '}<br /><span>Building.</span></p>
             <a className="text-link scroll-cue" href="/#interests">
               Scroll to explore <Icon name="down" width="18" height="18" />
             </a>

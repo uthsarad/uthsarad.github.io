@@ -118,19 +118,36 @@ export function usePageNavigation(initialPath: string, motionEnabled: boolean) {
   }, [])
 
   useEffect(() => {
-    // Preserve native direct-visit scrolling, but move keyboard focus to its section.
-    if (!location.key) {
-      if (!window.location.hash) return
-      const frame = requestAnimationFrame(() => focusDestination(window.location.hash))
-      return () => cancelAnimationFrame(frame)
+    const hash = location.key ? location.hash : window.location.hash
+    if (!location.key && !hash) return
+    const main = document.getElementById('main')
+    if (!main) return
+    let scrolled = false
+    const restore = () => {
+      // Preloading an import does not resolve React.lazy synchronously. The
+      // location effect can otherwise see its loading fallback, scroll to zero,
+      // and never retry after the real section mounts.
+      if (!main.firstElementChild || main.querySelector('.page-loading')) return false
+      if (!scrolled) {
+        const target = hashTarget(hash)
+        if (target && !location.restoreOffset) target.scrollIntoView({ behavior: 'instant', block: 'start' })
+        else if (location.key) window.scrollTo({ top: location.y, behavior: 'instant' })
+        scrolled = true
+      }
+      // The route animation temporarily makes main inert. Restore keyboard
+      // focus only when it releases the destination, not while it is hidden.
+      if (main.inert) return false
+      focusDestination(hash)
+      return true
     }
-    const frame = requestAnimationFrame(() => {
-      if (!document.getElementById('main')?.inert) focusDestination(location.hash)
-      const target = hashTarget(location.hash)
-      if (target && !location.restoreOffset) target.scrollIntoView({ behavior: 'instant', block: 'start' })
-      else window.scrollTo({ top: location.y, behavior: 'instant' })
+    const observer = new MutationObserver(() => {
+      if (restore()) observer.disconnect()
     })
-    return () => cancelAnimationFrame(frame)
+    observer.observe(main, { childList: true, subtree: true, attributes: true, attributeFilter: ['inert'] })
+    const frame = requestAnimationFrame(() => {
+      if (restore()) observer.disconnect()
+    })
+    return () => { cancelAnimationFrame(frame); observer.disconnect() }
   }, [location])
 
   const navigate = async (event: MouseEvent<HTMLDivElement>) => {

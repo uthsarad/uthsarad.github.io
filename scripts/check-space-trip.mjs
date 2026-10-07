@@ -12,6 +12,8 @@
  * installs packages, starts a server, edits application files, or commits.
  * Optional overrides: PLAYWRIGHT_MODULE, PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH,
  * SPACE_TRIP_URL, SPACE_TRIP_OUTPUT.
+ * The section-first menu is checked by check-sections.mjs. Legacy-route stress
+ * tests below activate temporary real anchors to exercise the retained router.
  */
 import assert from 'node:assert/strict'
 import { access, mkdir, readFile, readdir, writeFile } from 'node:fs/promises'
@@ -270,17 +272,18 @@ async function persistent(page, documentId) {
   assert.equal(result.count, 1, 'Exactly one black-hole canvas must remain mounted')
 }
 
-async function openMenuIfNeeded(page) {
-  const menu = page.getByRole('button', { name: 'Open navigation', exact: true })
-  if (await menu.isVisible().catch(() => false)) await menu.click()
-  return menu
+async function activateRoute(page, href) {
+  await page.evaluate((target) => {
+    const anchor = document.createElement('a')
+    anchor.href = target
+    document.querySelector('.site-shell').append(anchor)
+    anchor.click()
+    anchor.remove()
+  }, href)
 }
 
 async function clickRoute(page, id) {
-  await openMenuIfNeeded(page)
-  const anchor = page.locator(`#primary-navigation a[href="${pages[id].href}"]`)
-  assert.equal(await anchor.getAttribute('href'), pages[id].href, 'Navigation uses real hrefs')
-  await anchor.click()
+  await activateRoute(page, pages[id].href)
 }
 
 async function phasesSince(page, start) {
@@ -395,11 +398,8 @@ try {
         return actual
       }
       const projectY = await setScroll(620)
-      // The header is not sticky, so a pointer click would first scroll the link
-      // into view and the departure offset would be 0. Activate the real anchor
-      // in place so the stored position is the one set above.
-      const activate = (href) => page.evaluate((value) =>
-        document.querySelector(`#primary-navigation a[href="${value}"]`).click(), href)
+      // Activate an anchor in place without disturbing the departure offset.
+      const activate = (href) => activateRoute(page, href)
       await activate(pages.coursework.href)
       await settled(page, 'coursework')
       const courseworkY = await setScroll(450)
@@ -442,8 +442,13 @@ try {
       // DOM clicks intentionally bypass actionability waits to stress overlapping
       // requests in one event turn, as repeated keyboard/pointer input can do.
       await page.evaluate(() => {
-        for (const href of ['/about/', '/contact/', '/about/', '/contact/'])
-          document.querySelector(`#primary-navigation a[href="${href}"]`).click()
+        for (const href of ['/about/', '/contact/', '/about/', '/contact/']) {
+          const anchor = document.createElement('a')
+          anchor.href = href
+          document.querySelector('.site-shell').append(anchor)
+          anchor.click()
+          anchor.remove()
+        }
       })
       await settled(page, 'contact')
       assert.equal(new URL(page.url()).pathname, '/contact/', 'Rapid clicks end on the last target')
@@ -452,7 +457,7 @@ try {
       await settled(page, 'contact')
       assert.equal(await page.evaluate(() => document.documentElement.hasAttribute('data-transit')), false, 'No stuck data-transit after rapid clicks')
       assert.equal(await page.locator('#main').evaluate((main) => main.inert), false, 'main not inert after rapid clicks')
-      assert.equal(await page.getByRole('button', { name: 'Open navigation', exact: true }).isVisible().catch(() => false), false)
+      assert.equal(await page.getByRole('button', { name: 'Open navigation', exact: true }).isVisible().catch(() => false), true)
       await page.goBack()
       await settled(page, 'projects')
       await persistent(page, identity)
@@ -504,8 +509,7 @@ try {
       await visit(page)
       const identity = await captureIdentity(page)
       await shot(page, 'mobile')
-      // The accessible name flips to "Close navigation" when open, so locate by control target.
-      const menu = page.locator('button[aria-controls="primary-navigation"]')
+      const menu = page.locator('button[aria-controls="navigation-drawer"]')
       await menu.click()
       assert.equal(await menu.getAttribute('aria-expanded'), 'true')
       await page.keyboard.press('Escape')
