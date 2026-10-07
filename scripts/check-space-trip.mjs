@@ -361,7 +361,16 @@ try {
       const span = phases[phases.length - 1].at - phases[0].at
       assert.ok(span <= 3000, `Transit must settle quickly (~1.5s): ${span}ms`)
       assert.equal(new URL(page.url()).pathname, '/projects/', 'URL updates after transit')
-      assert.equal(await page.evaluate(() => document.title), expectedTitle('projects'), 'Document title updates')
+      // The tab follows reading topics, so the first card row can already show
+      // FerrumCalc here. Preview the real destination heading for an exact title
+      // check without forcing document.title or changing main's keyboard focus.
+      const readingTitle = await page.title()
+      await page.locator('#main h1 .topic-title').hover()
+      await page.waitForFunction((title) => document.title === title, expectedTitle('projects'), { timeout })
+      assert.equal(await page.title(), expectedTitle('projects'), 'Destination heading previews the correct document title')
+      const canonical = await page.locator('link[rel="canonical"]').getAttribute('href')
+      assert.equal(canonical, 'https://uthsarad.github.io' + pages.projects.href, 'Canonical metadata reflects the destination route, not a reading topic')
+      report.diagnostics.push({ name: 'navigation-titles', readingTitle, headingTitle: await page.title(), canonical })
       const projectsH1 = await page.locator('#main h1').textContent()
       assert.ok(projectsH1.trim().length > 0 && projectsH1 !== homeH1, 'h1 reflects the destination page')
       assert.equal(await page.locator('#main').evaluate((main) => document.activeElement === main), true, 'main is focused after transit')
