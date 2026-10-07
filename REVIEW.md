@@ -26,6 +26,12 @@ The enabled resume path was also checked in an isolated local snapshot with a cl
 
 This verifies download mechanics, not the owner's actual resume or its approval. The actual portfolio still has no `public/resume.pdf`, so its download controls remain honestly disabled. No private document was copied into the portfolio, and no push or deployment was performed. Physical-device performance, Core Web Vitals, and measured contrast conformance remain unverified.
 
+### Requirement-level acceptance follow-through, 7 October 2026
+
+`ACCEPTANCE.md` maps every explicit request and changed public output to a concrete observation, with `ACCEPTANCE.json` preserving the individual evidence. Fresh normal-network Chrome runs exercised the actual repository production preview, all six real menu links, native status/category filters, wheel-driven scene/progress/reveals, pause/reduced motion, relocated interest tabs, heading title previews, footer links, retained-route history/reload and all eight native Details disclosures without page JavaScript. A separately built historical baseline establishes the requested improvements: home changes from two chapters/no embedded articles to six chapters/eight articles, the 1440x79px top header becomes an 88px side rail, and Projects navigation changes from a full-page trip to a same-document focused section without transit mutations. The historical copy and earlier synthetic PDF fixture are supplementary, not the actual acceptance target.
+
+The owner outcome is not fully delivered: genuine resume download is still blocked by the missing approved PDF, and Museek/hsfix plus the optional coursework lifecycle entries remain unconfirmed. The real missing PDF request returns Vite's 200 HTML fallback, so it must not be treated as an existing PDF or successful download. Both constraints are explicit in the requirement map. Fresh used font faces loaded normally, while all recorded local abort/CSP failures remain disclosed rather than silently discarded. No push or deployment, private-document publication, email send or system-clipboard overwrite was performed.
+
 ## Aurora, Antigravity, and lock scene, 19 September 2026
 
 The owner corrected the current position to **Data Science Intern**. The hero badge, biography, About timeline, page metadata, and structured data now use that role. Coursework moves the globe into the lower-left corner on desktop and mobile, retaining its travel/zoom transition and aura.

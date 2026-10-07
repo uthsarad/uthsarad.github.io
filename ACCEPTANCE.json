@@ -1,0 +1,5752 @@
+{
+  "date": "2026-10-07",
+  "actualApplicationSource": "405d57e052cba89b34eca14c25fdccfe31ced021",
+  "observedHead": "054b3034083e1505b30cdf2f0077427164606595",
+  "actualTarget": "http://127.0.0.1:4173",
+  "scope": "Actual repository built public UI. Historical copy comparison and synthetic resume mechanics are supplementary, not substitutes.",
+  "browser": "154.0.8037.95",
+  "interpretations": [
+    "local repository implementation, not implicit publication",
+    "left desktop rail and floating top-left mobile hamburger",
+    "six chapters in existing content order",
+    "flow means normal scrolling, section drift and reveals, not scroll-jacking",
+    "unknown lifecycle retained rather than invented",
+    "resume requires owner-approved PDF"
+  ],
+  "blockedRequirements": [
+    {
+      "id": "R1-content",
+      "reason": "Two personal projects and three coursework entries have no confirmed binary lifecycle in supplied source."
+    },
+    {
+      "id": "R2-download",
+      "reason": "Owner-approved public/resume.pdf absent. Real requested asset returns HTML, controls disabled, no genuine resume download possible."
+    }
+  ],
+  "observations": [
+    {
+      "requirement": "R3",
+      "name": "initial desktop structure",
+      "outcome": "OBSERVED",
+      "evidence": {
+        "sections": [
+          "hero",
+          "interests",
+          "projects",
+          "coursework",
+          "about",
+          "contact"
+        ],
+        "h1": 1,
+        "h2": [
+          {
+            "id": "hero",
+            "h2": 0
+          },
+          {
+            "id": "interests",
+            "h2": 1
+          },
+          {
+            "id": "projects",
+            "h2": 1
+          },
+          {
+            "id": "coursework",
+            "h2": 1
+          },
+          {
+            "id": "about",
+            "h2": 1
+          },
+          {
+            "id": "contact",
+            "h2": 1
+          }
+        ],
+        "articles": 8,
+        "duplicates": [],
+        "overflow": 0,
+        "brokenAnchors": [],
+        "header": false,
+        "rail": null,
+        "menu": {
+          "x": 21.5,
+          "y": 100,
+          "width": 44,
+          "height": 44,
+          "top": 100,
+          "right": 65.5,
+          "bottom": 144,
+          "left": 21.5
+        }
+      }
+    },
+    {
+      "requirement": "R4",
+      "name": "ready actual canvas",
+      "outcome": "OBSERVED",
+      "evidence": "true"
+    },
+    {
+      "requirement": "R3",
+      "name": "hero text spacing",
+      "outcome": "OBSERVED",
+      "evidence": {
+        "text": "01 / INTRODUCTION\n\nCybersecurity student · Data Science intern\n\nUthsara\nDahanaike.\n\nComputer Science student in Colombo. I work on cybersecurity, data science + AI, and the tools around them.\n\nProjects\nDownload resume\n\nResume PDF is not available yet.\n\nCOLOMBO, SRI LANKA\n\nCuriosity.\nInvestigation.\nBuilding.\n\nScroll to explore",
+        "heading": "Uthsara\nDahanaike.",
+        "whiteSpace": "normal",
+        "wordSpacing": "0px"
+      }
+    },
+    {
+      "requirement": "R2",
+      "name": "hero disabled resume",
+      "outcome": "OBSERVED",
+      "evidence": {
+        "text": "Download resume ",
+        "disabled": true,
+        "describedby": "hero-resume-note",
+        "description": "Resume PDF is not available yet."
+      }
+    },
+    {
+      "requirement": "R2",
+      "name": "drawer disabled resume",
+      "outcome": "OBSERVED",
+      "evidence": {
+        "text": "Download resume ",
+        "disabled": true,
+        "describedby": "drawer-resume-note",
+        "description": "Resume PDF is not available yet."
+      }
+    },
+    {
+      "requirement": "R3",
+      "name": "native drawer hero",
+      "outcome": "PASS",
+      "evidence": {
+        "path": "/",
+        "hash": "#hero",
+        "focused": true,
+        "rect": {
+          "x": 88,
+          "y": 0,
+          "width": 1352,
+          "height": 850,
+          "top": 0,
+          "right": 1440,
+          "bottom": 850,
+          "left": 88
+        },
+        "y": 0,
+        "maxY": 5930,
+        "visible": true,
+        "sameCanvas": true,
+        "domContentLoads": 0
+      }
+    },
+    {
+      "requirement": "R3",
+      "name": "native drawer interests",
+      "outcome": "PASS",
+      "evidence": {
+        "path": "/",
+        "hash": "#interests",
+        "focused": true,
+        "rect": {
+          "x": 88,
+          "y": 24,
+          "width": 1352,
+          "height": 676.390625,
+          "top": 24,
+          "right": 1440,
+          "bottom": 700.390625,
+          "left": 88
+        },
+        "y": 826,
+        "maxY": 5930,
+        "visible": true,
+        "sameCanvas": true,
+        "domContentLoads": 0
+      }
+    },
+    {
+      "requirement": "R3",
+      "name": "native drawer projects",
+      "outcome": "PASS",
+      "evidence": {
+        "path": "/",
+        "hash": "#projects",
+        "focused": true,
+        "rect": {
+          "x": 88,
+          "y": 24.390625,
+          "width": 1352,
+          "height": 2190.859375,
+          "top": 24.390625,
+          "right": 1440,
+          "bottom": 2215.25,
+          "left": 88
+        },
+        "y": 1502,
+        "maxY": 5930,
+        "visible": true,
+        "sameCanvas": true,
+        "domContentLoads": 0
+      }
+    },
+    {
+      "requirement": "R3",
+      "name": "native drawer coursework",
+      "outcome": "PASS",
+      "evidence": {
+        "path": "/",
+        "hash": "#coursework",
+        "focused": true,
+        "rect": {
+          "x": 88,
+          "y": 25.25,
+          "width": 1352,
+          "height": 1551.265625,
+          "top": 25.25,
+          "right": 1440,
+          "bottom": 1576.515625,
+          "left": 88
+        },
+        "y": 3692,
+        "maxY": 5930,
+        "visible": true,
+        "sameCanvas": true,
+        "domContentLoads": 0
+      }
+    },
+    {
+      "requirement": "R3",
+      "name": "native drawer about",
+      "outcome": "PASS",
+      "evidence": {
+        "path": "/",
+        "hash": "#about",
+        "focused": true,
+        "rect": {
+          "x": 88,
+          "y": 23.515625,
+          "width": 1352,
+          "height": 886.75,
+          "top": 23.515625,
+          "right": 1440,
+          "bottom": 910.265625,
+          "left": 88
+        },
+        "y": 5245,
+        "maxY": 5930,
+        "visible": true,
+        "sameCanvas": true,
+        "domContentLoads": 0
+      }
+    },
+    {
+      "requirement": "R3",
+      "name": "native drawer contact",
+      "outcome": "PASS",
+      "evidence": {
+        "path": "/",
+        "hash": "#contact",
+        "focused": true,
+        "rect": {
+          "x": 88,
+          "y": 225.265625,
+          "width": 1352,
+          "height": 590.734375,
+          "top": 225.265625,
+          "right": 1440,
+          "bottom": 816,
+          "left": 88
+        },
+        "y": 5930,
+        "maxY": 5930,
+        "visible": true,
+        "sameCanvas": true,
+        "domContentLoads": 0
+      }
+    },
+    {
+      "requirement": "R2",
+      "name": "contact disabled resume",
+      "outcome": "OBSERVED",
+      "evidence": {
+        "text": "Download resume ",
+        "disabled": true,
+        "describedby": "contact-resume-note",
+        "description": "Resume PDF is not available yet."
+      }
+    },
+    {
+      "requirement": "R2",
+      "name": "enabled downloads",
+      "outcome": "OBSERVED",
+      "evidence": []
+    },
+    {
+      "requirement": "R2",
+      "name": "actual GET /resume.pdf",
+      "outcome": "BLOCKED: owner-approved PDF absent",
+      "evidence": {
+        "status": 200,
+        "mime": "text/html",
+        "startsWithPDF": false,
+        "bytes": 50884,
+        "publicFileExists": false
+      }
+    },
+    {
+      "requirement": "R1",
+      "name": "all project names and literal badges",
+      "outcome": "OBSERVED",
+      "evidence": [
+        {
+          "name": "NeOS",
+          "badge": "Ongoing"
+        },
+        {
+          "name": "FerrumCalc",
+          "badge": "Completed"
+        },
+        {
+          "name": "mEgis",
+          "badge": "Ongoing"
+        },
+        {
+          "name": "Museek",
+          "badge": "Status not confirmed"
+        },
+        {
+          "name": "hsfix",
+          "badge": "Status not confirmed"
+        }
+      ]
+    },
+    {
+      "requirement": "R1",
+      "name": "native project status ongoing",
+      "outcome": "PASS",
+      "evidence": {
+        "actual": [
+          "NeOS",
+          "mEgis"
+        ],
+        "expected": [
+          "NeOS",
+          "mEgis"
+        ]
+      }
+    },
+    {
+      "requirement": "R1",
+      "name": "native project status completed",
+      "outcome": "PASS",
+      "evidence": {
+        "actual": [
+          "FerrumCalc"
+        ],
+        "expected": [
+          "FerrumCalc"
+        ]
+      }
+    },
+    {
+      "requirement": "R1",
+      "name": "native project status unknown",
+      "outcome": "PASS",
+      "evidence": {
+        "actual": [
+          "Museek",
+          "hsfix"
+        ],
+        "expected": [
+          "Museek",
+          "hsfix"
+        ]
+      }
+    },
+    {
+      "requirement": "R1",
+      "name": "native project status all",
+      "outcome": "PASS",
+      "evidence": {
+        "actual": [
+          "NeOS",
+          "FerrumCalc",
+          "mEgis",
+          "Museek",
+          "hsfix"
+        ],
+        "expected": [
+          "NeOS",
+          "mEgis",
+          "FerrumCalc",
+          "Museek",
+          "hsfix"
+        ]
+      }
+    },
+    {
+      "requirement": "R1",
+      "name": "coursework literal badges",
+      "outcome": "OBSERVED",
+      "evidence": [
+        {
+          "name": "Digital Forensics Investigation",
+          "badge": "Status not confirmed"
+        },
+        {
+          "name": "AI Model Evaluation: Osteoporosis Detection",
+          "badge": "Status not confirmed"
+        },
+        {
+          "name": "Banking RPC System",
+          "badge": "Status not confirmed"
+        }
+      ]
+    },
+    {
+      "requirement": "R1",
+      "name": "systems ongoing intersection and coursework unchanged",
+      "outcome": "OBSERVED",
+      "evidence": {
+        "projects": [
+          "NeOS"
+        ],
+        "coursework": [
+          "Digital Forensics Investigation",
+          "AI Model Evaluation: Osteoporosis Detection",
+          "Banking RPC System"
+        ]
+      }
+    },
+    {
+      "requirement": "R1",
+      "name": "reverse independence",
+      "outcome": "OBSERVED",
+      "evidence": {
+        "projects": [
+          "NeOS"
+        ],
+        "coursework": [
+          "AI Model Evaluation: Osteoporosis Detection"
+        ],
+        "projectStatus": "ongoing"
+      }
+    },
+    {
+      "requirement": "R1",
+      "name": "empty native announcement",
+      "outcome": "OBSERVED",
+      "evidence": {
+        "text": "No coursework match Data + AI and Completed. Try another category or lifecycle status.",
+        "announcement": "0 studies\nshown, Data + AI, Completed",
+        "projects": [
+          "NeOS"
+        ]
+      }
+    },
+    {
+      "requirement": "compatibility",
+      "name": "actual project Details",
+      "outcome": "OBSERVED",
+      "evidence": {
+        "open": "",
+        "text": "Details\n: NeOS\n\nA curated, snapshot-based Arch Linux desktop distribution focused on predictable behavior, a polished KDE Plasma 6 experience, hardware support, and secure-by-default system configuration."
+      }
+    },
+    {
+      "requirement": "compatibility",
+      "name": "rendered About profile anchors",
+      "outcome": "OBSERVED",
+      "evidence": [
+        {
+          "text": "LinkedIn ",
+          "href": "https://www.linkedin.com/in/uthsara-dahanaike"
+        }
+      ]
+    },
+    {
+      "requirement": "compatibility",
+      "name": "rendered contact anchors",
+      "outcome": "OBSERVED",
+      "evidence": [
+        {
+          "text": "uthsarad@gmail.com",
+          "href": "mailto:uthsarad@gmail.com"
+        },
+        {
+          "text": "Email me ",
+          "href": "mailto:uthsarad@gmail.com"
+        },
+        {
+          "text": "GitHub ",
+          "href": "https://github.com/uthsarad"
+        },
+        {
+          "text": "LinkedIn ",
+          "href": "https://www.linkedin.com/in/uthsara-dahanaike"
+        }
+      ]
+    },
+    {
+      "requirement": "R4",
+      "name": "real wheel reading flow",
+      "outcome": "OBSERVED",
+      "evidence": {
+        "sameCanvas": true,
+        "samples": [
+          {
+            "path": "/",
+            "hash": "",
+            "y": 0,
+            "section": "hero",
+            "number": "01",
+            "label": "Introduction",
+            "progress": "transform: scaleY(0);",
+            "visual": "none",
+            "motion": "on",
+            "focus": "<body>\n    <div id=\"root\"><div class=\"site-shell\" id=\"top\"><div class=\"ambient-background\" data-section=\"hero\" aria-hidden=\"true\"><div class=\"black-hole\" data-page=\"home\" data-scene=\"home\" data-ready=",
+            "animations": [
+              {
+                "target": "DIV",
+                "state": "finished",
+                "time": 740
+              }
+            ]
+          },
+          {
+            "path": "/",
+            "hash": "",
+            "y": 480,
+            "section": "hero",
+            "number": "01",
+            "label": "Introduction",
+            "progress": "transform: scaleY(0.0809444);",
+            "visual": "none",
+            "motion": "on",
+            "focus": "<body>\n    <div id=\"root\"><div class=\"site-shell\" id=\"top\"><div class=\"ambient-background\" data-section=\"hero\" aria-hidden=\"true\"><div class=\"black-hole\" data-page=\"home\" data-scene=\"home\" data-ready=",
+            "animations": [
+              {
+                "target": "DIV",
+                "state": "running",
+                "time": 0,
+                "keyframes": [
+                  {
+                    "offset": 0,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "0",
+                    "transform": "translateY(24px)",
+                    "computedOffset": 0
+                  },
+                  {
+                    "offset": 1,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "1",
+                    "transform": "translateY(0px)",
+                    "computedOffset": 1
+                  }
+                ]
+              },
+              {
+                "target": "DIV",
+                "state": "finished",
+                "time": 740
+              }
+            ]
+          },
+          {
+            "path": "/",
+            "hash": "",
+            "y": 960,
+            "section": "interests",
+            "number": "02",
+            "label": "Interests",
+            "progress": "transform: scaleY(0.161889);",
+            "visual": "matrix(1, 0, 0, 1, 0, 0)",
+            "motion": "on",
+            "focus": "<body>\n    <div id=\"root\"><div class=\"site-shell\" id=\"top\"><div class=\"ambient-background\" data-section=\"interests\" aria-hidden=\"true\"><div class=\"black-hole\" data-page=\"home\" data-scene=\"security\" da",
+            "animations": [
+              {
+                "target": "DIV",
+                "state": "running",
+                "time": 33.277999996253804,
+                "keyframes": [
+                  {
+                    "offset": 0,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "0",
+                    "transform": "translateY(24px)",
+                    "computedOffset": 0
+                  },
+                  {
+                    "offset": 1,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "1",
+                    "transform": "translateY(0px)",
+                    "computedOffset": 1
+                  }
+                ]
+              },
+              {
+                "target": "DIV",
+                "state": "finished",
+                "time": 740
+              },
+              {
+                "target": "ARTICLE",
+                "state": "running",
+                "time": 0,
+                "keyframes": [
+                  {
+                    "offset": 0,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "0",
+                    "transform": "translateY(24px)",
+                    "computedOffset": 0
+                  },
+                  {
+                    "offset": 1,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "1",
+                    "transform": "translateY(0px)",
+                    "computedOffset": 1
+                  }
+                ]
+              },
+              {
+                "target": "ARTICLE",
+                "state": "running",
+                "time": 0,
+                "keyframes": [
+                  {
+                    "offset": 0,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "0",
+                    "transform": "translateY(24px)",
+                    "computedOffset": 0
+                  },
+                  {
+                    "offset": 1,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "1",
+                    "transform": "translateY(0px)",
+                    "computedOffset": 1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": "/",
+            "hash": "",
+            "y": 1440,
+            "section": "projects",
+            "number": "03",
+            "label": "Projects",
+            "progress": "transform: scaleY(0.242833);",
+            "visual": "matrix(0.926747, 0, 0, 0.926747, 38.8242, -48.5303)",
+            "motion": "on",
+            "focus": "<body>\n    <div id=\"root\"><div class=\"site-shell\" id=\"top\"><div class=\"ambient-background\" data-section=\"projects\" aria-hidden=\"true\"><div class=\"black-hole\" data-page=\"home\" data-scene=\"projects\" dat",
+            "animations": [
+              {
+                "target": "DIV",
+                "state": "running",
+                "time": 432.97799999625397,
+                "keyframes": [
+                  {
+                    "offset": 0,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "0",
+                    "transform": "translateY(24px)",
+                    "computedOffset": 0
+                  },
+                  {
+                    "offset": 1,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "1",
+                    "transform": "translateY(0px)",
+                    "computedOffset": 1
+                  }
+                ]
+              },
+              {
+                "target": "DIV",
+                "state": "finished",
+                "time": 740
+              },
+              {
+                "target": "ARTICLE",
+                "state": "running",
+                "time": 299.751000012364,
+                "keyframes": [
+                  {
+                    "offset": 0,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "0",
+                    "transform": "translateY(24px)",
+                    "computedOffset": 0
+                  },
+                  {
+                    "offset": 1,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "1",
+                    "transform": "translateY(0px)",
+                    "computedOffset": 1
+                  }
+                ]
+              },
+              {
+                "target": "ARTICLE",
+                "state": "running",
+                "time": 299.751000012364,
+                "keyframes": [
+                  {
+                    "offset": 0,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "0",
+                    "transform": "translateY(24px)",
+                    "computedOffset": 0
+                  },
+                  {
+                    "offset": 1,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "1",
+                    "transform": "translateY(0px)",
+                    "computedOffset": 1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": "/",
+            "hash": "",
+            "y": 1920,
+            "section": "projects",
+            "number": "03",
+            "label": "Projects",
+            "progress": "transform: scaleY(0.323777);",
+            "visual": "matrix(0.870571, 0, 0, 0.870571, -125.53, 65.0954)",
+            "motion": "on",
+            "focus": "<body>\n    <div id=\"root\"><div class=\"site-shell\" id=\"top\"><div class=\"ambient-background\" data-section=\"projects\" aria-hidden=\"true\"><div class=\"black-hole\" data-page=\"home\" data-scene=\"data\" data-re",
+            "animations": [
+              {
+                "target": "DIV",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "DIV",
+                "state": "finished",
+                "time": 740
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 740
+              },
+              {
+                "target": "ARTICLE",
+                "state": "running",
+                "time": 0,
+                "keyframes": [
+                  {
+                    "offset": 0,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "0",
+                    "transform": "translateY(24px)",
+                    "computedOffset": 0
+                  },
+                  {
+                    "offset": 1,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "1",
+                    "transform": "translateY(0px)",
+                    "computedOffset": 1
+                  }
+                ]
+              },
+              {
+                "target": "ARTICLE",
+                "state": "running",
+                "time": 0,
+                "keyframes": [
+                  {
+                    "offset": 0,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "0",
+                    "transform": "translateY(24px)",
+                    "computedOffset": 0
+                  },
+                  {
+                    "offset": 1,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "1",
+                    "transform": "translateY(0px)",
+                    "computedOffset": 1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": "/",
+            "hash": "",
+            "y": 2400,
+            "section": "projects",
+            "number": "03",
+            "label": "Projects",
+            "progress": "transform: scaleY(0.404722);",
+            "visual": "matrix(0.87, 0, 0, 0.87, -127.2, 66.25)",
+            "motion": "on",
+            "focus": "<body>\n    <div id=\"root\"><div class=\"site-shell\" id=\"top\"><div class=\"ambient-background\" data-section=\"projects\" aria-hidden=\"true\"><div class=\"black-hole\" data-page=\"home\" data-scene=\"data\" data-re",
+            "animations": [
+              {
+                "target": "DIV",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "DIV",
+                "state": "finished",
+                "time": 740
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 740
+              },
+              {
+                "target": "ARTICLE",
+                "state": "running",
+                "time": 383.06900001172914,
+                "keyframes": [
+                  {
+                    "offset": 0,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "0",
+                    "transform": "translateY(24px)",
+                    "computedOffset": 0
+                  },
+                  {
+                    "offset": 1,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "1",
+                    "transform": "translateY(0px)",
+                    "computedOffset": 1
+                  }
+                ]
+              },
+              {
+                "target": "ARTICLE",
+                "state": "running",
+                "time": 383.06900001172914,
+                "keyframes": [
+                  {
+                    "offset": 0,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "0",
+                    "transform": "translateY(24px)",
+                    "computedOffset": 0
+                  },
+                  {
+                    "offset": 1,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "1",
+                    "transform": "translateY(0px)",
+                    "computedOffset": 1
+                  }
+                ]
+              },
+              {
+                "target": "ARTICLE",
+                "state": "running",
+                "time": 0,
+                "keyframes": [
+                  {
+                    "offset": 0,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "0",
+                    "transform": "translateY(24px)",
+                    "computedOffset": 0
+                  },
+                  {
+                    "offset": 1,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "1",
+                    "transform": "translateY(0px)",
+                    "computedOffset": 1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": "/",
+            "hash": "",
+            "y": 3360,
+            "section": "coursework",
+            "number": "04",
+            "label": "Coursework",
+            "progress": "transform: scaleY(0.56661);",
+            "visual": "matrix(0.87, 0, 0, 0.87, -127.2, 66.25)",
+            "motion": "on",
+            "focus": "<body>\n    <div id=\"root\"><div class=\"site-shell\" id=\"top\"><div class=\"ambient-background\" data-section=\"coursework\" aria-hidden=\"true\"><div class=\"black-hole\" data-page=\"home\" data-scene=\"coursework\"",
+            "animations": [
+              {
+                "target": "DIV",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "DIV",
+                "state": "finished",
+                "time": 740
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 740
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 810
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "ARTICLE",
+                "state": "running",
+                "time": 49.99300000653584,
+                "keyframes": [
+                  {
+                    "offset": 0,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "0",
+                    "transform": "translateY(24px)",
+                    "computedOffset": 0
+                  },
+                  {
+                    "offset": 1,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "1",
+                    "transform": "translateY(0px)",
+                    "computedOffset": 1
+                  }
+                ]
+              },
+              {
+                "target": "ARTICLE",
+                "state": "running",
+                "time": 0,
+                "keyframes": [
+                  {
+                    "offset": 0,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "0",
+                    "transform": "translateY(24px)",
+                    "computedOffset": 0
+                  },
+                  {
+                    "offset": 1,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "1",
+                    "transform": "translateY(0px)",
+                    "computedOffset": 1
+                  }
+                ]
+              },
+              {
+                "target": "ARTICLE",
+                "state": "running",
+                "time": 0,
+                "keyframes": [
+                  {
+                    "offset": 0,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "0",
+                    "transform": "translateY(24px)",
+                    "computedOffset": 0
+                  },
+                  {
+                    "offset": 1,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "1",
+                    "transform": "translateY(0px)",
+                    "computedOffset": 1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": "/",
+            "hash": "",
+            "y": 3360,
+            "section": "coursework",
+            "number": "04",
+            "label": "Coursework",
+            "progress": "transform: scaleY(0.56661);",
+            "visual": "matrix(0.87, 0, 0, 0.87, -127.2, 66.25)",
+            "motion": "on",
+            "focus": "<body>\n    <div id=\"root\"><div class=\"site-shell\" id=\"top\"><div class=\"ambient-background\" data-section=\"coursework\" aria-hidden=\"true\"><div class=\"black-hole\" data-page=\"home\" data-scene=\"coursework\"",
+            "animations": [
+              {
+                "target": "DIV",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "DIV",
+                "state": "finished",
+                "time": 740
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 740
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 810
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "ARTICLE",
+                "state": "running",
+                "time": 316.39300000653583,
+                "keyframes": [
+                  {
+                    "offset": 0,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "0",
+                    "transform": "translateY(24px)",
+                    "computedOffset": 0
+                  },
+                  {
+                    "offset": 1,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "1",
+                    "transform": "translateY(0px)",
+                    "computedOffset": 1
+                  }
+                ]
+              },
+              {
+                "target": "ARTICLE",
+                "state": "running",
+                "time": 0,
+                "keyframes": [
+                  {
+                    "offset": 0,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "0",
+                    "transform": "translateY(24px)",
+                    "computedOffset": 0
+                  },
+                  {
+                    "offset": 1,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "1",
+                    "transform": "translateY(0px)",
+                    "computedOffset": 1
+                  }
+                ]
+              },
+              {
+                "target": "ARTICLE",
+                "state": "running",
+                "time": 0,
+                "keyframes": [
+                  {
+                    "offset": 0,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "0",
+                    "transform": "translateY(24px)",
+                    "computedOffset": 0
+                  },
+                  {
+                    "offset": 1,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "1",
+                    "transform": "translateY(0px)",
+                    "computedOffset": 1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": "/",
+            "hash": "",
+            "y": 3840,
+            "section": "coursework",
+            "number": "04",
+            "label": "Coursework",
+            "progress": "transform: scaleY(0.647555);",
+            "visual": "matrix(0.955036, 0, 0, 0.955036, 53.0769, -58.9423)",
+            "motion": "on",
+            "focus": "<body>\n    <div id=\"root\"><div class=\"site-shell\" id=\"top\"><div class=\"ambient-background\" data-section=\"coursework\" aria-hidden=\"true\"><div class=\"black-hole\" data-page=\"home\" data-scene=\"data\" data-",
+            "animations": [
+              {
+                "target": "DIV",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "DIV",
+                "state": "finished",
+                "time": 740
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 740
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 810
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "ARTICLE",
+                "state": "running",
+                "time": 666.0930000065362,
+                "keyframes": [
+                  {
+                    "offset": 0,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "0",
+                    "transform": "translateY(24px)",
+                    "computedOffset": 0
+                  },
+                  {
+                    "offset": 1,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "1",
+                    "transform": "translateY(0px)",
+                    "computedOffset": 1
+                  }
+                ]
+              },
+              {
+                "target": "ARTICLE",
+                "state": "running",
+                "time": 349.7070000152105,
+                "keyframes": [
+                  {
+                    "offset": 0,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "0",
+                    "transform": "translateY(24px)",
+                    "computedOffset": 0
+                  },
+                  {
+                    "offset": 1,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "1",
+                    "transform": "translateY(0px)",
+                    "computedOffset": 1
+                  }
+                ]
+              },
+              {
+                "target": "ARTICLE",
+                "state": "running",
+                "time": 349.7070000152105,
+                "keyframes": [
+                  {
+                    "offset": 0,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "0",
+                    "transform": "translateY(24px)",
+                    "computedOffset": 0
+                  },
+                  {
+                    "offset": 1,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "1",
+                    "transform": "translateY(0px)",
+                    "computedOffset": 1
+                  }
+                ]
+              },
+              {
+                "target": "ARTICLE",
+                "state": "running",
+                "time": 0,
+                "keyframes": [
+                  {
+                    "offset": 0,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "0",
+                    "transform": "translateY(24px)",
+                    "computedOffset": 0
+                  },
+                  {
+                    "offset": 1,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "1",
+                    "transform": "translateY(0px)",
+                    "computedOffset": 1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": "/",
+            "hash": "",
+            "y": 4320,
+            "section": "coursework",
+            "number": "04",
+            "label": "Coursework",
+            "progress": "transform: scaleY(0.728499);",
+            "visual": "matrix(0.959994, 0, 0, 0.959994, 63.5875, -66.2413)",
+            "motion": "on",
+            "focus": "<body>\n    <div id=\"root\"><div class=\"site-shell\" id=\"top\"><div class=\"ambient-background\" data-section=\"coursework\" aria-hidden=\"true\"><div class=\"black-hole\" data-page=\"home\" data-scene=\"coursework\"",
+            "animations": [
+              {
+                "target": "DIV",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "DIV",
+                "state": "finished",
+                "time": 740
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 740
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 810
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 740
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "ARTICLE",
+                "state": "running",
+                "time": 682.7070000152107,
+                "keyframes": [
+                  {
+                    "offset": 0,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "0",
+                    "transform": "translateY(24px)",
+                    "computedOffset": 0
+                  },
+                  {
+                    "offset": 1,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "1",
+                    "transform": "translateY(0px)",
+                    "computedOffset": 1
+                  }
+                ]
+              },
+              {
+                "target": "ARTICLE",
+                "state": "running",
+                "time": 16.597000024188624,
+                "keyframes": [
+                  {
+                    "offset": 0,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "0",
+                    "transform": "translateY(24px)",
+                    "computedOffset": 0
+                  },
+                  {
+                    "offset": 1,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "1",
+                    "transform": "translateY(0px)",
+                    "computedOffset": 1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": "/",
+            "hash": "",
+            "y": 4800,
+            "section": "coursework",
+            "number": "04",
+            "label": "Coursework",
+            "progress": "transform: scaleY(0.809444);",
+            "visual": "matrix(0.96, 0, 0, 0.96, 63.6, -66.25)",
+            "motion": "on",
+            "focus": "<body>\n    <div id=\"root\"><div class=\"site-shell\" id=\"top\"><div class=\"ambient-background\" data-section=\"coursework\" aria-hidden=\"true\"><div class=\"black-hole\" data-page=\"home\" data-scene=\"coursework\"",
+            "animations": [
+              {
+                "target": "DIV",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "DIV",
+                "state": "finished",
+                "time": 740
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 740
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 810
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 740
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 740
+              },
+              {
+                "target": "ARTICLE",
+                "state": "running",
+                "time": 549.5970000241881,
+                "keyframes": [
+                  {
+                    "offset": 0,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "0",
+                    "transform": "translateY(24px)",
+                    "computedOffset": 0
+                  },
+                  {
+                    "offset": 1,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "1",
+                    "transform": "translateY(0px)",
+                    "computedOffset": 1
+                  }
+                ]
+              },
+              {
+                "target": "DIV",
+                "state": "running",
+                "time": 0,
+                "keyframes": [
+                  {
+                    "offset": 0,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "0",
+                    "transform": "translateY(24px)",
+                    "computedOffset": 0
+                  },
+                  {
+                    "offset": 1,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "1",
+                    "transform": "translateY(0px)",
+                    "computedOffset": 1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": "/",
+            "hash": "",
+            "y": 5280,
+            "section": "about",
+            "number": "05",
+            "label": "About",
+            "progress": "transform: scaleY(0.890388);",
+            "visual": "matrix(0.96, 0, 0, 0.96, 63.6, -66.25)",
+            "motion": "on",
+            "focus": "<body>\n    <div id=\"root\"><div class=\"site-shell\" id=\"top\"><div class=\"ambient-background\" data-section=\"about\" aria-hidden=\"true\"><div class=\"black-hole\" data-page=\"home\" data-scene=\"about\" data-read",
+            "animations": [
+              {
+                "target": "DIV",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "DIV",
+                "state": "finished",
+                "time": 740
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 740
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 810
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 740
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 740
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 810
+              },
+              {
+                "target": "DIV",
+                "state": "running",
+                "time": 16.636000021034825,
+                "keyframes": [
+                  {
+                    "offset": 0,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "0",
+                    "transform": "translateY(24px)",
+                    "computedOffset": 0
+                  },
+                  {
+                    "offset": 1,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "1",
+                    "transform": "translateY(0px)",
+                    "computedOffset": 1
+                  }
+                ]
+              },
+              {
+                "target": "DIV",
+                "state": "running",
+                "time": 0,
+                "keyframes": [
+                  {
+                    "offset": 0,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "0",
+                    "transform": "translateY(24px)",
+                    "computedOffset": 0
+                  },
+                  {
+                    "offset": 1,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "1",
+                    "transform": "translateY(0px)",
+                    "computedOffset": 1
+                  }
+                ]
+              },
+              {
+                "target": "DIV",
+                "state": "running",
+                "time": 0,
+                "keyframes": [
+                  {
+                    "offset": 0,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "0",
+                    "transform": "translateY(24px)",
+                    "computedOffset": 0
+                  },
+                  {
+                    "offset": 1,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "1",
+                    "transform": "translateY(0px)",
+                    "computedOffset": 1
+                  }
+                ]
+              },
+              {
+                "target": "DIV",
+                "state": "running",
+                "time": 0,
+                "keyframes": [
+                  {
+                    "offset": 0,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "0",
+                    "transform": "translateY(24px)",
+                    "computedOffset": 0
+                  },
+                  {
+                    "offset": 1,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "1",
+                    "transform": "translateY(0px)",
+                    "computedOffset": 1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": "/",
+            "hash": "",
+            "y": 5930,
+            "section": "contact",
+            "number": "06",
+            "label": "Contact",
+            "progress": "transform: scaleY(1);",
+            "visual": "matrix(0.925074, 0, 0, 0.925074, -22.784, -4.54717)",
+            "motion": "on",
+            "focus": "<body>\n    <div id=\"root\"><div class=\"site-shell\" id=\"top\"><div class=\"ambient-background\" data-section=\"contact\" aria-hidden=\"true\"><div class=\"black-hole\" data-page=\"home\" data-scene=\"contact\" data-",
+            "animations": [
+              {
+                "target": "DIV",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "DIV",
+                "state": "finished",
+                "time": 740
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 740
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 810
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 740
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 740
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 810
+              },
+              {
+                "target": "DIV",
+                "state": "running",
+                "time": 516.3360000210346,
+                "keyframes": [
+                  {
+                    "offset": 0,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "0",
+                    "transform": "translateY(24px)",
+                    "computedOffset": 0
+                  },
+                  {
+                    "offset": 1,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "1",
+                    "transform": "translateY(0px)",
+                    "computedOffset": 1
+                  }
+                ]
+              },
+              {
+                "target": "DIV",
+                "state": "running",
+                "time": 116.67400001031325,
+                "keyframes": [
+                  {
+                    "offset": 0,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "0",
+                    "transform": "translateY(24px)",
+                    "computedOffset": 0
+                  },
+                  {
+                    "offset": 1,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "1",
+                    "transform": "translateY(0px)",
+                    "computedOffset": 1
+                  }
+                ]
+              },
+              {
+                "target": "DIV",
+                "state": "running",
+                "time": 116.67400001031325,
+                "keyframes": [
+                  {
+                    "offset": 0,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "0",
+                    "transform": "translateY(24px)",
+                    "computedOffset": 0
+                  },
+                  {
+                    "offset": 1,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "1",
+                    "transform": "translateY(0px)",
+                    "computedOffset": 1
+                  }
+                ]
+              },
+              {
+                "target": "DIV",
+                "state": "running",
+                "time": 116.67400001031325,
+                "keyframes": [
+                  {
+                    "offset": 0,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "0",
+                    "transform": "translateY(24px)",
+                    "computedOffset": 0
+                  },
+                  {
+                    "offset": 1,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "1",
+                    "transform": "translateY(0px)",
+                    "computedOffset": 1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": "/",
+            "hash": "",
+            "y": 5930,
+            "section": "contact",
+            "number": "06",
+            "label": "Contact",
+            "progress": "transform: scaleY(1);",
+            "visual": "matrix(1.03452, 0, 0, 1.03452, -1.08685, -38.0707)",
+            "motion": "on",
+            "focus": "<body>\n    <div id=\"root\"><div class=\"site-shell\" id=\"top\"><div class=\"ambient-background\" data-section=\"contact\" aria-hidden=\"true\"><div class=\"black-hole\" data-page=\"home\" data-scene=\"contact\" data-",
+            "animations": [
+              {
+                "target": "DIV",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "DIV",
+                "state": "finished",
+                "time": 740
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 740
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 810
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 740
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 740
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 810
+              },
+              {
+                "target": "DIV",
+                "state": "finished",
+                "time": 740
+              },
+              {
+                "target": "DIV",
+                "state": "running",
+                "time": 482.974000010314,
+                "keyframes": [
+                  {
+                    "offset": 0,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "0",
+                    "transform": "translateY(24px)",
+                    "computedOffset": 0
+                  },
+                  {
+                    "offset": 1,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "1",
+                    "transform": "translateY(0px)",
+                    "computedOffset": 1
+                  }
+                ]
+              },
+              {
+                "target": "DIV",
+                "state": "running",
+                "time": 482.974000010314,
+                "keyframes": [
+                  {
+                    "offset": 0,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "0",
+                    "transform": "translateY(24px)",
+                    "computedOffset": 0
+                  },
+                  {
+                    "offset": 1,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "1",
+                    "transform": "translateY(0px)",
+                    "computedOffset": 1
+                  }
+                ]
+              },
+              {
+                "target": "DIV",
+                "state": "running",
+                "time": 482.974000010314,
+                "keyframes": [
+                  {
+                    "offset": 0,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "0",
+                    "transform": "translateY(24px)",
+                    "computedOffset": 0
+                  },
+                  {
+                    "offset": 1,
+                    "easing": "cubic-bezier(0.2, 0.75, 0.3, 1)",
+                    "composite": "auto",
+                    "opacity": "1",
+                    "transform": "translateY(0px)",
+                    "computedOffset": 1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": "/",
+            "hash": "",
+            "y": 5930,
+            "section": "contact",
+            "number": "06",
+            "label": "Contact",
+            "progress": "transform: scaleY(1);",
+            "visual": "matrix(1.04, 0, 0, 1.04, 0, -39.75)",
+            "motion": "on",
+            "focus": "<body>\n    <div id=\"root\"><div class=\"site-shell\" id=\"top\"><div class=\"ambient-background\" data-section=\"contact\" aria-hidden=\"true\"><div class=\"black-hole\" data-page=\"home\" data-scene=\"contact\" data-",
+            "animations": [
+              {
+                "target": "DIV",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "DIV",
+                "state": "finished",
+                "time": 740
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 740
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 810
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 740
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 740
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 810
+              },
+              {
+                "target": "DIV",
+                "state": "finished",
+                "time": 740
+              },
+              {
+                "target": "DIV",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "DIV",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "DIV",
+                "state": "finished",
+                "time": 650
+              }
+            ]
+          },
+          {
+            "path": "/",
+            "hash": "",
+            "y": 5930,
+            "section": "contact",
+            "number": "06",
+            "label": "Contact",
+            "progress": "transform: scaleY(1);",
+            "visual": "matrix(1.04, 0, 0, 1.04, 0, -39.75)",
+            "motion": "on",
+            "focus": "<body>\n    <div id=\"root\"><div class=\"site-shell\" id=\"top\"><div class=\"ambient-background\" data-section=\"contact\" aria-hidden=\"true\"><div class=\"black-hole\" data-page=\"home\" data-scene=\"contact\" data-",
+            "animations": [
+              {
+                "target": "DIV",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "DIV",
+                "state": "finished",
+                "time": 740
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 740
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 810
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 740
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 740
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 810
+              },
+              {
+                "target": "DIV",
+                "state": "finished",
+                "time": 740
+              },
+              {
+                "target": "DIV",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "DIV",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "DIV",
+                "state": "finished",
+                "time": 650
+              }
+            ]
+          },
+          {
+            "path": "/",
+            "hash": "",
+            "y": 5930,
+            "section": "contact",
+            "number": "06",
+            "label": "Contact",
+            "progress": "transform: scaleY(1);",
+            "visual": "matrix(1.04, 0, 0, 1.04, 0, -39.75)",
+            "motion": "on",
+            "focus": "<body>\n    <div id=\"root\"><div class=\"site-shell\" id=\"top\"><div class=\"ambient-background\" data-section=\"contact\" aria-hidden=\"true\"><div class=\"black-hole\" data-page=\"home\" data-scene=\"contact\" data-",
+            "animations": [
+              {
+                "target": "DIV",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "DIV",
+                "state": "finished",
+                "time": 740
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 740
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 810
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 740
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 740
+              },
+              {
+                "target": "ARTICLE",
+                "state": "finished",
+                "time": 810
+              },
+              {
+                "target": "DIV",
+                "state": "finished",
+                "time": 740
+              },
+              {
+                "target": "DIV",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "DIV",
+                "state": "finished",
+                "time": 650
+              },
+              {
+                "target": "DIV",
+                "state": "finished",
+                "time": 650
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "requirement": "R4",
+      "name": "motion-on native anchor samples",
+      "outcome": "OBSERVED",
+      "evidence": [
+        {
+          "path": "/",
+          "hash": "#projects",
+          "y": 0,
+          "section": "hero",
+          "number": "01",
+          "label": "Introduction",
+          "progress": "transform: scaleY(0);",
+          "visual": "matrix(0.978874, 0, 0, 0.978874, 11.1966, -13.9958)",
+          "motion": "on",
+          "focus": "<section id=\"projects\" class=\"section section-anchor collection-section\" tabindex=\"-1\" aria-labelledby=\"projects-title\" data-scene-section=\"true\" data-topic=\"Projects\" data-scene=\"projects\"><div class",
+          "animations": [
+            {
+              "target": "DIV",
+              "state": "finished",
+              "time": 650
+            },
+            {
+              "target": "DIV",
+              "state": "finished",
+              "time": 740
+            },
+            {
+              "target": "ARTICLE",
+              "state": "finished",
+              "time": 650
+            },
+            {
+              "target": "ARTICLE",
+              "state": "finished",
+              "time": 740
+            },
+            {
+              "target": "ARTICLE",
+              "state": "finished",
+              "time": 810
+            },
+            {
+              "target": "ARTICLE",
+              "state": "finished",
+              "time": 650
+            },
+            {
+              "target": "ARTICLE",
+              "state": "finished",
+              "time": 740
+            },
+            {
+              "target": "ARTICLE",
+              "state": "finished",
+              "time": 650
+            },
+            {
+              "target": "ARTICLE",
+              "state": "finished",
+              "time": 740
+            },
+            {
+              "target": "ARTICLE",
+              "state": "finished",
+              "time": 810
+            },
+            {
+              "target": "DIV",
+              "state": "finished",
+              "time": 740
+            },
+            {
+              "target": "DIV",
+              "state": "finished",
+              "time": 650
+            },
+            {
+              "target": "DIV",
+              "state": "finished",
+              "time": 650
+            },
+            {
+              "target": "DIV",
+              "state": "finished",
+              "time": 650
+            }
+          ]
+        },
+        {
+          "path": "/",
+          "hash": "#projects",
+          "y": 0,
+          "section": "hero",
+          "number": "01",
+          "label": "Introduction",
+          "progress": "transform: scaleY(0);",
+          "visual": "matrix(0.978874, 0, 0, 0.978874, 11.1966, -13.9958)",
+          "motion": "on",
+          "focus": "<section id=\"projects\" class=\"section section-anchor collection-section\" tabindex=\"-1\" aria-labelledby=\"projects-title\" data-scene-section=\"true\" data-topic=\"Projects\" data-scene=\"projects\"><div class",
+          "animations": [
+            {
+              "target": "DIV",
+              "state": "finished",
+              "time": 650
+            },
+            {
+              "target": "DIV",
+              "state": "finished",
+              "time": 740
+            },
+            {
+              "target": "ARTICLE",
+              "state": "finished",
+              "time": 650
+            },
+            {
+              "target": "ARTICLE",
+              "state": "finished",
+              "time": 740
+            },
+            {
+              "target": "ARTICLE",
+              "state": "finished",
+              "time": 810
+            },
+            {
+              "target": "ARTICLE",
+              "state": "finished",
+              "time": 650
+            },
+            {
+              "target": "ARTICLE",
+              "state": "finished",
+              "time": 740
+            },
+            {
+              "target": "ARTICLE",
+              "state": "finished",
+              "time": 650
+            },
+            {
+              "target": "ARTICLE",
+              "state": "finished",
+              "time": 740
+            },
+            {
+              "target": "ARTICLE",
+              "state": "finished",
+              "time": 810
+            },
+            {
+              "target": "DIV",
+              "state": "finished",
+              "time": 740
+            },
+            {
+              "target": "DIV",
+              "state": "finished",
+              "time": 650
+            },
+            {
+              "target": "DIV",
+              "state": "finished",
+              "time": 650
+            },
+            {
+              "target": "DIV",
+              "state": "finished",
+              "time": 650
+            }
+          ]
+        },
+        {
+          "path": "/",
+          "hash": "#projects",
+          "y": 0,
+          "section": "hero",
+          "number": "01",
+          "label": "Introduction",
+          "progress": "transform: scaleY(0);",
+          "visual": "matrix(0.996184, 0, 0, 0.996184, 2.02234, -2.52793)",
+          "motion": "on",
+          "focus": "<section id=\"projects\" class=\"section section-anchor collection-section\" tabindex=\"-1\" aria-labelledby=\"projects-title\" data-scene-section=\"true\" data-topic=\"Projects\" data-scene=\"projects\"><div class",
+          "animations": [
+            {
+              "target": "DIV",
+              "state": "finished",
+              "time": 650
+            },
+            {
+              "target": "DIV",
+              "state": "finished",
+              "time": 740
+            },
+            {
+              "target": "ARTICLE",
+              "state": "finished",
+              "time": 650
+            },
+            {
+              "target": "ARTICLE",
+              "state": "finished",
+              "time": 740
+            },
+            {
+              "target": "ARTICLE",
+              "state": "finished",
+              "time": 810
+            },
+            {
+              "target": "ARTICLE",
+              "state": "finished",
+              "time": 650
+            },
+            {
+              "target": "ARTICLE",
+              "state": "finished",
+              "time": 740
+            },
+            {
+              "target": "ARTICLE",
+              "state": "finished",
+              "time": 650
+            },
+            {
+              "target": "ARTICLE",
+              "state": "finished",
+              "time": 740
+            },
+            {
+              "target": "ARTICLE",
+              "state": "finished",
+              "time": 810
+            },
+            {
+              "target": "DIV",
+              "state": "finished",
+              "time": 740
+            },
+            {
+              "target": "DIV",
+              "state": "finished",
+              "time": 650
+            },
+            {
+              "target": "DIV",
+              "state": "finished",
+              "time": 650
+            },
+            {
+              "target": "DIV",
+              "state": "finished",
+              "time": 650
+            }
+          ]
+        },
+        {
+          "path": "/",
+          "hash": "#projects",
+          "y": 0,
+          "section": "hero",
+          "number": "01",
+          "label": "Introduction",
+          "progress": "transform: scaleY(0);",
+          "visual": "matrix(0.996184, 0, 0, 0.996184, 2.02234, -2.52793)",
+          "motion": "on",
+          "focus": "<section id=\"projects\" class=\"section section-anchor collection-section\" tabindex=\"-1\" aria-labelledby=\"projects-title\" data-scene-section=\"true\" data-topic=\"Projects\" data-scene=\"projects\"><div class",
+          "animations": [
+            {
+              "target": "DIV",
+              "state": "finished",
+              "time": 650
+            },
+            {
+              "target": "DIV",
+              "state": "finished",
+              "time": 740
+            },
+            {
+              "target": "ARTICLE",
+              "state": "finished",
+              "time": 650
+            },
+            {
+              "target": "ARTICLE",
+              "state": "finished",
+              "time": 740
+            },
+            {
+              "target": "ARTICLE",
+              "state": "finished",
+              "time": 810
+            },
+            {
+              "target": "ARTICLE",
+              "state": "finished",
+              "time": 650
+            },
+            {
+              "target": "ARTICLE",
+              "state": "finished",
+              "time": 740
+            },
+            {
+              "target": "ARTICLE",
+              "state": "finished",
+              "time": 650
+            },
+            {
+              "target": "ARTICLE",
+              "state": "finished",
+              "time": 740
+            },
+            {
+              "target": "ARTICLE",
+              "state": "finished",
+              "time": 810
+            },
+            {
+              "target": "DIV",
+              "state": "finished",
+              "time": 740
+            },
+            {
+              "target": "DIV",
+              "state": "finished",
+              "time": 650
+            },
+            {
+              "target": "DIV",
+              "state": "finished",
+              "time": 650
+            },
+            {
+              "target": "DIV",
+              "state": "finished",
+              "time": 650
+            }
+          ]
+        },
+        {
+          "path": "/",
+          "hash": "#projects",
+          "y": 1116,
+          "section": "interests",
+          "number": "02",
+          "label": "Interests",
+          "progress": "transform: scaleY(0.188196);",
+          "visual": "matrix(1, 0, 0, 1, 0, 0)",
+          "motion": "on",
+          "focus": "<section id=\"projects\" class=\"section section-anchor collection-section\" tabindex=\"-1\" aria-labelledby=\"projects-title\" data-scene-section=\"true\" data-topic=\"Projects\" data-scene=\"projects\"><div class",
+          "animations": [
+            {
+              "target": "DIV",
+              "state": "finished",
+              "time": 650
+            },
+            {
+              "target": "DIV",
+              "state": "finished",
+              "time": 740
+            },
+            {
+              "target": "ARTICLE",
+              "state": "finished",
+              "time": 650
+            },
+            {
+              "target": "ARTICLE",
+              "state": "finished",
+              "time": 740
+            },
+            {
+              "target": "ARTICLE",
+              "state": "finished",
+              "time": 810
+            },
+            {
+              "target": "ARTICLE",
+              "state": "finished",
+              "time": 650
+            },
+            {
+              "target": "ARTICLE",
+              "state": "finished",
+              "time": 740
+            },
+            {
+              "target": "ARTICLE",
+              "state": "finished",
+              "time": 650
+            },
+            {
+              "target": "ARTICLE",
+              "state": "finished",
+              "time": 740
+            },
+            {
+              "target": "ARTICLE",
+              "state": "finished",
+              "time": 810
+            },
+            {
+              "target": "DIV",
+              "state": "finished",
+              "time": 740
+            },
+            {
+              "target": "DIV",
+              "state": "finished",
+              "time": 650
+            },
+            {
+              "target": "DIV",
+              "state": "finished",
+              "time": 650
+            },
+            {
+              "target": "DIV",
+              "state": "finished",
+              "time": 650
+            }
+          ]
+        },
+        {
+          "path": "/",
+          "hash": "#projects",
+          "y": 1502,
+          "section": "projects",
+          "number": "03",
+          "label": "Projects",
+          "progress": "transform: scaleY(0.253288);",
+          "visual": "matrix(0.882603, 0, 0, 0.882603, -114.868, 59.8271)",
+          "motion": "on",
+          "focus": "<section id=\"projects\" class=\"section section-anchor collection-section\" tabindex=\"-1\" aria-labelledby=\"projects-title\" data-scene-section=\"true\" data-topic=\"Projects\" data-scene=\"projects\"><div class",
+          "animations": [
+            {
+              "target": "DIV",
+              "state": "finished",
+              "time": 650
+            },
+            {
+              "target": "DIV",
+              "state": "finished",
+              "time": 740
+            },
+            {
+              "target": "ARTICLE",
+              "state": "finished",
+              "time": 650
+            },
+            {
+              "target": "ARTICLE",
+              "state": "finished",
+              "time": 740
+            },
+            {
+              "target": "ARTICLE",
+              "state": "finished",
+              "time": 810
+            },
+            {
+              "target": "ARTICLE",
+              "state": "finished",
+              "time": 650
+            },
+            {
+              "target": "ARTICLE",
+              "state": "finished",
+              "time": 740
+            },
+            {
+              "target": "ARTICLE",
+              "state": "finished",
+              "time": 650
+            },
+            {
+              "target": "ARTICLE",
+              "state": "finished",
+              "time": 740
+            },
+            {
+              "target": "ARTICLE",
+              "state": "finished",
+              "time": 810
+            },
+            {
+              "target": "DIV",
+              "state": "finished",
+              "time": 740
+            },
+            {
+              "target": "DIV",
+              "state": "finished",
+              "time": 650
+            },
+            {
+              "target": "DIV",
+              "state": "finished",
+              "time": 650
+            },
+            {
+              "target": "DIV",
+              "state": "finished",
+              "time": 650
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "requirement": "R4",
+      "name": "actual footer motion-off native anchor samples",
+      "outcome": "OBSERVED",
+      "evidence": [
+        {
+          "path": "/",
+          "hash": "#projects",
+          "y": 1502,
+          "section": "projects",
+          "number": "03",
+          "label": "Projects",
+          "progress": "transform: scaleY(0.253288);",
+          "visual": "none",
+          "motion": "off",
+          "focus": "<section id=\"projects\" class=\"section section-anchor collection-section\" tabindex=\"-1\" aria-labelledby=\"projects-title\" data-scene-section=\"true\" data-topic=\"Projects\" data-scene=\"projects\"><div class",
+          "animations": []
+        },
+        {
+          "path": "/",
+          "hash": "#projects",
+          "y": 1502,
+          "section": "projects",
+          "number": "03",
+          "label": "Projects",
+          "progress": "transform: scaleY(0.253288);",
+          "visual": "none",
+          "motion": "off",
+          "focus": "<section id=\"projects\" class=\"section section-anchor collection-section\" tabindex=\"-1\" aria-labelledby=\"projects-title\" data-scene-section=\"true\" data-topic=\"Projects\" data-scene=\"projects\"><div class",
+          "animations": []
+        },
+        {
+          "path": "/",
+          "hash": "#projects",
+          "y": 1502,
+          "section": "projects",
+          "number": "03",
+          "label": "Projects",
+          "progress": "transform: scaleY(0.253288);",
+          "visual": "none",
+          "motion": "off",
+          "focus": "<section id=\"projects\" class=\"section section-anchor collection-section\" tabindex=\"-1\" aria-labelledby=\"projects-title\" data-scene-section=\"true\" data-topic=\"Projects\" data-scene=\"projects\"><div class",
+          "animations": []
+        },
+        {
+          "path": "/",
+          "hash": "#projects",
+          "y": 1502,
+          "section": "projects",
+          "number": "03",
+          "label": "Projects",
+          "progress": "transform: scaleY(0.253288);",
+          "visual": "none",
+          "motion": "off",
+          "focus": "<section id=\"projects\" class=\"section section-anchor collection-section\" tabindex=\"-1\" aria-labelledby=\"projects-title\" data-scene-section=\"true\" data-topic=\"Projects\" data-scene=\"projects\"><div class",
+          "animations": []
+        },
+        {
+          "path": "/",
+          "hash": "#projects",
+          "y": 1502,
+          "section": "projects",
+          "number": "03",
+          "label": "Projects",
+          "progress": "transform: scaleY(0.253288);",
+          "visual": "none",
+          "motion": "off",
+          "focus": "<section id=\"projects\" class=\"section section-anchor collection-section\" tabindex=\"-1\" aria-labelledby=\"projects-title\" data-scene-section=\"true\" data-topic=\"Projects\" data-scene=\"projects\"><div class",
+          "animations": []
+        },
+        {
+          "path": "/",
+          "hash": "#projects",
+          "y": 1502,
+          "section": "projects",
+          "number": "03",
+          "label": "Projects",
+          "progress": "transform: scaleY(0.253288);",
+          "visual": "none",
+          "motion": "off",
+          "focus": "<section id=\"projects\" class=\"section section-anchor collection-section\" tabindex=\"-1\" aria-labelledby=\"projects-title\" data-scene-section=\"true\" data-topic=\"Projects\" data-scene=\"projects\"><div class",
+          "animations": []
+        }
+      ]
+    },
+    {
+      "requirement": "R4",
+      "name": "pause persisted by toggle/reload",
+      "outcome": "OBSERVED",
+      "evidence": {
+        "state": {
+          "path": "/",
+          "hash": "#projects",
+          "y": 1502,
+          "section": "projects",
+          "number": "03",
+          "label": "Projects",
+          "progress": "transform: scaleY(0.253288);",
+          "visual": "none",
+          "motion": "off",
+          "animations": [],
+          "focus": "<section id=\"projects\" class=\"section section-anchor collection-section\" tabindex=\"-1\" aria-labelledby=\"projects-title\" data-scene-section=\"true\" data-topic=\"Projects\" data-scene=\"projects\"><div class"
+        },
+        "checked": "false"
+      }
+    },
+    {
+      "requirement": "compatibility",
+      "name": "direct projects initial",
+      "outcome": "OBSERVED",
+      "evidence": {
+        "sections": [
+          "projects"
+        ],
+        "h1": 1,
+        "h2": [
+          {
+            "id": "projects",
+            "h2": 0
+          }
+        ],
+        "articles": 5,
+        "duplicates": [],
+        "overflow": 0,
+        "brokenAnchors": [],
+        "header": false,
+        "rail": null,
+        "menu": {
+          "x": 21.5,
+          "y": 100,
+          "width": 44,
+          "height": 44,
+          "top": 100,
+          "right": 65.5,
+          "bottom": 144,
+          "left": 21.5
+        }
+      }
+    },
+    {
+      "requirement": "compatibility",
+      "name": "direct projects drawer About",
+      "outcome": "OBSERVED",
+      "evidence": {
+        "path": "/",
+        "hash": "#about",
+        "focused": true,
+        "rect": {
+          "x": 88,
+          "y": 23.515625,
+          "width": 1352,
+          "height": 886.75,
+          "top": 23.515625,
+          "right": 1440,
+          "bottom": 910.265625,
+          "left": 88
+        },
+        "y": 5245,
+        "maxY": 5930,
+        "visible": true
+      }
+    },
+    {
+      "requirement": "compatibility",
+      "name": "About reload",
+      "outcome": "OBSERVED",
+      "evidence": {
+        "path": "/",
+        "hash": "#about",
+        "y": 5245,
+        "section": "about",
+        "number": "05",
+        "label": "About",
+        "progress": "transform: scaleY(0.884486);",
+        "visual": "none",
+        "motion": "off",
+        "animations": [
+          {
+            "tag": "DIV",
+            "id": "",
+            "opacity": "1",
+            "animations": []
+          },
+          {
+            "tag": "DIV",
+            "id": "",
+            "opacity": "1",
+            "animations": []
+          },
+          {
+            "tag": "DIV",
+            "id": "",
+            "opacity": "1",
+            "animations": []
+          },
+          {
+            "tag": "DIV",
+            "id": "",
+            "opacity": "1",
+            "animations": []
+          }
+        ],
+        "focus": "<section id=\"about\" class=\"section section-anchor about-section\" tabindex=\"-1\" aria-labelledby=\"about-title\" data-scene-section=\"true\" data-topic=\"About\" data-scene=\"about\"><div class=\"container\"><div"
+      }
+    },
+    {
+      "requirement": "compatibility",
+      "name": "back",
+      "outcome": "OBSERVED",
+      "evidence": {
+        "path": "/projects/",
+        "hash": "",
+        "y": 0,
+        "section": "projects",
+        "number": "03",
+        "label": "Projects",
+        "progress": "transform: scaleY(0);",
+        "visual": "none",
+        "motion": "off",
+        "animations": [],
+        "focus": "<main id=\"main\" class=\"page page-projects\" tabindex=\"-1\"><!--$--><!--/$--><section id=\"projects\" class=\"section section-anchor collection-section\" tabindex=\"-1\" aria-labelledby=\"projects-title\" data-s"
+      }
+    },
+    {
+      "requirement": "compatibility",
+      "name": "forward",
+      "outcome": "OBSERVED",
+      "evidence": {
+        "path": "/",
+        "hash": "#about",
+        "y": 5245,
+        "section": "about",
+        "number": "05",
+        "label": "About",
+        "progress": "transform: scaleY(0.884486);",
+        "visual": "none",
+        "motion": "off",
+        "animations": [],
+        "focus": "<section id=\"about\" class=\"section section-anchor about-section\" tabindex=\"-1\" aria-labelledby=\"about-title\" data-scene-section=\"true\" data-topic=\"About\" data-scene=\"about\"><div class=\"container\"><div"
+      }
+    },
+    {
+      "requirement": "integration",
+      "name": "normal-network fonts",
+      "outcome": "OBSERVED",
+      "evidence": {
+        "status": "loaded",
+        "faces": [
+          {
+            "family": "Inter",
+            "status": "unloaded"
+          },
+          {
+            "family": "Inter",
+            "status": "unloaded"
+          },
+          {
+            "family": "Inter",
+            "status": "unloaded"
+          },
+          {
+            "family": "Inter",
+            "status": "unloaded"
+          },
+          {
+            "family": "Inter",
+            "status": "unloaded"
+          },
+          {
+            "family": "Inter",
+            "status": "unloaded"
+          },
+          {
+            "family": "Inter",
+            "status": "loaded"
+          },
+          {
+            "family": "Inter",
+            "status": "unloaded"
+          },
+          {
+            "family": "Inter",
+            "status": "unloaded"
+          },
+          {
+            "family": "Inter",
+            "status": "unloaded"
+          },
+          {
+            "family": "Inter",
+            "status": "unloaded"
+          },
+          {
+            "family": "Inter",
+            "status": "unloaded"
+          },
+          {
+            "family": "Inter",
+            "status": "unloaded"
+          },
+          {
+            "family": "Inter",
+            "status": "loaded"
+          },
+          {
+            "family": "Inter",
+            "status": "unloaded"
+          },
+          {
+            "family": "Inter",
+            "status": "unloaded"
+          },
+          {
+            "family": "Inter",
+            "status": "unloaded"
+          },
+          {
+            "family": "Inter",
+            "status": "unloaded"
+          },
+          {
+            "family": "Inter",
+            "status": "unloaded"
+          },
+          {
+            "family": "Inter",
+            "status": "unloaded"
+          },
+          {
+            "family": "Inter",
+            "status": "loaded"
+          },
+          {
+            "family": "Inter",
+            "status": "unloaded"
+          },
+          {
+            "family": "Inter",
+            "status": "unloaded"
+          },
+          {
+            "family": "Inter",
+            "status": "unloaded"
+          },
+          {
+            "family": "Inter",
+            "status": "unloaded"
+          },
+          {
+            "family": "Inter",
+            "status": "unloaded"
+          },
+          {
+            "family": "Inter",
+            "status": "unloaded"
+          },
+          {
+            "family": "Inter",
+            "status": "unloaded"
+          },
+          {
+            "family": "Inter",
+            "status": "unloaded"
+          },
+          {
+            "family": "Inter",
+            "status": "unloaded"
+          },
+          {
+            "family": "Inter",
+            "status": "unloaded"
+          },
+          {
+            "family": "Inter",
+            "status": "unloaded"
+          },
+          {
+            "family": "Inter",
+            "status": "unloaded"
+          },
+          {
+            "family": "Inter",
+            "status": "unloaded"
+          },
+          {
+            "family": "Inter",
+            "status": "loaded"
+          },
+          {
+            "family": "Inter",
+            "status": "unloaded"
+          },
+          {
+            "family": "Inter",
+            "status": "unloaded"
+          },
+          {
+            "family": "Inter",
+            "status": "unloaded"
+          },
+          {
+            "family": "Inter",
+            "status": "unloaded"
+          },
+          {
+            "family": "Inter",
+            "status": "unloaded"
+          },
+          {
+            "family": "Inter",
+            "status": "unloaded"
+          },
+          {
+            "family": "Inter",
+            "status": "unloaded"
+          },
+          {
+            "family": "JetBrains Mono",
+            "status": "unloaded"
+          },
+          {
+            "family": "JetBrains Mono",
+            "status": "unloaded"
+          },
+          {
+            "family": "JetBrains Mono",
+            "status": "unloaded"
+          },
+          {
+            "family": "JetBrains Mono",
+            "status": "unloaded"
+          },
+          {
+            "family": "JetBrains Mono",
+            "status": "unloaded"
+          },
+          {
+            "family": "JetBrains Mono",
+            "status": "loaded"
+          },
+          {
+            "family": "JetBrains Mono",
+            "status": "unloaded"
+          },
+          {
+            "family": "JetBrains Mono",
+            "status": "unloaded"
+          },
+          {
+            "family": "JetBrains Mono",
+            "status": "unloaded"
+          },
+          {
+            "family": "JetBrains Mono",
+            "status": "unloaded"
+          },
+          {
+            "family": "JetBrains Mono",
+            "status": "unloaded"
+          },
+          {
+            "family": "JetBrains Mono",
+            "status": "loaded"
+          }
+        ],
+        "bodyFamily": "Inter, system-ui, sans-serif"
+      }
+    },
+    {
+      "requirement": "R3",
+      "name": "layout 390",
+      "outcome": "OBSERVED",
+      "evidence": {
+        "sections": [
+          "hero",
+          "interests",
+          "projects",
+          "coursework",
+          "about",
+          "contact"
+        ],
+        "h1": 1,
+        "h2": [
+          {
+            "id": "hero",
+            "h2": 0
+          },
+          {
+            "id": "interests",
+            "h2": 1
+          },
+          {
+            "id": "projects",
+            "h2": 1
+          },
+          {
+            "id": "coursework",
+            "h2": 1
+          },
+          {
+            "id": "about",
+            "h2": 1
+          },
+          {
+            "id": "contact",
+            "h2": 1
+          }
+        ],
+        "articles": 8,
+        "duplicates": [],
+        "overflow": 0,
+        "brokenAnchors": [],
+        "header": false,
+        "rail": null,
+        "menu": {
+          "x": 16,
+          "y": 16,
+          "width": 48,
+          "height": 48,
+          "top": 16,
+          "right": 64,
+          "bottom": 64,
+          "left": 16
+        }
+      }
+    },
+    {
+      "requirement": "R3",
+      "name": "layout 320",
+      "outcome": "OBSERVED",
+      "evidence": {
+        "sections": [
+          "hero",
+          "interests",
+          "projects",
+          "coursework",
+          "about",
+          "contact"
+        ],
+        "h1": 1,
+        "h2": [
+          {
+            "id": "hero",
+            "h2": 0
+          },
+          {
+            "id": "interests",
+            "h2": 1
+          },
+          {
+            "id": "projects",
+            "h2": 1
+          },
+          {
+            "id": "coursework",
+            "h2": 1
+          },
+          {
+            "id": "about",
+            "h2": 1
+          },
+          {
+            "id": "contact",
+            "h2": 1
+          }
+        ],
+        "articles": 8,
+        "duplicates": [],
+        "overflow": 0,
+        "brokenAnchors": [],
+        "header": false,
+        "rail": null,
+        "menu": {
+          "x": 16,
+          "y": 16,
+          "width": 48,
+          "height": 48,
+          "top": 16,
+          "right": 64,
+          "bottom": 64,
+          "left": 16
+        }
+      }
+    },
+    {
+      "requirement": "R4",
+      "name": "native prefers-reduced-motion samples",
+      "outcome": "OBSERVED",
+      "evidence": [
+        {
+          "path": "/",
+          "hash": "#projects",
+          "y": 1502,
+          "section": "projects",
+          "number": "03",
+          "label": "Projects",
+          "progress": "transform: scaleY(0.255965);",
+          "visual": "none",
+          "motion": "off",
+          "focus": "<section id=\"projects\" class=\"section section-anchor collection-section\" tabindex=\"-1\" aria-labelledby=\"projects-title\" data-scene-section=\"true\" data-topic=\"Projects\" data-scene=\"projects\"><div class",
+          "animations": []
+        },
+        {
+          "path": "/",
+          "hash": "#projects",
+          "y": 1502,
+          "section": "projects",
+          "number": "03",
+          "label": "Projects",
+          "progress": "transform: scaleY(0.255965);",
+          "visual": "none",
+          "motion": "off",
+          "focus": "<section id=\"projects\" class=\"section section-anchor collection-section\" tabindex=\"-1\" aria-labelledby=\"projects-title\" data-scene-section=\"true\" data-topic=\"Projects\" data-scene=\"projects\"><div class",
+          "animations": []
+        },
+        {
+          "path": "/",
+          "hash": "#projects",
+          "y": 1502,
+          "section": "projects",
+          "number": "03",
+          "label": "Projects",
+          "progress": "transform: scaleY(0.255965);",
+          "visual": "none",
+          "motion": "off",
+          "focus": "<section id=\"projects\" class=\"section section-anchor collection-section\" tabindex=\"-1\" aria-labelledby=\"projects-title\" data-scene-section=\"true\" data-topic=\"Projects\" data-scene=\"projects\"><div class",
+          "animations": []
+        },
+        {
+          "path": "/",
+          "hash": "#projects",
+          "y": 1502,
+          "section": "projects",
+          "number": "03",
+          "label": "Projects",
+          "progress": "transform: scaleY(0.255965);",
+          "visual": "none",
+          "motion": "off",
+          "focus": "<section id=\"projects\" class=\"section section-anchor collection-section\" tabindex=\"-1\" aria-labelledby=\"projects-title\" data-scene-section=\"true\" data-topic=\"Projects\" data-scene=\"projects\"><div class",
+          "animations": []
+        }
+      ]
+    },
+    {
+      "requirement": "compatibility",
+      "name": "native no-JS content",
+      "outcome": "OBSERVED",
+      "evidence": {
+        "sections": [
+          "hero",
+          "interests",
+          "projects",
+          "coursework",
+          "about",
+          "contact"
+        ],
+        "h1": 1,
+        "h2": [
+          {
+            "id": "hero",
+            "h2": 0
+          },
+          {
+            "id": "interests",
+            "h2": 1
+          },
+          {
+            "id": "projects",
+            "h2": 1
+          },
+          {
+            "id": "coursework",
+            "h2": 1
+          },
+          {
+            "id": "about",
+            "h2": 1
+          },
+          {
+            "id": "contact",
+            "h2": 1
+          }
+        ],
+        "articles": 8,
+        "duplicates": [],
+        "overflow": 0,
+        "brokenAnchors": [],
+        "header": false,
+        "rail": null,
+        "menu": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      }
+    },
+    {
+      "requirement": "compatibility",
+      "name": "no-JS real fallback links",
+      "outcome": "OBSERVED",
+      "evidence": [
+        {
+          "text": "01Introduction",
+          "href": "/#hero"
+        },
+        {
+          "text": "02Interests",
+          "href": "/#interests"
+        },
+        {
+          "text": "03Projects",
+          "href": "/#projects"
+        },
+        {
+          "text": "04Coursework",
+          "href": "/#coursework"
+        },
+        {
+          "text": "05About",
+          "href": "/#about"
+        },
+        {
+          "text": "06Contact",
+          "href": "/#contact"
+        }
+      ]
+    },
+    {
+      "requirement": "compatibility",
+      "name": "no-JS Contact anchor",
+      "outcome": "OBSERVED",
+      "evidence": {
+        "path": "/",
+        "hash": "#contact",
+        "y": 4525,
+        "section": "hero",
+        "number": "01",
+        "label": "Introduction",
+        "progress": null,
+        "visual": "none",
+        "animations": [],
+        "focus": "<section id=\"contact\" class=\"section section-anchor contact-section\" tabindex=\"-1\" aria-labelledby=\"contact-title\" data-scene-section=\"true\" data-topic=\"Contact\" data-scene=\"contact\"><div class=\"conta"
+      }
+    }
+  ],
+  "supplement": {
+    "railCandidates": [
+      {
+        "tag": "HEADER",
+        "class": "side-navigation",
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 88,
+          "height": 1000,
+          "top": 0,
+          "right": 88,
+          "bottom": 1000,
+          "left": 0
+        }
+      },
+      {
+        "tag": "A",
+        "class": "side-brand",
+        "rect": {
+          "x": 21.5,
+          "y": 26,
+          "width": 44,
+          "height": 44,
+          "top": 26,
+          "right": 65.5,
+          "bottom": 70,
+          "left": 21.5
+        }
+      },
+      {
+        "tag": "BUTTON",
+        "class": "icon-button side-menu-toggle",
+        "rect": {
+          "x": 21.5,
+          "y": 100,
+          "width": 44,
+          "height": 44,
+          "top": 100,
+          "right": 65.5,
+          "bottom": 144,
+          "left": 21.5
+        }
+      },
+      {
+        "tag": "DIV",
+        "class": "side-reading",
+        "rect": {
+          "x": 35.5,
+          "y": 174,
+          "width": 16,
+          "height": 800,
+          "top": 174,
+          "right": 51.5,
+          "bottom": 974,
+          "left": 35.5
+        }
+      },
+      {
+        "tag": "SPAN",
+        "class": "side-number",
+        "rect": {
+          "x": 35.6875,
+          "y": 198,
+          "width": 15.609375,
+          "height": 17,
+          "top": 198,
+          "right": 51.296875,
+          "bottom": 215,
+          "left": 35.6875
+        }
+      },
+      {
+        "tag": "SPAN",
+        "class": "side-progress-track",
+        "rect": {
+          "x": 42.5,
+          "y": 235,
+          "width": 2,
+          "height": 180,
+          "top": 235,
+          "right": 44.5,
+          "bottom": 415,
+          "left": 42.5
+        }
+      },
+      {
+        "tag": "SPAN",
+        "class": "side-progress",
+        "rect": {
+          "x": 42.5,
+          "y": 235,
+          "width": 2,
+          "height": 0,
+          "top": 235,
+          "right": 44.5,
+          "bottom": 235,
+          "left": 42.5
+        }
+      },
+      {
+        "tag": "SPAN",
+        "class": "side-section-label",
+        "rect": {
+          "x": 35.5,
+          "y": 435,
+          "width": 16,
+          "height": 84.78125,
+          "top": 435,
+          "right": 51.5,
+          "bottom": 519.78125,
+          "left": 35.5
+        }
+      },
+      {
+        "tag": "DIV",
+        "class": "hero-aside",
+        "rect": {
+          "x": 949.296875,
+          "y": 241.796875,
+          "width": 364.6875,
+          "height": 366.390625,
+          "top": 241.796875,
+          "right": 1313.984375,
+          "bottom": 608.1875,
+          "left": 949.296875
+        }
+      }
+    ],
+    "publicAttributes": {
+      "html": [
+        [
+          "lang",
+          "en"
+        ],
+        [
+          "class",
+          "dark"
+        ],
+        [
+          "data-motion",
+          "on"
+        ]
+      ],
+      "scene": [
+        [
+          "class",
+          "ambient-background"
+        ],
+        [
+          "data-section",
+          "hero"
+        ],
+        [
+          "aria-hidden",
+          "true"
+        ]
+      ]
+    },
+    "fonts": {
+      "status": "loading",
+      "loaded": [
+        {
+          "family": "Inter",
+          "weight": "400"
+        },
+        {
+          "family": "Inter",
+          "weight": "500"
+        },
+        {
+          "family": "Inter",
+          "weight": "600"
+        },
+        {
+          "family": "Inter",
+          "weight": "800"
+        },
+        {
+          "family": "JetBrains Mono",
+          "weight": "400"
+        },
+        {
+          "family": "JetBrains Mono",
+          "weight": "500"
+        }
+      ],
+      "errors": []
+    },
+    "network": []
+  },
+  "additional": {
+    "observations": [
+      {
+        "name": "Interests initial",
+        "evidence": {
+          "title": "Interests | Uthsara Dahanaike",
+          "canonical": "https://uthsarad.github.io/",
+          "path": "/",
+          "hash": "#interests",
+          "scene": [
+            [
+              "class",
+              "ambient-background"
+            ],
+            [
+              "data-section",
+              "interests"
+            ],
+            [
+              "aria-hidden",
+              "true"
+            ]
+          ],
+          "tabs": [
+            {
+              "text": "Cybersecurity",
+              "selected": "true",
+              "controls": "interest-panel"
+            },
+            {
+              "text": "Data Science + AI",
+              "selected": "false",
+              "controls": "interest-panel"
+            }
+          ],
+          "panels": [
+            {
+              "text": "Reverse engineering & digital forensics",
+              "hidden": false,
+              "id": "interest-panel"
+            }
+          ],
+          "reading": "Interests",
+          "topics": [],
+          "focus": "02 / INTERESTSThe questionsthat keep me building.How systems work, where they break, and what data can tell us. Explore the two areas I keep coming back to.CybersecurityData Science + AIReverse engineering & digital forensics"
+        }
+      },
+      {
+        "name": "real tab click 0",
+        "evidence": {
+          "title": "Cybersecurity | Uthsara Dahanaike",
+          "canonical": "https://uthsarad.github.io/",
+          "path": "/",
+          "hash": "#interests",
+          "scene": [
+            [
+              "class",
+              "ambient-background"
+            ],
+            [
+              "data-section",
+              "interests"
+            ],
+            [
+              "aria-hidden",
+              "true"
+            ]
+          ],
+          "tabs": [
+            {
+              "text": "Cybersecurity",
+              "selected": "true",
+              "controls": "interest-panel"
+            },
+            {
+              "text": "Data Science + AI",
+              "selected": "false",
+              "controls": "interest-panel"
+            }
+          ],
+          "panels": [
+            {
+              "text": "Reverse engineering & digital forensics",
+              "hidden": false,
+              "id": "interest-panel"
+            }
+          ],
+          "reading": "Interests",
+          "topics": [],
+          "focus": "Cybersecurity"
+        }
+      },
+      {
+        "name": "real tab click 1",
+        "evidence": {
+          "title": "Data Science + AI | Uthsara Dahanaike",
+          "canonical": "https://uthsarad.github.io/",
+          "path": "/",
+          "hash": "#interests",
+          "scene": [
+            [
+              "class",
+              "ambient-background"
+            ],
+            [
+              "data-section",
+              "interests"
+            ],
+            [
+              "aria-hidden",
+              "true"
+            ]
+          ],
+          "tabs": [
+            {
+              "text": "Cybersecurity",
+              "selected": "false",
+              "controls": "interest-panel"
+            },
+            {
+              "text": "Data Science + AI",
+              "selected": "true",
+              "controls": "interest-panel"
+            }
+          ],
+          "panels": [
+            {
+              "text": "Move or tap to bend the field.\n\nShift field\n↗",
+              "hidden": false,
+              "id": "interest-panel"
+            }
+          ],
+          "reading": "Interests",
+          "topics": [],
+          "focus": "Data Science + AI"
+        }
+      },
+      {
+        "name": "native ArrowRight",
+        "evidence": {
+          "title": "Data Science + AI | Uthsara Dahanaike",
+          "canonical": "https://uthsarad.github.io/",
+          "path": "/",
+          "hash": "#interests",
+          "scene": [
+            [
+              "class",
+              "ambient-background"
+            ],
+            [
+              "data-section",
+              "interests"
+            ],
+            [
+              "aria-hidden",
+              "true"
+            ]
+          ],
+          "tabs": [
+            {
+              "text": "Cybersecurity",
+              "selected": "false",
+              "controls": "interest-panel"
+            },
+            {
+              "text": "Data Science + AI",
+              "selected": "true",
+              "controls": "interest-panel"
+            }
+          ],
+          "panels": [
+            {
+              "text": "Move or tap to bend the field.\n\nShift field\n↗",
+              "hidden": false,
+              "id": "interest-panel"
+            }
+          ],
+          "reading": "Interests",
+          "topics": [],
+          "focus": "Data Science + AI"
+        }
+      },
+      {
+        "name": "Projects resting",
+        "evidence": {
+          "title": "FerrumCalc | Uthsara Dahanaike",
+          "canonical": "https://uthsarad.github.io/",
+          "path": "/",
+          "hash": "#projects",
+          "scene": [
+            [
+              "class",
+              "ambient-background"
+            ],
+            [
+              "data-section",
+              "projects"
+            ],
+            [
+              "aria-hidden",
+              "true"
+            ]
+          ],
+          "tabs": [
+            {
+              "text": "Cybersecurity",
+              "selected": "false",
+              "controls": "interest-panel"
+            },
+            {
+              "text": "Data Science + AI",
+              "selected": "true",
+              "controls": "interest-panel"
+            }
+          ],
+          "panels": [
+            {
+              "text": "Move or tap to bend the field.\n\nShift field\n↗",
+              "hidden": false,
+              "id": "interest-panel"
+            }
+          ],
+          "reading": "Projects",
+          "topics": [],
+          "focus": "03 / PROJECTSProjects.Linux, desktop apps, and geospatial tools.All projects5Systems2Tools & data4Filter projects by statusAll statusesOngoingCompletedStatus not confirmed5 projects shown, All projects, All statusesneos / system~ $ cat /etc/os-releaseNeOSarch base · plasma desktop→ a system, on your termsLINUX / SYSTEMSOngoingNeOSAn Arch Linux desktop with snapshots, KDE Plasma, and secure defaults.Arch LinuxShellCIView repository Details : NeOSA curated, snapshot-based Arch Linux desktop distribution focused on predictable behavior, a polished KDE Plasma 6 experience, hardware support, and secure-by-default system configuration.PROGRAMMER0xFF → 255HEXDECBIN＋789＝RUST / DESKTOPCompletedFerrumCalcA Rust calculator with scientific, programmer, and graph modes.RusteguiView repository Details : FerrumCalcA native desktop calculator with standard, scientific, programmer, and graph modes, full expression parsing, base-prefixed literals, keyboard support, history, and persistent preferences.GEOFENCE / ENTERGEOSPATIAL / DATAOngoingmEgisGPS logs turned into trips, geofence events, and interactive maps.PythonGeoPandasShapelyView repository Details : mEgisA Python toolkit for vehicle tracking and geofence analysis. It ingests GPS logs, detects enter and exit events, computes speed and trip segments, persists data in SQLite, and renders interactive Folium maps with playback.AUDIO / LOCAL FIRSTStatus not confirmedPrivateMuseekA lightweight local music player built around mpv.mpvMusic playbackPrivate repositoryDetails : MuseekA private, lightweight music player built around mpv for local music playback.changes → patch → applysmall changes. traceable history.PYTHON / DEVELOPER TOOLSStatus not confirmedUsablehsfixTurn working-tree changes into named, reviewable Git patches.PythonGitView repository Details : hsfixA small CLI that turns working-tree changes into named, reviewable Git patches, tracks whether each patch is applied, and supports applying, reverting, listing, and drift-checking patches.More on GitHub "
+        }
+      },
+      {
+        "name": "Projects actual heading hover",
+        "evidence": {
+          "title": "Projects | Uthsara Dahanaike",
+          "canonical": "https://uthsarad.github.io/",
+          "path": "/",
+          "hash": "#projects",
+          "scene": [
+            [
+              "class",
+              "ambient-background"
+            ],
+            [
+              "data-section",
+              "projects"
+            ],
+            [
+              "aria-hidden",
+              "true"
+            ]
+          ],
+          "tabs": [
+            {
+              "text": "Cybersecurity",
+              "selected": "false",
+              "controls": "interest-panel"
+            },
+            {
+              "text": "Data Science + AI",
+              "selected": "true",
+              "controls": "interest-panel"
+            }
+          ],
+          "panels": [
+            {
+              "text": "Move or tap to bend the field.\n\nShift field\n↗",
+              "hidden": false,
+              "id": "interest-panel"
+            }
+          ],
+          "reading": "Projects",
+          "topics": [],
+          "focus": "03 / PROJECTSProjects.Linux, desktop apps, and geospatial tools.All projects5Systems2Tools & data4Filter projects by statusAll statusesOngoingCompletedStatus not confirmed5 projects shown, All projects, All statusesneos / system~ $ cat /etc/os-releaseNeOSarch base · plasma desktop→ a system, on your termsLINUX / SYSTEMSOngoingNeOSAn Arch Linux desktop with snapshots, KDE Plasma, and secure defaults.Arch LinuxShellCIView repository Details : NeOSA curated, snapshot-based Arch Linux desktop distribution focused on predictable behavior, a polished KDE Plasma 6 experience, hardware support, and secure-by-default system configuration.PROGRAMMER0xFF → 255HEXDECBIN＋789＝RUST / DESKTOPCompletedFerrumCalcA Rust calculator with scientific, programmer, and graph modes.RusteguiView repository Details : FerrumCalcA native desktop calculator with standard, scientific, programmer, and graph modes, full expression parsing, base-prefixed literals, keyboard support, history, and persistent preferences.GEOFENCE / ENTERGEOSPATIAL / DATAOngoingmEgisGPS logs turned into trips, geofence events, and interactive maps.PythonGeoPandasShapelyView repository Details : mEgisA Python toolkit for vehicle tracking and geofence analysis. It ingests GPS logs, detects enter and exit events, computes speed and trip segments, persists data in SQLite, and renders interactive Folium maps with playback.AUDIO / LOCAL FIRSTStatus not confirmedPrivateMuseekA lightweight local music player built around mpv.mpvMusic playbackPrivate repositoryDetails : MuseekA private, lightweight music player built around mpv for local music playback.changes → patch → applysmall changes. traceable history.PYTHON / DEVELOPER TOOLSStatus not confirmedUsablehsfixTurn working-tree changes into named, reviewable Git patches.PythonGitView repository Details : hsfixA small CLI that turns working-tree changes into named, reviewable Git patches, tracks whether each patch is applied, and supports applying, reverting, listing, and drift-checking patches.More on GitHub "
+        }
+      },
+      {
+        "name": "Projects heading leave",
+        "evidence": {
+          "title": "FerrumCalc | Uthsara Dahanaike",
+          "canonical": "https://uthsarad.github.io/",
+          "path": "/",
+          "hash": "#projects",
+          "scene": [
+            [
+              "class",
+              "ambient-background"
+            ],
+            [
+              "data-section",
+              "projects"
+            ],
+            [
+              "aria-hidden",
+              "true"
+            ]
+          ],
+          "tabs": [
+            {
+              "text": "Cybersecurity",
+              "selected": "false",
+              "controls": "interest-panel"
+            },
+            {
+              "text": "Data Science + AI",
+              "selected": "true",
+              "controls": "interest-panel"
+            }
+          ],
+          "panels": [
+            {
+              "text": "Move or tap to bend the field.\n\nShift field\n↗",
+              "hidden": false,
+              "id": "interest-panel"
+            }
+          ],
+          "reading": "Projects",
+          "topics": [],
+          "focus": "03 / PROJECTSProjects.Linux, desktop apps, and geospatial tools.All projects5Systems2Tools & data4Filter projects by statusAll statusesOngoingCompletedStatus not confirmed5 projects shown, All projects, All statusesneos / system~ $ cat /etc/os-releaseNeOSarch base · plasma desktop→ a system, on your termsLINUX / SYSTEMSOngoingNeOSAn Arch Linux desktop with snapshots, KDE Plasma, and secure defaults.Arch LinuxShellCIView repository Details : NeOSA curated, snapshot-based Arch Linux desktop distribution focused on predictable behavior, a polished KDE Plasma 6 experience, hardware support, and secure-by-default system configuration.PROGRAMMER0xFF → 255HEXDECBIN＋789＝RUST / DESKTOPCompletedFerrumCalcA Rust calculator with scientific, programmer, and graph modes.RusteguiView repository Details : FerrumCalcA native desktop calculator with standard, scientific, programmer, and graph modes, full expression parsing, base-prefixed literals, keyboard support, history, and persistent preferences.GEOFENCE / ENTERGEOSPATIAL / DATAOngoingmEgisGPS logs turned into trips, geofence events, and interactive maps.PythonGeoPandasShapelyView repository Details : mEgisA Python toolkit for vehicle tracking and geofence analysis. It ingests GPS logs, detects enter and exit events, computes speed and trip segments, persists data in SQLite, and renders interactive Folium maps with playback.AUDIO / LOCAL FIRSTStatus not confirmedPrivateMuseekA lightweight local music player built around mpv.mpvMusic playbackPrivate repositoryDetails : MuseekA private, lightweight music player built around mpv for local music playback.changes → patch → applysmall changes. traceable history.PYTHON / DEVELOPER TOOLSStatus not confirmedUsablehsfixTurn working-tree changes into named, reviewable Git patches.PythonGitView repository Details : hsfixA small CLI that turns working-tree changes into named, reviewable Git patches, tracks whether each patch is applied, and supports applying, reverting, listing, and drift-checking patches.More on GitHub "
+        }
+      }
+    ],
+    "failedRequests": [],
+    "errors": []
+  },
+  "targeted": {
+    "base": "http://127.0.0.1:4173",
+    "observations": [
+      {
+        "name": "native drawer hero",
+        "state": {
+          "y": 0,
+          "hash": "#hero",
+          "path": "/",
+          "motion": "on",
+          "projectTop": 1526.390625,
+          "activeRevealAnimations": [],
+          "allRevealAnimations": 1
+        },
+        "sameCanvas": true,
+        "transitRecords": []
+      },
+      {
+        "name": "native drawer interests",
+        "state": {
+          "y": 826,
+          "hash": "#interests",
+          "path": "/",
+          "motion": "on",
+          "projectTop": 1526.390625,
+          "activeRevealAnimations": [
+            {
+              "state": "running",
+              "time": 0
+            }
+          ],
+          "allRevealAnimations": 2
+        },
+        "sameCanvas": true,
+        "transitRecords": []
+      },
+      {
+        "name": "native drawer projects",
+        "state": {
+          "y": 1502,
+          "hash": "#projects",
+          "path": "/",
+          "motion": "on",
+          "projectTop": 1526.390625,
+          "activeRevealAnimations": [
+            {
+              "state": "running",
+              "time": 0
+            },
+            {
+              "state": "running",
+              "time": 0
+            },
+            {
+              "state": "running",
+              "time": 0
+            },
+            {
+              "state": "running",
+              "time": 0
+            }
+          ],
+          "allRevealAnimations": 6
+        },
+        "sameCanvas": true,
+        "transitRecords": []
+      },
+      {
+        "name": "native drawer coursework",
+        "state": {
+          "y": 3688,
+          "hash": "#coursework",
+          "path": "/",
+          "motion": "on",
+          "projectTop": 1526.390625,
+          "activeRevealAnimations": [
+            {
+              "state": "running",
+              "time": 0
+            },
+            {
+              "state": "running",
+              "time": 0
+            },
+            {
+              "state": "running",
+              "time": 0
+            },
+            {
+              "state": "running",
+              "time": 0
+            }
+          ],
+          "allRevealAnimations": 10
+        },
+        "sameCanvas": true,
+        "transitRecords": []
+      },
+      {
+        "name": "native drawer about",
+        "state": {
+          "y": 5245,
+          "hash": "#about",
+          "path": "/",
+          "motion": "on",
+          "projectTop": 1526.390625,
+          "activeRevealAnimations": [
+            {
+              "state": "running",
+              "time": 333.0719999894498
+            },
+            {
+              "state": "running",
+              "time": 0
+            },
+            {
+              "state": "running",
+              "time": 0
+            },
+            {
+              "state": "running",
+              "time": 0
+            }
+          ],
+          "allRevealAnimations": 14
+        },
+        "sameCanvas": true,
+        "transitRecords": []
+      },
+      {
+        "name": "native drawer contact",
+        "state": {
+          "y": 5930,
+          "hash": "#contact",
+          "path": "/",
+          "motion": "on",
+          "projectTop": 1526.390625,
+          "activeRevealAnimations": [],
+          "allRevealAnimations": 14
+        },
+        "sameCanvas": true,
+        "transitRecords": []
+      },
+      {
+        "name": "actual footer motion-off explicit origin",
+        "start": {
+          "y": 0,
+          "hash": "#hero",
+          "path": "/",
+          "motion": "off",
+          "projectTop": 1526.390625,
+          "activeRevealAnimations": [],
+          "allRevealAnimations": 0
+        },
+        "beforeClick": {
+          "y": 0,
+          "hash": "#hero",
+          "path": "/",
+          "motion": "off",
+          "projectTop": 1526.390625,
+          "activeRevealAnimations": [],
+          "allRevealAnimations": 0
+        },
+        "targetDistance": 1526.390625,
+        "samples": [
+          {
+            "y": 1502,
+            "hash": "#projects",
+            "path": "/",
+            "motion": "off",
+            "projectTop": 1526.390625,
+            "activeRevealAnimations": [],
+            "allRevealAnimations": 0
+          },
+          {
+            "y": 1502,
+            "hash": "#projects",
+            "path": "/",
+            "motion": "off",
+            "projectTop": 1526.390625,
+            "activeRevealAnimations": [],
+            "allRevealAnimations": 0
+          },
+          {
+            "y": 1502,
+            "hash": "#projects",
+            "path": "/",
+            "motion": "off",
+            "projectTop": 1526.390625,
+            "activeRevealAnimations": [],
+            "allRevealAnimations": 0
+          },
+          {
+            "y": 1502,
+            "hash": "#projects",
+            "path": "/",
+            "motion": "off",
+            "projectTop": 1526.390625,
+            "activeRevealAnimations": [],
+            "allRevealAnimations": 0
+          }
+        ]
+      },
+      {
+        "name": "native reduced-motion explicit origin",
+        "start": {
+          "y": 0,
+          "hash": "#hero",
+          "path": "/",
+          "motion": "off",
+          "projectTop": 1526.390625,
+          "activeRevealAnimations": [],
+          "allRevealAnimations": 0
+        },
+        "beforeClick": {
+          "y": 0,
+          "hash": "#hero",
+          "path": "/",
+          "motion": "off",
+          "projectTop": 1526.390625,
+          "activeRevealAnimations": [],
+          "allRevealAnimations": 0
+        },
+        "targetDistance": 1526.390625,
+        "samples": [
+          {
+            "y": 1502,
+            "hash": "#projects",
+            "path": "/",
+            "motion": "off",
+            "projectTop": 1526.390625,
+            "activeRevealAnimations": [],
+            "allRevealAnimations": 0
+          },
+          {
+            "y": 1502,
+            "hash": "#projects",
+            "path": "/",
+            "motion": "off",
+            "projectTop": 1526.390625,
+            "activeRevealAnimations": [],
+            "allRevealAnimations": 0
+          },
+          {
+            "y": 1502,
+            "hash": "#projects",
+            "path": "/",
+            "motion": "off",
+            "projectTop": 1526.390625,
+            "activeRevealAnimations": [],
+            "allRevealAnimations": 0
+          },
+          {
+            "y": 1502,
+            "hash": "#projects",
+            "path": "/",
+            "motion": "off",
+            "projectTop": 1526.390625,
+            "activeRevealAnimations": [],
+            "allRevealAnimations": 0
+          }
+        ]
+      }
+    ],
+    "failedRequests": [],
+    "errors": []
+  },
+  "footer": {
+    "base": "http://127.0.0.1:4173",
+    "observations": [
+      {
+        "id": "interests",
+        "path": "/",
+        "hash": "#interests",
+        "focus": "interests",
+        "visible": true,
+        "top": 24,
+        "scrollY": 826,
+        "motion": "off",
+        "transit": null,
+        "sameCanvas": true
+      },
+      {
+        "id": "projects",
+        "path": "/",
+        "hash": "#projects",
+        "focus": "projects",
+        "visible": true,
+        "top": 24.390625,
+        "scrollY": 1502,
+        "motion": "off",
+        "transit": null,
+        "sameCanvas": true
+      },
+      {
+        "id": "coursework",
+        "path": "/",
+        "hash": "#coursework",
+        "focus": "coursework",
+        "visible": true,
+        "top": 24.25,
+        "scrollY": 3693,
+        "motion": "off",
+        "transit": null,
+        "sameCanvas": true
+      },
+      {
+        "id": "about",
+        "path": "/",
+        "hash": "#about",
+        "focus": "about",
+        "visible": true,
+        "top": 23.515625,
+        "scrollY": 5245,
+        "motion": "off",
+        "transit": null,
+        "sameCanvas": true
+      },
+      {
+        "id": "contact",
+        "path": "/",
+        "hash": "#contact",
+        "focus": "contact",
+        "visible": true,
+        "top": 225.265625,
+        "scrollY": 5930,
+        "motion": "off",
+        "transit": null,
+        "sameCanvas": true
+      }
+    ],
+    "errors": [],
+    "footerLinks": [
+      {
+        "text": "u.Uthsara Dahanaike",
+        "href": "/"
+      },
+      {
+        "text": "Interests",
+        "href": "/#interests"
+      },
+      {
+        "text": "Projects",
+        "href": "/#projects"
+      },
+      {
+        "text": "Coursework",
+        "href": "/#coursework"
+      },
+      {
+        "text": "About",
+        "href": "/#about"
+      },
+      {
+        "text": "Contact",
+        "href": "/#contact"
+      },
+      {
+        "text": "Back to top",
+        "href": "#top"
+      }
+    ],
+    "backToTop": {
+      "y": 0,
+      "hash": "#top",
+      "focus": ""
+    }
+  },
+  "historicalComparison": {
+    "date": "2026-10-07T04:21:25.139Z",
+    "beforeSource": "09e9086",
+    "beforeIsHistoricalCopy": true,
+    "afterSource": "054b3034083e1505b30cdf2f0077427164606595",
+    "afterIsActualRepositoryPreview": true,
+    "beforeURL": "http://127.0.0.1:62552",
+    "afterURL": "http://127.0.0.1:4173",
+    "browser": "154.0.8037.95",
+    "pageErrors": [],
+    "requestFailures": [],
+    "beforeHome": {
+      "path": "/",
+      "sections": [
+        {
+          "id": "hero",
+          "heading": "UthsaraDahanaike."
+        },
+        {
+          "id": "explore",
+          "heading": "My work"
+        }
+      ],
+      "articles": 0,
+      "header": {
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 79,
+          "top": 0,
+          "right": 1440,
+          "bottom": 79,
+          "left": 0
+        },
+        "links": [
+          {
+            "text": "Home",
+            "href": "/"
+          },
+          {
+            "text": "Projects",
+            "href": "/projects/"
+          },
+          {
+            "text": "Coursework",
+            "href": "/coursework/"
+          },
+          {
+            "text": "About",
+            "href": "/about/"
+          },
+          {
+            "text": "Contact",
+            "href": "/contact/"
+          }
+        ]
+      },
+      "sideRail": null,
+      "resumeButtons": [],
+      "statusSelects": 0,
+      "overflow": 0
+    },
+    "beforeProjects": {
+      "url": "http://127.0.0.1:62552/projects/",
+      "phases": [
+        "ingesting",
+        "swapping",
+        "emerging",
+        null
+      ],
+      "statuses": [
+        {
+          "title": "NeOS",
+          "status": "In progress"
+        },
+        {
+          "title": "FerrumCalc",
+          "status": "Complete"
+        },
+        {
+          "title": "mEgis",
+          "status": "In progress"
+        },
+        {
+          "title": "Museek",
+          "status": "Private"
+        },
+        {
+          "title": "hsfix",
+          "status": "Usable"
+        }
+      ],
+      "statusSelects": 0
+    },
+    "afterHome": {
+      "path": "/",
+      "sections": [
+        {
+          "id": "hero",
+          "heading": "UthsaraDahanaike."
+        },
+        {
+          "id": "interests",
+          "heading": "The questionsthat keep me building."
+        },
+        {
+          "id": "projects",
+          "heading": "Projects."
+        },
+        {
+          "id": "coursework",
+          "heading": "Coursework."
+        },
+        {
+          "id": "about",
+          "heading": "About me."
+        },
+        {
+          "id": "contact",
+          "heading": "Get in touch."
+        }
+      ],
+      "articles": 8,
+      "header": null,
+      "sideRail": {
+        "x": 0,
+        "y": 0,
+        "width": 88,
+        "height": 1000,
+        "top": 0,
+        "right": 88,
+        "bottom": 1000,
+        "left": 0
+      },
+      "resumeButtons": [
+        {
+          "tag": "BUTTON",
+          "disabled": true,
+          "href": null
+        },
+        {
+          "tag": "BUTTON",
+          "disabled": true,
+          "href": null
+        },
+        {
+          "tag": "BUTTON",
+          "disabled": true,
+          "href": null
+        }
+      ],
+      "statusSelects": 2,
+      "overflow": 0
+    },
+    "observedImprovements": {
+      "embeddedArticles": [
+        0,
+        8
+      ],
+      "desktopNavigation": "horizontal top header replaced by side hamburger rail",
+      "lifecycleSelectors": [
+        0,
+        2
+      ],
+      "resume": "absent before, three honest disabled controls after, actual approved PDF still missing",
+      "navigation": "old actual Projects menu left root and used ingestion; new actual root section navigation separately verified"
+    }
+  },
+  "priorSectionChecks": [
+    {
+      "name": "desktop",
+      "passed": true,
+      "errors": [],
+      "layouts": [
+        {
+          "url": "http://127.0.0.1:4173/",
+          "duplicate": [],
+          "overflow": 0
+        },
+        {
+          "url": "http://127.0.0.1:4173/",
+          "duplicate": [],
+          "overflow": 0
+        },
+        {
+          "url": "http://127.0.0.1:4173/#projects",
+          "duplicate": [],
+          "overflow": 0
+        }
+      ],
+      "checks": {
+        "drawer": {
+          "initialFocusInside": true,
+          "tabFocusContained": true,
+          "backgroundFocusRejected": true,
+          "escapeAndReturnFocus": true,
+          "backdrop": true,
+          "closeButton": true,
+          "rapidReopen": true
+        },
+        "scene": {
+          "sameCanvas": true,
+          "sectionTransitPhases": []
+        },
+        "scrolling": {
+          "reducedMotion": false,
+          "scrollBehavior": "smooth",
+          "calls": [
+            {
+              "id": "hero",
+              "behavior": "smooth"
+            },
+            {
+              "id": "interests",
+              "behavior": "smooth"
+            },
+            {
+              "id": "projects",
+              "behavior": "smooth"
+            },
+            {
+              "id": "coursework",
+              "behavior": "smooth"
+            },
+            {
+              "id": "about",
+              "behavior": "smooth"
+            },
+            {
+              "id": "contact",
+              "behavior": "smooth"
+            }
+          ]
+        },
+        "history": {
+          "backToProjects": true,
+          "forwardToAbout": true,
+          "reloadAbout": true
+        },
+        "initialDeepLink": {
+          "hash": "#projects",
+          "focusedAndVisible": true
+        },
+        "filters": {
+          "systemsOngoingProjects": 1,
+          "academicDataUnknown": 1,
+          "academicDataCompleted": 0,
+          "systemsUnknownProjects": 0,
+          "emptyAnnouncements": true,
+          "independentBothDirections": true,
+          "restoredProjects": 5,
+          "restoredCoursework": 3
+        },
+        "motionOff": {
+          "persistedAfterReload": true,
+          "noSmoothAnchorScroll": true
+        }
+      },
+      "destinations": [
+        {
+          "id": "hero",
+          "path": "/",
+          "hash": "#hero",
+          "focused": true,
+          "scrollY": 0,
+          "expectedY": 0,
+          "top": 0
+        },
+        {
+          "id": "interests",
+          "path": "/",
+          "hash": "#interests",
+          "focused": true,
+          "scrollY": 826,
+          "expectedY": 826,
+          "top": 24
+        },
+        {
+          "id": "projects",
+          "path": "/",
+          "hash": "#projects",
+          "focused": true,
+          "scrollY": 1502,
+          "expectedY": 1502.390625,
+          "top": 24.390625
+        },
+        {
+          "id": "coursework",
+          "path": "/",
+          "hash": "#coursework",
+          "focused": true,
+          "scrollY": 3667,
+          "expectedY": 3666.859375,
+          "top": 23.859375
+        },
+        {
+          "id": "about",
+          "path": "/",
+          "hash": "#about",
+          "focused": true,
+          "scrollY": 5173,
+          "expectedY": 5173.359375,
+          "top": 24.359375
+        },
+        {
+          "id": "contact",
+          "path": "/",
+          "hash": "#contact",
+          "focused": true,
+          "scrollY": 5868,
+          "expectedY": 5868,
+          "top": 224.109375
+        },
+        {
+          "id": "projects",
+          "path": "/",
+          "hash": "#projects",
+          "focused": true,
+          "scrollY": 1502,
+          "expectedY": 1502.390625,
+          "top": 24.390625
+        },
+        {
+          "id": "about",
+          "path": "/",
+          "hash": "#about",
+          "focused": true,
+          "scrollY": 5173,
+          "expectedY": 5173.359375,
+          "top": 24.359375
+        },
+        {
+          "id": "projects",
+          "path": "/",
+          "hash": "#projects",
+          "focused": true,
+          "scrollY": 1502,
+          "expectedY": 1502.390625,
+          "top": 24.390625
+        },
+        {
+          "id": "about",
+          "path": "/",
+          "hash": "#about",
+          "focused": true,
+          "scrollY": 5173,
+          "expectedY": 5173.359375,
+          "top": 24.359375
+        },
+        {
+          "id": "about",
+          "path": "/",
+          "hash": "#about",
+          "focused": true,
+          "scrollY": 5173,
+          "expectedY": 5173.359375,
+          "top": 24.359375
+        },
+        {
+          "id": "projects",
+          "path": "/",
+          "hash": "#projects",
+          "focused": true,
+          "scrollY": 1502,
+          "expectedY": 1502.390625,
+          "top": 24.390625
+        },
+        {
+          "id": "projects",
+          "path": "/",
+          "hash": "#projects",
+          "focused": true,
+          "scrollY": 1502,
+          "expectedY": 1502.390625,
+          "top": 24.390625
+        },
+        {
+          "id": "contact",
+          "path": "/",
+          "hash": "#contact",
+          "focused": true,
+          "scrollY": 5868,
+          "expectedY": 5868,
+          "top": 224.109375
+        }
+      ]
+    },
+    {
+      "name": "mobile",
+      "passed": true,
+      "errors": [],
+      "layouts": [
+        {
+          "url": "http://127.0.0.1:4173/",
+          "duplicate": [],
+          "overflow": 0
+        },
+        {
+          "url": "http://127.0.0.1:4173/",
+          "duplicate": [],
+          "overflow": 0
+        },
+        {
+          "url": "http://127.0.0.1:4173/#projects",
+          "duplicate": [],
+          "overflow": 0
+        }
+      ],
+      "checks": {
+        "drawer": {
+          "initialFocusInside": true,
+          "tabFocusContained": true,
+          "backgroundFocusRejected": true,
+          "escapeAndReturnFocus": true,
+          "backdrop": true,
+          "closeButton": true,
+          "rapidReopen": true
+        },
+        "scene": {
+          "sameCanvas": true,
+          "sectionTransitPhases": []
+        },
+        "scrolling": {
+          "reducedMotion": false,
+          "scrollBehavior": "smooth",
+          "calls": [
+            {
+              "id": "hero",
+              "behavior": "smooth"
+            },
+            {
+              "id": "interests",
+              "behavior": "smooth"
+            },
+            {
+              "id": "projects",
+              "behavior": "smooth"
+            },
+            {
+              "id": "coursework",
+              "behavior": "smooth"
+            },
+            {
+              "id": "about",
+              "behavior": "smooth"
+            },
+            {
+              "id": "contact",
+              "behavior": "smooth"
+            }
+          ]
+        },
+        "history": {
+          "backToProjects": true,
+          "forwardToAbout": true,
+          "reloadAbout": true
+        },
+        "initialDeepLink": {
+          "hash": "#projects",
+          "focusedAndVisible": true
+        },
+        "filters": {
+          "systemsOngoingProjects": 1,
+          "academicDataUnknown": 1,
+          "academicDataCompleted": 0,
+          "systemsUnknownProjects": 0,
+          "emptyAnnouncements": true,
+          "independentBothDirections": true,
+          "restoredProjects": 5,
+          "restoredCoursework": 3
+        },
+        "motionOff": {
+          "persistedAfterReload": true,
+          "noSmoothAnchorScroll": true
+        }
+      },
+      "destinations": [
+        {
+          "id": "hero",
+          "path": "/",
+          "hash": "#hero",
+          "focused": true,
+          "scrollY": 0,
+          "expectedY": 0,
+          "top": 36
+        },
+        {
+          "id": "interests",
+          "path": "/",
+          "hash": "#interests",
+          "focused": true,
+          "scrollY": 590,
+          "expectedY": 589.578125,
+          "top": 87.578125
+        },
+        {
+          "id": "projects",
+          "path": "/",
+          "hash": "#projects",
+          "focused": true,
+          "scrollY": 1341,
+          "expectedY": 1341.265625,
+          "top": 88.265625
+        },
+        {
+          "id": "coursework",
+          "path": "/",
+          "hash": "#coursework",
+          "focused": true,
+          "scrollY": 4513,
+          "expectedY": 4512.890625,
+          "top": 87.890625
+        },
+        {
+          "id": "about",
+          "path": "/",
+          "hash": "#about",
+          "focused": true,
+          "scrollY": 6636,
+          "expectedY": 6636.34375,
+          "top": 88.34375
+        },
+        {
+          "id": "contact",
+          "path": "/",
+          "hash": "#contact",
+          "focused": true,
+          "scrollY": 7994,
+          "expectedY": 7994.171875,
+          "top": 88.171875
+        },
+        {
+          "id": "projects",
+          "path": "/",
+          "hash": "#projects",
+          "focused": true,
+          "scrollY": 1341,
+          "expectedY": 1341.265625,
+          "top": 88.265625
+        },
+        {
+          "id": "about",
+          "path": "/",
+          "hash": "#about",
+          "focused": true,
+          "scrollY": 6636,
+          "expectedY": 6636.34375,
+          "top": 88.34375
+        },
+        {
+          "id": "projects",
+          "path": "/",
+          "hash": "#projects",
+          "focused": true,
+          "scrollY": 1341,
+          "expectedY": 1341.265625,
+          "top": 88.265625
+        },
+        {
+          "id": "about",
+          "path": "/",
+          "hash": "#about",
+          "focused": true,
+          "scrollY": 6636,
+          "expectedY": 6636.34375,
+          "top": 88.34375
+        },
+        {
+          "id": "about",
+          "path": "/",
+          "hash": "#about",
+          "focused": true,
+          "scrollY": 6636,
+          "expectedY": 6636.34375,
+          "top": 88.34375
+        },
+        {
+          "id": "projects",
+          "path": "/",
+          "hash": "#projects",
+          "focused": true,
+          "scrollY": 1341,
+          "expectedY": 1341.265625,
+          "top": 88.265625
+        },
+        {
+          "id": "projects",
+          "path": "/",
+          "hash": "#projects",
+          "focused": true,
+          "scrollY": 1341,
+          "expectedY": 1341.265625,
+          "top": 88.265625
+        },
+        {
+          "id": "contact",
+          "path": "/",
+          "hash": "#contact",
+          "focused": true,
+          "scrollY": 7994,
+          "expectedY": 7994.171875,
+          "top": 88.171875
+        }
+      ]
+    },
+    {
+      "name": "narrow",
+      "passed": true,
+      "errors": [],
+      "layouts": [
+        {
+          "url": "http://127.0.0.1:4173/",
+          "duplicate": [],
+          "overflow": 0
+        },
+        {
+          "url": "http://127.0.0.1:4173/#projects",
+          "duplicate": [],
+          "overflow": 0
+        }
+      ],
+      "checks": {
+        "drawer": {
+          "initialFocusInside": true,
+          "tabFocusContained": true,
+          "backgroundFocusRejected": true,
+          "escapeAndReturnFocus": true,
+          "backdrop": true,
+          "closeButton": true,
+          "rapidReopen": true
+        },
+        "scene": {
+          "sameCanvas": true,
+          "sectionTransitPhases": []
+        },
+        "scrolling": {
+          "reducedMotion": false,
+          "scrollBehavior": "smooth",
+          "calls": [
+            {
+              "id": "hero",
+              "behavior": "smooth"
+            },
+            {
+              "id": "interests",
+              "behavior": "smooth"
+            },
+            {
+              "id": "projects",
+              "behavior": "smooth"
+            },
+            {
+              "id": "coursework",
+              "behavior": "smooth"
+            },
+            {
+              "id": "about",
+              "behavior": "smooth"
+            },
+            {
+              "id": "contact",
+              "behavior": "smooth"
+            }
+          ]
+        },
+        "history": {
+          "backToProjects": true,
+          "forwardToAbout": true,
+          "reloadAbout": true
+        },
+        "initialDeepLink": {
+          "hash": "#projects",
+          "focusedAndVisible": true
+        },
+        "filters": {
+          "systemsOngoingProjects": 1,
+          "academicDataUnknown": 1,
+          "academicDataCompleted": 0,
+          "systemsUnknownProjects": 0,
+          "emptyAnnouncements": true,
+          "independentBothDirections": true,
+          "restoredProjects": 5,
+          "restoredCoursework": 3
+        },
+        "motionOff": {
+          "persistedAfterReload": true,
+          "noSmoothAnchorScroll": true
+        }
+      },
+      "destinations": [
+        {
+          "id": "hero",
+          "path": "/",
+          "hash": "#hero",
+          "focused": true,
+          "scrollY": 0,
+          "expectedY": 0,
+          "top": 36
+        },
+        {
+          "id": "interests",
+          "path": "/",
+          "hash": "#interests",
+          "focused": true,
+          "scrollY": 657,
+          "expectedY": 657.0625,
+          "top": 88.0625
+        },
+        {
+          "id": "projects",
+          "path": "/",
+          "hash": "#projects",
+          "focused": true,
+          "scrollY": 1410,
+          "expectedY": 1409.734375,
+          "top": 87.734375
+        },
+        {
+          "id": "coursework",
+          "path": "/",
+          "hash": "#coursework",
+          "focused": true,
+          "scrollY": 4739,
+          "expectedY": 4738.53125,
+          "top": 87.53125
+        },
+        {
+          "id": "about",
+          "path": "/",
+          "hash": "#about",
+          "focused": true,
+          "scrollY": 6951,
+          "expectedY": 6950.953125,
+          "top": 87.953125
+        },
+        {
+          "id": "contact",
+          "path": "/",
+          "hash": "#contact",
+          "focused": true,
+          "scrollY": 8376,
+          "expectedY": 8376.125,
+          "top": 88.125
+        },
+        {
+          "id": "projects",
+          "path": "/",
+          "hash": "#projects",
+          "focused": true,
+          "scrollY": 1410,
+          "expectedY": 1409.734375,
+          "top": 87.734375
+        },
+        {
+          "id": "about",
+          "path": "/",
+          "hash": "#about",
+          "focused": true,
+          "scrollY": 6951,
+          "expectedY": 6950.953125,
+          "top": 87.953125
+        },
+        {
+          "id": "projects",
+          "path": "/",
+          "hash": "#projects",
+          "focused": true,
+          "scrollY": 1410,
+          "expectedY": 1409.734375,
+          "top": 87.734375
+        },
+        {
+          "id": "about",
+          "path": "/",
+          "hash": "#about",
+          "focused": true,
+          "scrollY": 6951,
+          "expectedY": 6950.953125,
+          "top": 87.953125
+        },
+        {
+          "id": "about",
+          "path": "/",
+          "hash": "#about",
+          "focused": true,
+          "scrollY": 6951,
+          "expectedY": 6950.953125,
+          "top": 87.953125
+        },
+        {
+          "id": "projects",
+          "path": "/",
+          "hash": "#projects",
+          "focused": true,
+          "scrollY": 1410,
+          "expectedY": 1409.734375,
+          "top": 87.734375
+        },
+        {
+          "id": "projects",
+          "path": "/",
+          "hash": "#projects",
+          "focused": true,
+          "scrollY": 1410,
+          "expectedY": 1409.734375,
+          "top": 87.734375
+        },
+        {
+          "id": "contact",
+          "path": "/",
+          "hash": "#contact",
+          "focused": true,
+          "scrollY": 8376,
+          "expectedY": 8376.125,
+          "top": 88.125
+        }
+      ]
+    },
+    {
+      "name": "reduced-motion",
+      "passed": true,
+      "errors": [],
+      "layouts": [
+        {
+          "url": "http://127.0.0.1:4173/",
+          "duplicate": [],
+          "overflow": 0
+        },
+        {
+          "url": "http://127.0.0.1:4173/#projects",
+          "duplicate": [],
+          "overflow": 0
+        }
+      ],
+      "checks": {
+        "drawer": {
+          "initialFocusInside": true,
+          "tabFocusContained": true,
+          "backgroundFocusRejected": true,
+          "escapeAndReturnFocus": true,
+          "backdrop": true,
+          "closeButton": true,
+          "rapidReopen": true
+        },
+        "scene": {
+          "sameCanvas": true,
+          "sectionTransitPhases": []
+        },
+        "scrolling": {
+          "reducedMotion": true,
+          "scrollBehavior": "auto",
+          "calls": [
+            {
+              "id": "hero",
+              "behavior": "instant"
+            },
+            {
+              "id": "interests",
+              "behavior": "instant"
+            },
+            {
+              "id": "projects",
+              "behavior": "instant"
+            },
+            {
+              "id": "coursework",
+              "behavior": "instant"
+            },
+            {
+              "id": "about",
+              "behavior": "instant"
+            },
+            {
+              "id": "contact",
+              "behavior": "instant"
+            }
+          ]
+        },
+        "history": {
+          "backToProjects": true,
+          "forwardToAbout": true,
+          "reloadAbout": true
+        },
+        "initialDeepLink": {
+          "hash": "#projects",
+          "focusedAndVisible": true
+        },
+        "filters": {
+          "systemsOngoingProjects": 1,
+          "academicDataUnknown": 1,
+          "academicDataCompleted": 0,
+          "systemsUnknownProjects": 0,
+          "emptyAnnouncements": true,
+          "independentBothDirections": true,
+          "restoredProjects": 5,
+          "restoredCoursework": 3
+        }
+      },
+      "destinations": [
+        {
+          "id": "hero",
+          "path": "/",
+          "hash": "#hero",
+          "focused": true,
+          "scrollY": 0,
+          "expectedY": 0,
+          "top": 0
+        },
+        {
+          "id": "interests",
+          "path": "/",
+          "hash": "#interests",
+          "focused": true,
+          "scrollY": 826,
+          "expectedY": 826,
+          "top": 24
+        },
+        {
+          "id": "projects",
+          "path": "/",
+          "hash": "#projects",
+          "focused": true,
+          "scrollY": 1502,
+          "expectedY": 1502.390625,
+          "top": 24.390625
+        },
+        {
+          "id": "coursework",
+          "path": "/",
+          "hash": "#coursework",
+          "focused": true,
+          "scrollY": 3667,
+          "expectedY": 3666.859375,
+          "top": 23.859375
+        },
+        {
+          "id": "about",
+          "path": "/",
+          "hash": "#about",
+          "focused": true,
+          "scrollY": 5173,
+          "expectedY": 5173.359375,
+          "top": 24.359375
+        },
+        {
+          "id": "contact",
+          "path": "/",
+          "hash": "#contact",
+          "focused": true,
+          "scrollY": 5868,
+          "expectedY": 5868,
+          "top": 224.109375
+        },
+        {
+          "id": "projects",
+          "path": "/",
+          "hash": "#projects",
+          "focused": true,
+          "scrollY": 1502,
+          "expectedY": 1502.390625,
+          "top": 24.390625
+        },
+        {
+          "id": "about",
+          "path": "/",
+          "hash": "#about",
+          "focused": true,
+          "scrollY": 5173,
+          "expectedY": 5173.359375,
+          "top": 24.359375
+        },
+        {
+          "id": "projects",
+          "path": "/",
+          "hash": "#projects",
+          "focused": true,
+          "scrollY": 1502,
+          "expectedY": 1502.390625,
+          "top": 24.390625
+        },
+        {
+          "id": "about",
+          "path": "/",
+          "hash": "#about",
+          "focused": true,
+          "scrollY": 5173,
+          "expectedY": 5173.359375,
+          "top": 24.359375
+        },
+        {
+          "id": "about",
+          "path": "/",
+          "hash": "#about",
+          "focused": true,
+          "scrollY": 5173,
+          "expectedY": 5173.359375,
+          "top": 24.359375
+        },
+        {
+          "id": "projects",
+          "path": "/",
+          "hash": "#projects",
+          "focused": true,
+          "scrollY": 1502,
+          "expectedY": 1502.390625,
+          "top": 24.390625
+        },
+        {
+          "id": "projects",
+          "path": "/",
+          "hash": "#projects",
+          "focused": true,
+          "scrollY": 1502,
+          "expectedY": 1502.390625,
+          "top": 24.390625
+        }
+      ]
+    },
+    {
+      "name": "no-js",
+      "passed": true,
+      "errors": [],
+      "layouts": [
+        {
+          "url": "http://127.0.0.1:4173/#contact",
+          "duplicate": [],
+          "overflow": 0
+        }
+      ],
+      "checks": {
+        "nativeNavigation": {
+          "anchors": [
+            "hero",
+            "interests",
+            "projects",
+            "coursework",
+            "about",
+            "contact"
+          ],
+          "prerenderedArticles": 8
+        }
+      },
+      "destinations": [
+        {
+          "id": "hero",
+          "path": "/",
+          "hash": "#hero",
+          "focused": true,
+          "scrollY": 0,
+          "expectedY": 0,
+          "top": 0
+        },
+        {
+          "id": "interests",
+          "path": "/",
+          "hash": "#interests",
+          "focused": true,
+          "scrollY": 826,
+          "expectedY": 826,
+          "top": 24
+        },
+        {
+          "id": "projects",
+          "path": "/",
+          "hash": "#projects",
+          "focused": true,
+          "scrollY": 1502,
+          "expectedY": 1502.390625,
+          "top": 24.390625
+        },
+        {
+          "id": "coursework",
+          "path": "/",
+          "hash": "#coursework",
+          "focused": true,
+          "scrollY": 3667,
+          "expectedY": 3666.859375,
+          "top": 23.859375
+        },
+        {
+          "id": "about",
+          "path": "/",
+          "hash": "#about",
+          "focused": true,
+          "scrollY": 5173,
+          "expectedY": 5173.359375,
+          "top": 24.359375
+        },
+        {
+          "id": "contact",
+          "path": "/",
+          "hash": "#contact",
+          "focused": true,
+          "scrollY": 5921,
+          "expectedY": 5921,
+          "top": 171.109375
+        }
+      ]
+    },
+    {
+      "name": "routes",
+      "passed": true,
+      "errors": [],
+      "layouts": [
+        {
+          "url": "http://127.0.0.1:4173/projects/",
+          "duplicate": [],
+          "overflow": 0
+        },
+        {
+          "url": "http://127.0.0.1:4173/coursework/",
+          "duplicate": [],
+          "overflow": 0
+        },
+        {
+          "url": "http://127.0.0.1:4173/about/",
+          "duplicate": [],
+          "overflow": 0
+        },
+        {
+          "url": "http://127.0.0.1:4173/contact/",
+          "duplicate": [],
+          "overflow": 0
+        }
+      ],
+      "checks": {
+        "legacyRoutes": [
+          {
+            "route": "projects",
+            "articles": 5,
+            "returnToProjectsFocusedAndVisible": true,
+            "backToStandalone": true
+          },
+          {
+            "route": "coursework",
+            "articles": 3,
+            "returnToProjectsFocusedAndVisible": true,
+            "backToStandalone": true
+          },
+          {
+            "route": "about",
+            "articles": 0,
+            "returnToProjectsFocusedAndVisible": true,
+            "backToStandalone": true
+          },
+          {
+            "route": "contact",
+            "articles": 0,
+            "returnToProjectsFocusedAndVisible": true,
+            "backToStandalone": true
+          }
+        ],
+        "crossPageTransit": [
+          "ingesting",
+          "swapping",
+          "emerging"
+        ]
+      },
+      "destinations": [
+        {
+          "id": "projects",
+          "path": "/",
+          "hash": "#projects",
+          "focused": true,
+          "scrollY": 1502,
+          "expectedY": 1502.390625,
+          "top": 24.390625
+        },
+        {
+          "id": "projects",
+          "path": "/",
+          "hash": "#projects",
+          "focused": true,
+          "scrollY": 1502,
+          "expectedY": 1502.390625,
+          "top": 24.390625
+        },
+        {
+          "id": "projects",
+          "path": "/",
+          "hash": "#projects",
+          "focused": true,
+          "scrollY": 1502,
+          "expectedY": 1502.390625,
+          "top": 24.390625
+        },
+        {
+          "id": "projects",
+          "path": "/",
+          "hash": "#projects",
+          "focused": true,
+          "scrollY": 1502,
+          "expectedY": 1502.390625,
+          "top": 24.390625
+        }
+      ]
+    }
+  ],
+  "rendererChecks": [
+    {
+      "name": "navigation",
+      "status": "passed",
+      "durationMs": 14605
+    },
+    {
+      "name": "escape",
+      "status": "passed",
+      "durationMs": 2893
+    },
+    {
+      "name": "history",
+      "status": "passed",
+      "durationMs": 12860
+    },
+    {
+      "name": "back-mid-trip",
+      "status": "passed",
+      "durationMs": 6063
+    },
+    {
+      "name": "rapid",
+      "status": "passed",
+      "durationMs": 8013
+    },
+    {
+      "name": "motion-switch",
+      "status": "passed",
+      "durationMs": 6557
+    },
+    {
+      "name": "reduced-motion",
+      "status": "passed",
+      "durationMs": 1985
+    },
+    {
+      "name": "mobile",
+      "status": "passed",
+      "durationMs": 12340
+    },
+    {
+      "name": "context-loss",
+      "status": "passed",
+      "durationMs": 7622
+    },
+    {
+      "name": "missing-assets",
+      "status": "passed",
+      "durationMs": 6645
+    }
+  ],
+  "rendererTitleObservation": {
+    "name": "navigation-titles",
+    "readingTitle": "FerrumCalc | Uthsara Dahanaike",
+    "headingTitle": "Projects | Uthsara Dahanaike",
+    "canonical": "https://uthsarad.github.io/projects/"
+  },
+  "network": {
+    "normalRequestsNotIntercepted": true,
+    "failures": [
+      {
+        "url": "http://127.0.0.1:4173/black-hole/deflection.dat",
+        "failure": {
+          "errorText": "net::ERR_ABORTED"
+        }
+      },
+      {
+        "url": "http://127.0.0.1:4173/black-hole/inverse_radius.dat",
+        "failure": {
+          "errorText": "net::ERR_ABORTED"
+        }
+      },
+      {
+        "url": "http://127.0.0.1:4173/black-hole/black_body.dat",
+        "failure": {
+          "errorText": "net::ERR_ABORTED"
+        }
+      },
+      {
+        "url": "http://127.0.0.1:4173/black-hole/doppler.dat",
+        "failure": {
+          "errorText": "net::ERR_ABORTED"
+        }
+      },
+      {
+        "url": "http://127.0.0.1:4173/assets/Home-DNN1vjzJ.js",
+        "failure": {
+          "errorText": "csp"
+        }
+      },
+      {
+        "url": "http://127.0.0.1:4173/assets/TopicTitle-ZB8l_bvB.js",
+        "failure": {
+          "errorText": "csp"
+        }
+      },
+      {
+        "url": "http://127.0.0.1:4173/assets/Showcase-BhufPgyf.js",
+        "failure": {
+          "errorText": "csp"
+        }
+      },
+      {
+        "url": "http://127.0.0.1:4173/assets/About-C3uzHM4v.js",
+        "failure": {
+          "errorText": "csp"
+        }
+      },
+      {
+        "url": "http://127.0.0.1:4173/assets/Contact-Bdzi764n.js",
+        "failure": {
+          "errorText": "csp"
+        }
+      }
+    ],
+    "httpErrors": [],
+    "pageErrors": []
+  },
+  "artifacts": [
+    {
+      "path": "%TEMP%/portfolio-public-acceptance/fresh-20261007-0410/observe.mjs",
+      "sha256": "0a94c218b0242679227aebe9db89db9167a9ec220185ff0f7e10fe6dfde41dd7"
+    },
+    {
+      "path": "%TEMP%/portfolio-public-acceptance/fresh-20261007-0410/report.json",
+      "sha256": "f0c933c2b864cc69eb8036a8d0937098c5bb0377c9ae8a5f2d82aa9f6b347b03"
+    },
+    {
+      "path": "%TEMP%/portfolio-public-acceptance/fresh-20261007-0410/supplement.mjs",
+      "sha256": "45ee877d9221a1cb68b87f4513321bcafed107c939a4b1dabde6d199a5223f59"
+    },
+    {
+      "path": "%TEMP%/portfolio-public-acceptance/fresh-20261007-0410/supplement.json",
+      "sha256": "d5355b48fe413e3f694d4374874eb13f0fcf680af31e6090e5e135f3d9f6b2b1"
+    },
+    {
+      "path": "%TEMP%/portfolio-public-acceptance/fresh-20261007-0410/additional-integrations.mjs",
+      "sha256": "62b3647a9c595288f693e6ee8fa29ec05babbfb39a8c76853be61a9b2bcf0223"
+    },
+    {
+      "path": "%TEMP%/portfolio-public-acceptance/fresh-20261007-0410/additional-integrations.json",
+      "sha256": "c4750c6b07273668a635e493459ad00cdd304dbad19580d8459bf8209faa2a4e"
+    },
+    {
+      "path": "%TEMP%/portfolio-public-acceptance/fresh-20261007-0410/targeted.mjs",
+      "sha256": "e57caeafe9972349f61ecde7c8cf525873756b1181ae66318e6ee6ba10d809dc"
+    },
+    {
+      "path": "%TEMP%/portfolio-public-acceptance/fresh-20261007-0410/targeted.json",
+      "sha256": "31c4cf3ef14df5ff4f67cfc19683029768cd5e9efcdd109ed216084361b9f46f"
+    },
+    {
+      "path": "%TEMP%/portfolio-public-acceptance/fresh-20261007-0410/footer.json",
+      "sha256": "d165870caafd7772a65e180cd71f0e43a41a89f71fe0249ec3709fd51973c075"
+    },
+    {
+      "path": "%TEMP%/portfolio-public-acceptance/fresh-20261007-0410/no-js-details.json",
+      "sha256": "e2730df11342a391efa017fa577aa933eded8537f04115bdc26c470ffae9b517"
+    }
+  ],
+  "unverified": [
+    "live deployment",
+    "owner design sign-off",
+    "genuine approved resume bytes/download",
+    "unconfirmed owner lifecycle facts",
+    "physical-device performance",
+    "Core Web Vitals",
+    "measured contrast conformance"
+  ],
+  "noJsDetails": {
+    "actualTarget": "http://127.0.0.1:4173",
+    "javaScriptEnabled": false,
+    "entries": [
+      {
+        "title": "NeOS",
+        "open": true,
+        "text": "Details\n: NeOS\n\nA curated, snapshot-based Arch Linux desktop distribution focused on predictable behavior, a polished KDE Plasma 6 experience, hardware support, and secure-by-default system configuration."
+      },
+      {
+        "title": "FerrumCalc",
+        "open": true,
+        "text": "Details\n: FerrumCalc\n\nA native desktop calculator with standard, scientific, programmer, and graph modes, full expression parsing, base-prefixed literals, keyboard support, history, and persistent preferences."
+      },
+      {
+        "title": "mEgis",
+        "open": true,
+        "text": "Details\n: mEgis\n\nA Python toolkit for vehicle tracking and geofence analysis. It ingests GPS logs, detects enter and exit events, computes speed and trip segments, persists data in SQLite, and renders interactive Folium maps with playback."
+      },
+      {
+        "title": "Museek",
+        "open": true,
+        "text": "Details\n: Museek\n\nA private, lightweight music player built around mpv for local music playback."
+      },
+      {
+        "title": "hsfix",
+        "open": true,
+        "text": "Details\n: hsfix\n\nA small CLI that turns working-tree changes into named, reviewable Git patches, tracks whether each patch is applied, and supports applying, reverting, listing, and drift-checking patches."
+      },
+      {
+        "title": "Digital Forensics Investigation",
+        "open": true,
+        "text": "Details\n: Digital Forensics Investigation\n\nA ransomware investigation project covering evidence collection, artifact analysis, and incident reconstruction."
+      },
+      {
+        "title": "AI Model Evaluation: Osteoporosis Detection",
+        "open": true,
+        "text": "Details\n: AI Model Evaluation: Osteoporosis Detection\n\nA group notebook project evaluating MLP and CNN models for osteoporosis detection, including data preprocessing, model comparison, and performance evaluation."
+      },
+      {
+        "title": "Banking RPC System",
+        "open": true,
+        "text": "Details\n: Banking RPC System\n\nA three-tier banking transfer system with separate client, application-server, and database-server layers, including validation, fee calculation, SQLite transactions, and end-to-end tests."
+      }
+    ]
+  }
+}

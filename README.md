@@ -22,6 +22,8 @@ The drawer uses native dialog focus containment and background inertness. Escape
 
 The four standalone content pages remain available for existing links. Their side menu returns to the matching landing subsection. Ordinary local page clicks retain the React shell, physical canvas, and runtime, with space-trip choreography only for cross-page routes. Same-document section jumps never start a trip. Back/Forward restores reading positions and destination focus. Modifier clicks, downloads, external links, and failed module loads retain native navigation. `scripts/build-pages.mjs` prerenders complete React pages into HTML, with page-specific metadata and reachable static module preloads. Text, section links, and project disclosures work before JavaScript. GitHub Pages serves only static files.
 
+Individual requirement checks, before/after observations, guessed design choices, and remaining owner-data constraints are recorded in `ACCEPTANCE.md` and `ACCEPTANCE.json`. Resume mechanics are implemented, but the actual owner's download remains blocked until an approved PDF is added and rebuilt.
+
 ## Development
 
 Use Node.js 22 and npm. On Windows PowerShell, use `npm.cmd` if script execution policy blocks `npm`.
