@@ -14,6 +14,7 @@ import { createRequire } from 'node:module'
 import { homedir, tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
+import { settleTrackedRequests } from './request-settlement.mjs'
 
 const require = createRequire(import.meta.url)
 const argv = process.argv.slice(2)
@@ -72,6 +73,7 @@ async function scenario(name, options, actions) {
   page.setDefaultTimeout(15000)
   let phase = `${name}.created`
   const pending = new Map()
+  let lastActivityAt = Date.now()
   const result = { name, javaScriptEnabled: options.javaScriptEnabled !== false, requestCount: 0,
     finishedRequests: 0, responseCount: 0, observations: [], pendingAtClose: [] }
   report.scenarios.push(result)
@@ -81,12 +83,14 @@ async function scenario(name, options, actions) {
     console.log(phase)
   }
   page.on('request', (request) => {
+    lastActivityAt = Date.now()
     result.requestCount++
     pending.set(request, { requestId: result.requestCount, context: name, url: request.url(), resourceType: request.resourceType(),
       startedPhase: phase, startedAt: new Date().toISOString() })
   })
-  page.on('requestfinished', (request) => { result.finishedRequests++; pending.delete(request) })
+  page.on('requestfinished', (request) => { lastActivityAt = Date.now(); result.finishedRequests++; pending.delete(request) })
   page.on('requestfailed', (request) => {
+    lastActivityAt = Date.now()
     report.failedRequests.push({ ...pending.get(request), context: name, url: request.url(),
       resourceType: request.resourceType(), failedPhase: phase, failedAt: new Date().toISOString(),
       errorText: request.failure()?.errorText })
@@ -100,6 +104,11 @@ async function scenario(name, options, actions) {
   const note = (name, evidence) => result.observations.push({ name, evidence, phase, at: new Date().toISOString() })
   try {
     await actions({ page, mark, note })
+    if (name !== 'reduced-motion-early-close') {
+      mark('settle-tracked-requests')
+      result.requestSettlement = await settleTrackedRequests(pending, () => lastActivityAt)
+      note('observed request ledger settled', result.requestSettlement)
+    }
     result.settledBeforeClose = pending.size === 0
     if (name !== 'reduced-motion-early-close') assert.equal(pending.size, 0, 'Settled public workflow must finish all requests before context close')
     result.outcome = name === 'reduced-motion-early-close' ? 'BOUNDARY_OBSERVED' : 'PASS'
