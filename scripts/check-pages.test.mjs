@@ -2,7 +2,9 @@ import test from 'node:test'
 import assert from 'node:assert/strict'
 import { readFile, access } from 'node:fs/promises'
 import { gzipSync } from 'node:zlib'
+import { loadContentContract, assertLifecycleBadges, assertResumeFilename } from './content-contract.mjs'
 
+const content = await loadContentContract()
 const root = new URL('../', import.meta.url)
 const pages = JSON.parse(
   await readFile(new URL('src/data/pages.json', root), 'utf8'),
@@ -129,24 +131,26 @@ test('Home section anchors, lifecycle badges, and optional resume are readable w
     assert.match(main, new RegExp(`<h2\\b[^>]*id="${id}"`))
   const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map((match) => match[1])
   assert.equal(new Set(ids).size, ids.length, 'Home IDs must be unique')
-  const articles = [...main.matchAll(/<article\b[^>]*>([\s\S]*?)<\/article>/g)].map((match) => match[1])
-  for (const [id, status] of Object.entries({ neos: 'ongoing', megis: 'ongoing', ferrumcalc: 'completed', museek: 'unknown', hsfix: 'unknown', forensics: 'unknown', osteoporosis: 'unknown', dsrpc: 'unknown' })) {
-    const article = articles.find((value) => value.includes(`id="title-${id}"`))
-    assert.ok(article?.includes(`is-${status}`), `${id} needs its confirmed lifecycle`)
-  }
-  const hasResume = await access(new URL('public/resume.pdf', root)).then(() => true, () => false)
+  assertLifecycleBadges(main, [...content.projects, ...content.coursework])
+  const hasResume = content.resume.available
   for (const page of Object.values(pages)) {
     const document = await readFile(new URL('dist' + page.href + 'index.html', root), 'utf8')
     for (const id of sections) assert.ok(document.includes(`href="/#${id}"`), `${page.href} menu needs ${id}`)
+    const expectedControls = page.href === '/' ? 3 : page.href === '/contact/' ? 2 : 1
     if (hasResume) {
-      assert.match(document, /<a\b[^>]*href="\/resume\.pdf"/)
-      await access(new URL('dist/resume.pdf', root))
+      const links = [...document.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/g)]
+        .filter((match) => match[1].includes(`href="${content.resume.href}"`) && /Download resume/.test(match[2]))
+      assert.equal(links.length, expectedControls, `${page.href} needs every configured native resume link`)
+      for (const link of links) assertResumeFilename(link[1], content.resume.filename)
     } else {
       assert.ok(!document.includes('href="/resume.pdf"'), 'No broken resume link')
-      const button = [...document.matchAll(/<button\b([^>]*)>([\s\S]*?)<\/button>/g)].find((match) => /Download resume/.test(match[2]))
-      assert.ok(button && /\bdisabled(?:="")?/.test(button[1]), 'Absent resume must have a disabled download button')
-      const explanation = button[1].match(/aria-describedby="([^"]+)"/)?.[1]
-      assert.ok(explanation && document.includes(`id="${explanation}"`), 'Disabled resume needs an accessible explanation')
+      const buttons = [...document.matchAll(/<button\b([^>]*)>([\s\S]*?)<\/button>/g)].filter((match) => /Download resume/.test(match[2]))
+      assert.equal(buttons.length, expectedControls, `${page.href} needs every explained unavailable control`)
+      for (const button of buttons) {
+        assert.ok(/\bdisabled(?:="")?/.test(button[1]), 'Absent resume must have a disabled download button')
+        const explanation = button[1].match(/aria-describedby="([^"]+)"/)?.[1]
+        assert.ok(explanation && document.includes(`id="${explanation}"`), 'Disabled resume needs an accessible explanation')
+      }
     }
   }
 })

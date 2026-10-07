@@ -5591,6 +5591,104 @@
     "headingTitle": "Projects | Uthsara Dahanaike",
     "canonical": "https://uthsarad.github.io/projects/"
   },
+  "contentReadinessFollowthrough": {
+    "date": "2026-10-07",
+    "observedHead": "64a072c",
+    "actualApplicationSource": "405d57e052cba89b34eca14c25fdccfe31ced021",
+    "actualTarget": "http://127.0.0.1:4173",
+    "scope": "Actual repository production preview with the existing local font-blocked, scroll-logging section runner. Not new normal-network acceptance, owner approval or native PDF transfer.",
+    "applicationSourceChanged": false,
+    "ownerDataChanged": false,
+    "ownerOutcomeDelivered": false,
+    "validation": {
+      "build": { "command": "npm run build", "exitCode": 0 },
+      "generatedPages": { "command": "npm run check:pages", "passed": 5, "failed": 0 },
+      "contractGuards": { "command": "npm run check:content", "passed": 9, "failed": 0, "scope": "In-memory harness regressions, not genuine resume or owner lifecycle acceptance" },
+      "workflowGate": "check:content after build and before GitHub Pages artifact upload",
+      "remoteWorkflowRun": false,
+      "newDependencies": false
+    },
+    "browser": "154.0.8037.95",
+    "startedAt": "2026-10-07T10:05:32.562Z",
+    "finishedAt": "2026-10-07T10:08:50.984Z",
+    "reportArtifact": "%TEMP%/portfolio-content-readiness-20261007-1005/report.json",
+    "reportSha256": "d38078989368692f1a5cd0f79596e7712c36059f806f1f1c498373e7823e297c",
+    "browserDriver": "scripts/check-sections.mjs",
+    "browserDriverSha256": "a0b26b5627532b0b1ed677f6da0666c0f3ee5e4b8ca69b5fc07a1b89daec51b2",
+    "browserDriverChangedDuringRun": false,
+    "finalStaticGuardSourcesSha256": {
+      "scripts/content-contract.mjs": "549efb6bc4995e795089a9f04d24fda762efbdf2fa289c66d842cdb914eedd30",
+      "scripts/content-contract.test.mjs": "0fea1739f7d004e127d59e90005b4872d52229b80747c4a49da1d0a6add0c7bc",
+      "scripts/check-pages.test.mjs": "9533b545d5597a203d8232e5800c12575d4fb5bcb58862c543f1339a6cf11952"
+    },
+    "staticGuardChronology": "The static-only filename assertion was corrected while the browser run was active. The browser driver and browser-used oracle functions were unchanged. All nine guard regressions and five static checks were rerun on the final guard source.",
+    "ownerSourceSha256": {
+      "src/data/projects.ts": "cf13087f80a37fde1a7f24c05d1f966757c0dc672d0c1d18d06d2eb3bb17a442",
+      "src/data/profile.ts": "80d18de2134260b0dd1b3dde26c054e28d43b544acbafad57edaebd8f343865a"
+    },
+    "scenarios": [
+      { "name": "desktop", "passed": true, "matrixCombinations": 28, "emptyCombinations": 9, "uncaughtPageErrors": 0 },
+      { "name": "mobile", "passed": true, "matrixCombinations": 28, "emptyCombinations": 9, "uncaughtPageErrors": 0 },
+      { "name": "narrow", "passed": true, "matrixCombinations": 28, "emptyCombinations": 9, "uncaughtPageErrors": 0 },
+      { "name": "reduced-motion", "passed": true, "matrixCombinations": 28, "emptyCombinations": 9, "uncaughtPageErrors": 0 },
+      { "name": "no-js", "passed": true, "matrixCombinations": 0, "uncaughtPageErrors": 0 },
+      { "name": "routes", "passed": true, "matrixCombinations": 0, "uncaughtPageErrors": 0 }
+    ],
+    "filters": {
+      "oracle": "Literal src/data/projects.ts declarations, not rendered DOM or application filter predicates",
+      "personalCombinationsPerLandingScenario": 12,
+      "academicCombinationsPerLandingScenario": 16,
+      "observedNativeSelections": 112,
+      "visibleCardsHeadingsAndBadges": true,
+      "exactIdsTitlesLabelsAndLifecycleClasses": true,
+      "emptyAnnouncementsAndCounts": true,
+      "independentBothDirections": true,
+      "oppositeControlsUnchanged": true,
+      "restoredProjects": 5,
+      "restoredCoursework": 3
+    },
+    "resume": {
+      "available": false,
+      "landingScenariosChecked": 4,
+      "downloadLinksPerScenario": 0,
+      "explainedDisabledControlsPerScenario": 3,
+      "noteIds": ["drawer-resume-note", "hero-resume-note", "contact-resume-note"],
+      "servedStatus": 200,
+      "servedType": "text/html",
+      "responseHasPdfSignature": false,
+      "nativeDownloadTransferExercised": false,
+      "ownerDownloadBlocked": true,
+      "approvedPdfPathExercisedInThisRun": false,
+      "integrityGuardScope": "PDF signature plus exact public/built/served bytes, not full PDF semantic validation or owner approval"
+    },
+    "reviewedHarnessCorrections": [
+      "React-escaped configured download filenames accepted with an actual in-memory React serialization regression",
+      "Visible result articles, headings and lifecycle badges plus readable innerText required alongside exact source data",
+      "data-download-only and missing native download attributes rejected"
+    ],
+    "retainedResourceConsoleMessages": 17,
+    "networkLimit": "Remote fonts intentionally blocked. Resource console messages remain in the raw report. This run makes no zero-network-error claim and does not reinterpret earlier untimed failures.",
+    "postRunHttpDocumentIdentity": {
+      "observedAt": "2026-10-07T10:09:39.941Z",
+      "scope": "Separate HTTP probe after browser completion, not retrospective initial browser document instrumentation",
+      "documents": [
+        { "route": "/", "status": 200, "bytes": 50884, "sha256": "efbb45c2809cfbbc53aa566e8c48f90260d4b59d9128beb4a5344a82b30121f7", "sourceMatchesServed": true },
+        { "route": "/projects/", "status": 200, "bytes": 24341, "sha256": "4e5c7294e8c0621351ebcfc6c3e8a496018f2f83c70111699791239b3d0047fd", "sourceMatchesServed": true },
+        { "route": "/coursework/", "status": 200, "bytes": 23276, "sha256": "1da9ca7da7c74b389ac19f8e920f76142b56cc38b143139710ef9fa21c46ae8e", "sourceMatchesServed": true },
+        { "route": "/about/", "status": 200, "bytes": 16144, "sha256": "7c4cef270944a38a548f5eb3929a9a03f6cfaac1b9eafc8045d9b0394d24a33a", "sourceMatchesServed": true },
+        { "route": "/contact/", "status": 200, "bytes": 14569, "sha256": "876561945074b52f02d9bd791c8c883c64742ab0a42f601783adbcae65012907", "sourceMatchesServed": true }
+      ]
+    },
+    "ownerApprovalReceived": false,
+    "unconfirmedLifecycleIds": ["museek", "hsfix", "forensics", "osteoporosis", "dsrpc"],
+    "privatePdfCopied": false,
+    "pushOrDeploymentPerformed": false,
+    "limits": [
+      "No genuine resume download without explicit approval and public/resume.pdf",
+      "No inferred binary lifecycle from private/usable context or course codes",
+      "No physical-device, hardware-GPU, Core Web Vitals or measured-contrast acceptance"
+    ]
+  },
   "networkPhaseFollowthrough": {
     "date": "2026-10-07",
     "startedAt": "2026-10-07T04:52:46.668Z",

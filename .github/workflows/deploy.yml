@@ -50,6 +50,9 @@ jobs:
       - name: Verify generated pages
         run: npm run check:pages
 
+      - name: Verify content contracts
+        run: npm run check:content
+
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:

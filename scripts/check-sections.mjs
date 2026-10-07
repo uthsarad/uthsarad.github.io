@@ -11,6 +11,8 @@ import { createRequire } from 'node:module'
 import { homedir, tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
 import { pathToFileURL } from 'node:url'
+import { createHash } from 'node:crypto'
+import { loadContentContract, lifecycleLabels, statusOptions, matchingItems } from './content-contract.mjs'
 
 const require = createRequire(import.meta.url)
 const argv = process.argv.slice(2)
@@ -101,6 +103,7 @@ const report = { startedAt: new Date().toISOString(), baseURL, output, tests: []
 ] }
 await mkdir(output, { recursive: true })
 let browser
+let content
 let activeResult
 async function shot(page, name) {
   const path = join(output, `${name}.png`)
@@ -201,6 +204,101 @@ async function filterStatus(page, label, collection = 'projects') {
   if (await select.count()) await select.selectOption({ label })
   else await page.getByRole('group', { name }).getByRole('button', { name: label, exact: true }).click()
 }
+const categories = {
+  projects: [{ label: 'All projects', tag: null }, { label: 'Systems', tag: 'systems' }, { label: 'Tools & data', tag: 'tools' }],
+  coursework: [{ label: 'All coursework', tag: null }, { label: 'Security', tag: 'security' }, { label: 'Data + AI', tag: 'ai' }, { label: 'Systems', tag: 'systems' }],
+}
+const expectedCards = (items) => items.map((item) => ({ id: item.id, title: item.title, label: lifecycleLabels[item.lifecycle], states: [`is-${item.lifecycle}`] }))
+async function checkCards(page, collection, expected) {
+  const actual = await page.locator(`#${collection}-grid article`).evaluateAll((nodes) => nodes.map((node) => {
+    const heading = node.querySelector('h3')
+    const badge = node.querySelector('.project-lifecycle')
+    return { id: heading?.id.replace(/^title-/, ''), title: heading?.textContent.trim(), label: badge?.textContent.trim(), states: [...(badge?.classList ?? [])].filter((value) => /^is-(ongoing|completed|unknown)$/.test(value)) }
+  }))
+  assert.deepEqual(actual, expectedCards(expected), `${collection} IDs, titles and lifecycle badges must match declared source data`)
+  for (const item of expected) {
+    const article = page.locator(`#${collection}-grid article`).filter({ has: page.locator(`#title-${item.id}`) })
+    assert.equal(await article.count(), 1, `${item.id} needs one readable result card`)
+    for (const element of [article, article.locator('h3'), article.locator('.project-lifecycle')]) {
+      assert.equal(await element.isVisible(), true, `${item.id} card, title and lifecycle must be visible`)
+    }
+    assert.equal((await article.locator('h3').innerText()).trim(), item.title, `${item.id} needs a readable result title`)
+    assert.equal((await article.locator('.project-lifecycle').innerText()).trim(), lifecycleLabels[item.lifecycle], `${item.id} needs a readable lifecycle badge`)
+  }
+}
+async function selectCategory(page, collection, label) {
+  const group = page.getByRole('group', { name: `Filter ${collection} by category`, exact: true })
+  // Counts are separate accessible text after the label.
+  const buttons = group.getByRole('button').filter({ hasText: label })
+  assert.equal(await buttons.count(), 1, `${collection} needs one exact category control for ${label}`)
+  const button = buttons.first()
+  await button.click()
+  assert.equal(await button.getAttribute('aria-pressed'), 'true', `${collection} category must be selected`)
+}
+async function settledCards(page, collection, expected, categoryLabel, statusLabel) {
+  await page.waitForFunction(({ collection, ids, categoryLabel, statusLabel }) => {
+    const actual = [...document.querySelectorAll(`#${collection}-grid article h3`)].map((node) => node.id.replace(/^title-/, ''))
+    const announcement = document.querySelector(`#${collection} [role="status"]`)?.textContent ?? ''
+    return JSON.stringify(actual) === JSON.stringify(ids) && announcement.includes(categoryLabel) && announcement.includes(statusLabel)
+  }, { collection, ids: expected.map((item) => item.id), categoryLabel, statusLabel })
+  await checkCards(page, collection, expected)
+}
+async function filterMatrix(page, collection, oppositeExpected, oppositeSelection) {
+  const opposite = collection === 'projects' ? 'coursework' : 'projects'
+  const observations = []
+  for (const category of categories[collection]) {
+    await selectCategory(page, collection, category.label)
+    for (const [status, label] of Object.entries(statusOptions)) {
+      await filterStatus(page, label, collection)
+      const expected = matchingItems(content[collection], status, category.tag)
+      await settledCards(page, collection, expected, category.label, label)
+      assert.equal(await page.getByRole('combobox', { name: new RegExp(`Filter ${collection} by (lifecycle )?status`, 'i') }).inputValue(), status)
+      const noun = collection === 'coursework' ? (expected.length === 1 ? 'study' : 'studies') : (expected.length === 1 ? 'project' : 'projects')
+      const announcement = await page.locator(`#${collection} [role="status"]`).textContent()
+      assert.match(announcement, new RegExp(`^${expected.length}\\s+${noun}\\b`), 'Result count and singular/plural must match')
+      if (!expected.length) assert.match(await page.locator(`#${collection}-grid .collection-empty-state`).innerText(), new RegExp(`No ${collection === 'coursework' ? 'coursework' : 'projects'} match`, 'i'))
+      await checkCards(page, opposite, oppositeExpected)
+      assert.equal(await page.getByRole('combobox', { name: new RegExp(`Filter ${opposite} by (lifecycle )?status`, 'i') }).inputValue(), oppositeSelection.status, 'Opposite lifecycle control changed')
+      const oppositeCategory = page.getByRole('group', { name: `Filter ${opposite} by category`, exact: true }).getByRole('button').filter({ hasText: oppositeSelection.category })
+      assert.equal(await oppositeCategory.count(), 1)
+      assert.equal(await oppositeCategory.getAttribute('aria-pressed'), 'true', 'Opposite category control changed')
+      observations.push({ collection, category: category.label, status, ids: expected.map((item) => item.id), count: expected.length, announcement: announcement.trim(), oppositeIds: oppositeExpected.map((item) => item.id) })
+    }
+    console.log(`JCODE_CHECKPOINT ${JSON.stringify({ message: `${activeResult.name}: ${collection} ${category.label} lifecycle matrix passed` })}`)
+  }
+  return observations
+}
+async function checkResumeMarkup(page) {
+  const actual = await page.evaluate(() => ({
+    links: [...document.querySelectorAll('a[download]')].filter((node) => node.getAttribute('href') === '/resume.pdf').map((node) => ({ href: node.getAttribute('href'), filename: node.getAttribute('download') })),
+    buttons: [...document.querySelectorAll('button')].filter((node) => /Download resume/.test(node.textContent)).map((node) => ({ disabled: node.disabled, noteId: node.getAttribute('aria-describedby'), note: document.getElementById(node.getAttribute('aria-describedby'))?.textContent })),
+  }))
+  const response = await page.context().request.get(new URL(content.resume.href, baseURL).href)
+  const bytes = await response.body()
+  const signature = bytes.subarray(0, 5).toString() === '%PDF-'
+  const servedType = response.headers()['content-type'] ?? ''
+  if (content.resume.available) {
+    assert.deepEqual(actual.links, Array.from({ length: 3 }, () => ({ href: content.resume.href, filename: content.resume.filename })))
+    assert.deepEqual(actual.buttons, [])
+    assert.equal(response.status(), 200)
+    assert.match(servedType, /^application\/pdf(?:;|$)/i)
+    assert.ok(signature, 'Public resume response must be PDF, not a 200 HTML fallback')
+    assert.equal(createHash('sha256').update(bytes).digest('hex'), content.resume.sha256, 'Served resume must match the current public and built PDF')
+  } else {
+    assert.deepEqual(actual.links, [])
+    assert.equal(actual.buttons.length, 3)
+    assert.equal(new Set(actual.buttons.map((button) => button.noteId)).size, 3)
+    for (const button of actual.buttons) {
+      assert.equal(button.disabled, true)
+      assert.equal(button.note, 'Resume PDF is not available yet.')
+    }
+    assert.ok([200, 404].includes(response.status()), 'Absent resume must have a normal missing-asset response')
+    assert.equal(signature, false, 'Missing source resume must not leave a stale served PDF')
+  }
+  activeResult.checks.resume = { available: content.resume.available, controls: actual, status: response.status(), servedType, responseHasPdfSignature: signature,
+    publicAssetIntegrity: content.resume.available ? { bytes: content.resume.bytes, sha256: content.resume.sha256 } : null,
+    nativeDownloadTransferExercised: false, ownerDownloadBlocked: !content.resume.available }
+}
 async function checkHome(page, name, reducedMotion) {
   await page.goto(baseURL + '/')
   await page.getByRole('button', { name: 'Open navigation', exact: true }).waitFor()
@@ -272,39 +370,31 @@ async function checkHome(page, name, reducedMotion) {
   await settledSection(page, 'projects')
   activeResult.checks.initialDeepLink = { hash: '#projects', focusedAndVisible: true }
   await navigateSection(page, 'projects')
-  const category = page.getByRole('group', { name: 'Filter projects by category', exact: true })
-  await category.getByRole('button', { name: /^Systems/ }).click()
-  await filterStatus(page, 'Ongoing')
-  await page.waitForFunction(() => document.querySelectorAll('#projects-grid article').length === 1)
-  assert.match(await page.locator('#projects-grid').innerText(), /NeOS/)
-  assert.equal(await category.getByRole('button', { name: /^Systems/ }).getAttribute('aria-pressed'), 'true')
-  assert.equal(await page.locator('#coursework-grid article').count(), 3, 'Project category/status changed coursework')
-  const academicCategory = page.getByRole('group', { name: 'Filter coursework by category', exact: true })
-  await academicCategory.getByRole('button', { name: /^Data \+ AI/ }).click()
-  await filterStatus(page, 'Status not confirmed', 'coursework')
-  await page.waitForFunction(() => document.querySelectorAll('#coursework-grid article').length === 1)
-  assert.match(await page.locator('#coursework-grid').innerText(), /Osteoporosis Detection/)
-  assert.equal(await page.locator('#projects-grid article').count(), 1, 'Coursework filters changed project results')
-  assert.match(await page.locator('#projects-grid').innerText(), /NeOS/)
-  assert.equal(await category.getByRole('button', { name: /^Systems/ }).getAttribute('aria-pressed'), 'true')
-  assert.equal(await page.getByRole('combobox', { name: /Filter projects by (lifecycle )?status/i }).inputValue(), 'ongoing')
-  await filterStatus(page, 'Completed', 'coursework')
-  await page.waitForFunction(() => document.querySelectorAll('#coursework-grid article').length === 0)
-  assert.match(await page.locator('#coursework-grid').innerText(), /No coursework match/i)
-  assert.match(await page.locator('#coursework [role="status"]').innerText(), /^0 studies/)
-  assert.equal(await page.locator('#projects-grid article').count(), 1, 'Empty coursework result changed project results')
-  await academicCategory.getByRole('button', { name: /^All coursework/ }).click()
+  await selectCategory(page, 'coursework', 'All coursework')
   await filterStatus(page, 'All statuses', 'coursework')
-  await page.waitForFunction(() => document.querySelectorAll('#coursework-grid article').length === 3)
-  await filterStatus(page, 'Status not confirmed')
-  await page.waitForFunction(() => document.querySelectorAll('#projects-grid article').length === 0)
-  assert.match(await page.locator('#projects-grid').innerText(), /No projects match/i)
-  assert.match(await page.locator('#projects [role="status"]').innerText(), /^0 projects/)
-  await category.getByRole('button', { name: /^All projects/ }).click()
+  await selectCategory(page, 'projects', 'All projects')
   await filterStatus(page, 'All statuses')
-  await page.waitForFunction(() => document.querySelectorAll('#projects-grid article').length === 5)
-  assert.equal(await page.locator('#coursework-grid article').count(), 3, 'Project filters changed coursework')
-  activeResult.checks.filters = { systemsOngoingProjects: 1, academicDataUnknown: 1, academicDataCompleted: 0, systemsUnknownProjects: 0, emptyAnnouncements: true, independentBothDirections: true, restoredProjects: 5, restoredCoursework: 3 }
+  const projectMatrix = await filterMatrix(page, 'projects', content.coursework, { category: 'All coursework', status: 'all' })
+  // Retain a filtered project subset while exercising every academic combination.
+  await selectCategory(page, 'projects', 'Systems')
+  await filterStatus(page, 'Ongoing')
+  const systemsOngoing = matchingItems(content.projects, 'ongoing', 'systems')
+  await settledCards(page, 'projects', systemsOngoing, 'Systems', 'Ongoing')
+  const academicMatrix = await filterMatrix(page, 'coursework', systemsOngoing, { category: 'Systems', status: 'ongoing' })
+  await selectCategory(page, 'coursework', 'All coursework')
+  await filterStatus(page, 'All statuses', 'coursework')
+  await settledCards(page, 'coursework', content.coursework, 'All coursework', 'All statuses')
+  await selectCategory(page, 'projects', 'All projects')
+  await filterStatus(page, 'All statuses')
+  await settledCards(page, 'projects', content.projects, 'All projects', 'All statuses')
+  const matrix = [...projectMatrix, ...academicMatrix]
+  const count = (rows, category, status) => rows.find((row) => row.category === category && row.status === status).count
+  activeResult.checks.filters = { oracle: 'src/data/projects.ts literal declarations, independent of rendered DOM and UI predicates',
+    systemsOngoingProjects: count(projectMatrix, 'Systems', 'ongoing'), academicDataUnknown: count(academicMatrix, 'Data + AI', 'unknown'),
+    academicDataCompleted: count(academicMatrix, 'Data + AI', 'completed'), systemsUnknownProjects: count(projectMatrix, 'Systems', 'unknown'),
+    emptyAnnouncements: matrix.some((row) => row.count === 0), emptyCombinations: matrix.filter((row) => row.count === 0).length,
+    independentBothDirections: true, restoredProjects: content.projects.length, restoredCoursework: content.coursework.length, matrix }
+  await checkResumeMarkup(page)
   await cleanLayout(page)
   await shot(page, name)
   if (!reducedMotion) {
@@ -354,6 +444,9 @@ async function run(name, options, check) {
   }
 }
 try {
+  content = await loadContentContract()
+  report.contentExpectations = { source: 'literal declarations, not current DOM', projects: content.projects.map(({ id, lifecycle }) => ({ id, lifecycle })),
+    coursework: content.coursework.map(({ id, lifecycle }) => ({ id, lifecycle })), resume: content.resume }
   const { chromium, modulePath } = await findPlaywright()
   const executablePath = await findChromium(chromium)
   browser = await chromium.launch({ headless: !argv.includes('--headed'), executablePath, args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader'] })
