@@ -93,7 +93,10 @@ export function useScene(page: PageId | undefined) {
         previousSection = nextSection
         setSection(nextSection)
         // Topic selections must not keep the background stuck in an earlier chapter.
+        // Release preview state only. Native keyboard focus and tab selection stay put.
         setPinned(null)
+        setFocused(null)
+        setHovered(null)
       }
       let next = sections[0]?.topic ?? initial
       for (const section of sections) {

@@ -198,6 +198,30 @@ async function navigateSection(page, id) {
   await settledSection(page, id)
   assert.equal(await drawer.evaluate((node) => node.open), false)
 }
+async function checkReadingTopicRelease(page) {
+  const viewport = page.viewportSize()
+  const observations = []
+  for (const id of ['interest-tab-security', 'interest-tab-data']) {
+    await navigateSection(page, 'interests')
+    const tab = page.locator('#' + id)
+    await tab.click()
+    await page.mouse.move(viewport.width - 2, viewport.height - 2)
+    const selectedTitle = (await tab.innerText()).trim() + ' | Uthsara Dahanaike'
+    await page.waitForFunction((title) => document.title === title, selectedTitle)
+    assert.equal(await tab.evaluate((node) => node === document.activeElement), true)
+    for (let step = 0; step < 20; step++) {
+      await page.mouse.wheel(0, 300)
+      await page.waitForTimeout(120)
+      if (await page.locator('.ambient-background').getAttribute('data-section') === 'projects') break
+    }
+    await page.waitForFunction(() => document.querySelector('.ambient-background')?.dataset.section === 'projects')
+    await page.waitForFunction((title) => document.title !== title && !['security', 'data'].includes(document.querySelector('.black-hole')?.dataset.scene), selectedTitle)
+    assert.equal(await tab.evaluate((node) => node === document.activeElement), true, 'Chapter changes must not move native keyboard focus')
+    assert.equal(await tab.getAttribute('aria-selected'), 'true', 'Chapter changes must not change selected interest tab')
+    observations.push(await page.evaluate((id) => ({ tab: id, focusedId: document.activeElement?.id, selected: document.getElementById(id)?.getAttribute('aria-selected'), section: document.querySelector('.ambient-background')?.dataset.section, scene: document.querySelector('.black-hole')?.dataset.scene, title: document.title, y: scrollY }), id))
+  }
+  activeResult.checks.readingTopicRelease = { actualNativeWheel: true, focusPreserved: true, selectionPreserved: true, observations }
+}
 async function filterStatus(page, label, collection = 'projects') {
   const name = new RegExp(`Filter ${collection} by (lifecycle )?status`, 'i')
   const select = page.getByRole('combobox', { name })
@@ -357,6 +381,7 @@ async function checkHome(page, name, reducedMotion) {
   report.testsScrollBehavior[name] = scrollBehavior
   if (reducedMotion) assert.notEqual(scrollBehavior, 'smooth', 'Reduced motion must not force smooth scroll')
   activeResult.checks.scrolling = { reducedMotion, scrollBehavior, calls }
+  if (name === 'desktop') await checkReadingTopicRelease(page)
   await navigateSection(page, 'projects')
   await navigateSection(page, 'about')
   await page.goBack()
