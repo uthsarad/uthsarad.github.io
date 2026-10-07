@@ -1,5 +1,122 @@
 {
   "date": "2026-10-07",
+  "wholeResultFollowthrough": {
+    "date": "2026-10-07",
+    "observedHead": "07cafb31553de9032adca057d8d3b956d6a17bed",
+    "applicationSource": "93b7019",
+    "applicationChange": "Three added lines in src/lib/scene.ts since 405d57e: a comment and focused/hovered preview resets beside the existing pinned reset at chapter change. Native DOM focus, selected interest tab and supplied owner content are unchanged.",
+    "scope": "Actual current repository production preview. Existing dated evidence remains unchanged. Full public-interface rerun, not a copied app or fixture.",
+    "ownerOutcomeDelivered": false,
+    "browser": "154.0.8037.95",
+    "artifactRoot": "%TEMP%/portfolio-whole-result-20261007-1017",
+    "buildAndChecks": { "backgroundTask": "283705z63z", "buildExitCode": 0, "generatedPageChecks": 5, "contractHarnessChecks": 9, "requestSettlementHarnessChecks": 5, "failed": 0, "harnessLimit": "In-memory guards, not owner facts, resume transfer or replacement browser acceptance." },
+    "publicObservation": {
+      "report": "public-final/report.json",
+      "sha256": "d8c1cf7f9b7abe32d3229bf73db336bb708fa8da440901be0fba5e857cd17d40",
+      "driver": "public-observe.mjs",
+      "driverSha256": "39fa4a7f8efbe42c7c490c8652d0e0af51d1f0384bbe60d86e89193070c59f65",
+      "startedAt": "2026-10-07T10:42:33.879Z",
+      "finishedAt": "2026-10-07T10:44:36.337Z",
+      "outcome": "PASS_WITH_OWNER_CONTENT_BLOCKED",
+      "observations": { "PASS": 38, "BLOCKED_CONTENT": 3 },
+      "contexts": ["desktop", "mobile-390", "mobile-320", "reduced-motion", "no-js"],
+      "requestInterception": false, "scrollingOrAnimationApiReplacement": false, "forcedApplicationState": false,
+      "initialDocumentBytesMatchedDist": true, "allContextsClosedWithPendingZero": true,
+      "quietMs": 500, "deadlineMs": 15000,
+      "pageErrors": 0, "httpErrors": 0, "unexpectedFailures": 0, "exactNoJsModulePreloadCspRecords": 5,
+      "nativeFilterMatrix": { "rows": 28, "emptyCombinations": 9, "restoredProjects": 5, "restoredCoursework": 3 },
+      "usedFontFamiliesWithLoadedFaces": ["Inter", "JetBrains Mono"],
+      "limit": "Used faces loaded. Unused language-subset faces remain unloaded, not failed. No zero-console-error claim."
+    },
+    "networkObservation": {
+      "report": "final-network/network-phases.json",
+      "sha256": "7f227f138ff6d5d430d4fc64e2986aebc75b4cb292346041c92a0007cabd8297",
+      "driverSha256": "9ab04e727374db3f94df555771be85143a9e8cc2503b219cf68787669a5f62f7",
+      "startedAt": "2026-10-07T10:37:28.695Z", "finishedAt": "2026-10-07T10:38:15.623Z", "outcome": "PASS",
+      "scenarios": [
+        { "name": "desktop", "outcome": "PASS", "requests": 56, "finished": 56, "pendingBeforeClose": 0, "pendingAfterClose": 0 },
+        { "name": "mobile-390", "outcome": "PASS", "requests": 23, "finished": 23, "pendingBeforeClose": 0, "pendingAfterClose": 0 },
+        { "name": "mobile-320", "outcome": "PASS", "requests": 23, "finished": 23, "pendingBeforeClose": 0, "pendingAfterClose": 0 },
+        { "name": "reduced-motion-settled", "outcome": "PASS", "requests": 15, "finished": 15, "pendingBeforeClose": 0, "pendingAfterClose": 0 },
+        { "name": "reduced-motion-early-close", "outcome": "BOUNDARY_OBSERVED", "requests": 14, "finished": 12, "pendingBeforeClose": 2, "pendingAfterClose": 2 },
+        { "name": "no-js", "outcome": "PASS", "requests": 11, "finished": 6, "pendingBeforeClose": 0, "pendingAfterClose": 0 }
+      ],
+      "exactNoJsModulePreloadCspRecords": 5, "correlatedTeardownAborts": 0, "unexpectedFailures": 0, "httpErrors": 0, "pageErrors": 0,
+      "settlement": "Five settled cases require empty tracked ledger plus 500ms observed quiet with a 15s deadline. Request starts/finishes/failures reset quiet time. Helper never deletes, ignores or cancels pending requests.",
+      "limit": "Early-close skips settlement and retains two unfinished fonts. Bounded quiet does not prove no future request will arrive or establish causes of older failures."
+    },
+    "sectionObservation": {
+      "report": "final-sections/report.json", "sha256": "ea1e1b6ff99757b0638b15b61697eda568055a141fad81d824292867a12c8d0b",
+      "driverSha256": "ef438f79fdfe8ce4455d858c3796adf87c5481fd7352ddfb28631b4d603ed125",
+      "startedAt": "2026-10-07T10:38:16.175Z", "finishedAt": "2026-10-07T10:41:01.485Z", "passed": 6, "failed": 0, "matrixRows": 112,
+      "eachLandingMatrix": { "rows": 28, "emptyCombinations": 9, "restoredProjects": 5, "restoredCoursework": 3 },
+      "nativeFocusedTopicRegressions": [
+        { "tab": "interest-tab-security", "focusedId": "interest-tab-security", "selected": "true", "section": "projects", "scene": "projects", "title": "Projects | Uthsara Dahanaike", "y": 1426 },
+        { "tab": "interest-tab-data", "focusedId": "interest-tab-data", "selected": "true", "section": "projects", "scene": "projects", "title": "Projects | Uthsara Dahanaike", "y": 1426 }
+      ],
+      "pageErrors": 0, "hydrationErrorMessages": 0, "retainedResourceConsoleMessages": 17, "consoleMessageCounts": [3, 3, 3, 2, 1, 5], "nativeOwnerResumeTransfers": 0,
+      "limit": "Deliberate remote-font blocking and native-scroll logging. Generic console resource messages lack exact URL correlation and are not all labelled proven font failures."
+    },
+    "rendererObservation": {
+      "report": "final-renderer/report.json", "sha256": "99f02a33e065b917dac0ef40a78edcd1487e61980c99e97f1616c8b71fc25bdb",
+      "driverSha256": "cdeb01323f03106657c0fea609629e78e6d2c136a5da21b94ad465b99e7502aa",
+      "startedAt": "2026-10-07T10:41:02.367Z", "finishedAt": "2026-10-07T10:42:24.524Z", "passed": 10, "failed": 0,
+      "scenarios": ["navigation", "escape", "history", "back-mid-trip", "rapid", "motion-switch", "reduced-motion", "mobile", "context-loss", "missing-assets"],
+      "limit": "Supplemental retained-engine checks use temporary legacy anchors and intentional context-loss/missing-assets failures, not replacement public-UI acceptance."
+    },
+    "requirementTrace": [
+      { "id": "R1", "check": "Visible literal badges and 28 native normal-network filter rows plus 112 final-section rows", "observed": "Ongoing NeOS/mEgis, Completed FerrumCalc, unknown Museek/hsfix and coursework. Counts, empty announcements, independent opposite controls and 5/3 restoration match source.", "outcome": "MECHANISM_ACCEPTED_OWNER_FACTS_BLOCKED" },
+      { "id": "R2", "check": "Actual desktop/no-JS controls and GET /resume.pdf, plus four section checks", "observed": "Zero native download links, three explained disabled controls with unique notes, 200 HTML/non-PDF and no genuine transfer.", "outcome": "APPROVED_PDF_BLOCKED" },
+      { "id": "R3", "check": "Actual desktop, 390px, 320px and no-JS DOM and static generated documents", "observed": "Six ordered sections, one H1, five H2s, eight articles, no duplicate IDs or horizontal overflow.", "outcome": "ACCEPTED_LOCALLY" },
+      { "id": "R4", "check": "Six actual drawer links, modal focus/dismissal suite, narrow opener bounds and no-JS fallback", "observed": "No top bar; side rail/menu focuses visible root subsections and retains canvas. Native fallback links and Contact work.", "outcome": "ACCEPTED_LOCALLY" },
+      { "id": "R5", "check": "Native wheel, reveal keyframes, progress, canvas, smooth/pause/reduced probes and focused-tab regressions", "observed": "All chapters advance, zero section transit mutations, same canvas, opacity 0-to-1 entrances. Pause/reduced immediate from Y0 with no reveals. Off-chapter interest topic releases while native focus/tab remain.", "outcome": "ACCEPTED_LOCALLY" },
+      { "output": "Hero Projects CTA, Scroll cue and monogram", "check": "Actual public-final clicks", "observed": "Projects, Interests and Introduction receive correct root hash and visible focus." },
+      { "output": "Interest tabs, heading previews and canonical", "check": "Actual tab clicks/ArrowRight and Projects heading hover/leave", "observed": "Selection/panel/focus, preview/restoration and root canonical remain correct. Both native stale-topic guards pass." },
+      { "output": "Footer links, Back to top and retained-route history/reload", "check": "Five actual footer links, real Back to top; standalone Projects-to-About/reload/Back/Forward", "observed": "Correct sections/focus/restoration, Back to top Y0, actual paused reload persists." },
+      { "output": "Profile/contact, disclosures and no-JS content", "check": "Actual text/hrefs, project Details and all eight no-JS summaries", "observed": "Existing profile/mailto/social facts retained, eight disclosures open. No email/clipboard OS action." },
+      { "output": "Static metadata, assets, document identity and retained renderer", "check": "Build plus 5 generated-page tests, fresh five-document HTTP probe and 10 retained renderer cases", "observed": "All pass. Served bytes equal current dist. No remote workflow/deployment." }
+    ],
+    "concreteImprovement": {
+      "baseline": "Preserved actual Chrome historical 09e9086 comparison, not regenerated or the current acceptance target.",
+      "landingChapters": [2, 6], "embeddedArticles": [0, 8], "lifecycleSelectors": [0, 2],
+      "navigation": "Historical 1440x79 top bar and Projects full-page trip become an actual 88px side rail and focused same-document subsection with no transit mutations.",
+      "topicBefore": "Actual public/report.json kept Data Science+AI title while focused data tab and native wheel reached Projects/Coursework. Rail/background drift still advanced.",
+      "topicAfter": "Actual public-final reading titles become Projects, FerrumCalc, Museek, hsfix and Coursework with the same focused/selected tab. Legitimate project-card data scenes remain allowed. Both tracked tab guards observe Projects title/scene at Y1426.",
+      "notClaimed": "Faster loading, genuine owner resume transfer, physical-device/GPU performance, measured contrast, owner aesthetic sign-off or publication."
+    },
+    "failedChronology": [
+      { "report": "network/network-phases.json", "sha256": "87beb31adc0e0a2a960fb3c4d1f83b1d6e952f347f10bd0db551a7687dc2e9e5", "outcome": "FAIL", "observed": "No-JS favicon.svg request started 10:18:39.017 in fallback Contact, still pending at 10:18:39.022 close. Networkidle insufficient, not a font or proven app defect." },
+      { "report": "public/report.json", "sha256": "e6d671c8ac6c0c9071bbd2ad600baee33d751458db90de972cc03fc7d87b0880", "outcome": "FAIL", "observed": "41 UI observations reached; strict assertion retained four .dat aborts and one noise_texture abort. Reload phase attribution insufficient, precise causes unknown. Stale focused-topic title reproduced." },
+      { "report": "public-settled/report.json", "sha256": "ab1760253ce7c803ed97fa82ff66104b618bde6dd33c46476b8cfb16bfe116ff", "outcome": "FAIL", "observed": "20 observations including corrected topic release; favicon-data.svg retained at the 15s ledger deadline after extra root document replacement. Cause unproven." }
+    ],
+    "observerCorrections": "Computed native scroll padding/margin and bottom-clamped alignment replace the invented top-40px expectation. Final wheel reset clicks the actual Home section link rather than unnecessary extra document replacement. Full-document/reload actions separately settled/labelled. Failure whitelist and pending-zero/deadline checks remain strict. New success does not establish older failure causes.",
+    "sourceFingerprints": {
+      "src/lib/scene.ts": "5286fcecb0052b58b32b62f64350ebccb16b3570ccefdeded66598d3ddea91f9",
+      "src/data/projects.ts": "cf13087f80a37fde1a7f24c05d1f966757c0dc672d0c1d18d06d2eb3bb17a442",
+      "src/data/profile.ts": "80d18de2134260b0dd1b3dde26c054e28d43b544acbafad57edaebd8f343865a",
+      "scripts/request-settlement.mjs": "a9beeb0ec9d06bd7ecb0a01da6cf515c53b070d26ad29545becb6856eb74bc7c",
+      "scripts/request-settlement.test.mjs": "52b4ffd7f81dd80f18818d745a2bdeeebf72c542c1303a478b7e4f8c14777a03"
+    },
+    "finalHttpDocumentObservation": {
+      "observedAt": "2026-10-07T10:45:22.672Z", "report": "final-http-documents.json",
+      "initialJavaScriptGzipBytesByRoute": { "/": 66757, "/projects/": 60441, "/coursework/": 60441, "/about/": 56273, "/contact/": 56234 },
+      "scope": "Fresh served-byte comparison after browser runs, not retrospective browser-request instrumentation. Initial JavaScript gzip is recomputed from the generated HTML asset set, not a Core Web Vitals or loading-speed measurement.",
+      "documents": [
+        { "route": "/", "status": 200, "bytes": 50884, "sha256": "302c456776b3d7b5fe0137a4bd2c432e04d555b55fe70f629e7588c536d3a473" },
+        { "route": "/projects/", "status": 200, "bytes": 24341, "sha256": "5b6531e00d4b7987a35e1c9f3c78158d7e92d7316193164e6d7de1e63c9121fe" },
+        { "route": "/coursework/", "status": 200, "bytes": 23276, "sha256": "9facd05870065b4eb68c5957b7cc635b91f3a821b185ca6ac083a4c3ee3d9939" },
+        { "route": "/about/", "status": 200, "bytes": 16144, "sha256": "c96299c05203d05f54db4b127f652cbd76672f43e5fa0ff86b565175bfd86580" },
+        { "route": "/contact/", "status": 200, "bytes": 14569, "sha256": "72350bb90ea3187f9d205f67bc683aa6f040600d8044ff7371e577c8a233710b" }
+      ]
+    },
+    "limits": [
+      "Approved real PDF absent; no native owner-resume transfer exercised.",
+      "Museek/hsfix and optional coursework lifecycle facts remain unknown, not invented.",
+      "Earlier cleanup-rejection synthetic checks remain bound to their dated original driver, not rerun against the changed driver.",
+      "No push/deployment, private-document copy, email send or system clipboard overwrite.",
+      "Headless viewport/touch emulation and SwiftShader are not physical-device or hardware-GPU acceptance."
+    ]
+  },
   "actualApplicationSource": "405d57e052cba89b34eca14c25fdccfe31ced021",
   "observedHead": "054b3034083e1505b30cdf2f0077427164606595",
   "actualTarget": "http://127.0.0.1:4173",
