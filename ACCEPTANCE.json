@@ -5591,6 +5591,111 @@
     "headingTitle": "Projects | Uthsara Dahanaike",
     "canonical": "https://uthsarad.github.io/projects/"
   },
+  "networkPhaseFollowthrough": {
+    "date": "2026-10-07",
+    "startedAt": "2026-10-07T04:52:46.668Z",
+    "finishedAt": "2026-10-07T04:53:33.326Z",
+    "actualTarget": "http://127.0.0.1:4173",
+    "observedGitHead": "1db26003e86c116bb7f57a8fa6e0e1c12e6fe643",
+    "browser": "154.0.8037.95",
+    "outcome": "PASS",
+    "scope": "Actual built repository public UI with normal requests and byte-verified documents. Five settled workflows pass. Early reduced-motion closure is a boundary observation only. Genuine resume delivery and unknown owner lifecycle data remain blocked.",
+    "requestInterception": false,
+    "applicationStatePatched": false,
+    "driver": "scripts/check-public-network.mjs",
+    "driverSha256": "d918c716cfac9d64eb55b0676c6a4a4a05bb355aa4d378b8746638f53dfbcc75",
+    "report": "%TEMP%/portfolio-network-phases-20261007-0452/network-phases.json",
+    "reportSha256": "d1c7069996da3b3e11b75cf7f72a787d9437616fac368aa7fb38ae060835786c",
+    "builtDocuments": [
+      {
+        "path": "/",
+        "bytes": 50884,
+        "sha256": "efbb45c2809cfbbc53aa566e8c48f90260d4b59d9128beb4a5344a82b30121f7"
+      },
+      {
+        "path": "/projects/",
+        "bytes": 24341,
+        "sha256": "4e5c7294e8c0621351ebcfc6c3e8a496018f2f83c70111699791239b3d0047fd"
+      }
+    ],
+    "scenarios": [
+      { "name": "desktop", "outcome": "PASS", "requests": 57, "finished": 57, "pendingAtClose": 0 },
+      { "name": "mobile-390", "outcome": "PASS", "requests": 21, "finished": 21, "pendingAtClose": 0 },
+      { "name": "mobile-320", "outcome": "PASS", "requests": 21, "finished": 21, "pendingAtClose": 0 },
+      {
+        "name": "reduced-motion-settled",
+        "outcome": "PASS",
+        "requests": 15,
+        "finished": 15,
+        "pendingAtClose": 0,
+        "motion": "off",
+        "canvasReady": "false",
+        "meaning": "System reduced motion deliberately prevents live WebGL initialization. Native UI and requests settle without forcing application state."
+      },
+      {
+        "name": "reduced-motion-early-close",
+        "outcome": "BOUNDARY_OBSERVED",
+        "requests": 15,
+        "finished": 13,
+        "pendingAtClose": 2,
+        "pendingAfterClose": 2,
+        "unfinishedResourceTypes": ["font", "font"],
+        "meaning": "Native section navigation worked but font requests were not observed finishing. This is not completed-font or settled-network acceptance."
+      },
+      {
+        "name": "no-js",
+        "outcome": "PASS",
+        "requests": 10,
+        "finished": 5,
+        "failedExactModulePreloads": 5,
+        "pendingAtClose": 0,
+        "openedNativeDetails": 8
+      }
+    ],
+    "failureAttribution": {
+      "exactNoJsModulePreloadFailures": 5,
+      "startedPhase": "no-js.load",
+      "failedPhase": "no-js.load",
+      "errorText": "csp",
+      "normalSettledJavaScriptContextFailures": 0,
+      "correlatedEarlyCloseAbortEvents": 0,
+      "unexpectedFailures": 0,
+      "httpErrors": 0,
+      "pageErrors": 0,
+      "olderDatAbortPhase": "Not reproduced. The four older untimed failures remain preserved in network below and cannot be retrospectively attributed."
+    },
+    "harnessChronology": [
+      {
+        "report": "%TEMP%/portfolio-network-phases-20261007-0445/network-phases.json",
+        "meaning": "Initial phase observation. Strengthened source-identity and false-pass guards before final acceptance."
+      },
+      {
+        "report": "%TEMP%/portfolio-network-phases-20261007-0448/network-phases.json",
+        "outcome": "FAIL",
+        "meaning": "New runner wrongly expected ready WebGL under system reduced motion. Independent source review corrected the test only, not the application."
+      },
+      {
+        "report": "%TEMP%/portfolio-network-phases-invalid-20261007/network-phases.json",
+        "outcome": "EXPECTED_FAIL",
+        "meaning": "Invalid URL rejected with child exit 1, fresh finished FAIL report and no browser/network action. A harness guard check, not application acceptance."
+      }
+    ],
+    "independentReview": {
+      "outcome": "NO_REMAINING_CODE_GUARD_OR_EVIDENCE_BLOCKER",
+      "rawReportAndSummaryVerified": true,
+      "originalUntimedFailuresPreserved": 9,
+      "guardCheckRelevance": "synthetic, not application acceptance",
+      "guardChecks": [
+        "Exact-source browser close rejection persists FAIL, finishedAt, cleanupError and exit code 1 while retaining the original error",
+        "Context close rejection and combined action/cleanup errors remain recorded",
+        "Startup RUNNING-to-FAIL guard replaces stale output",
+        "Reduced-motion readiness branch and exact CSP/abort negative cases reject mistaken expectations"
+      ],
+      "noIndependentBrowserRunOrFileEdit": true,
+      "ownerDataBlockersRemain": true
+    },
+    "ownerOutcomeDelivered": false
+  },
   "network": {
     "normalRequestsNotIntercepted": true,
     "failures": [
