@@ -231,6 +231,10 @@ try {
     note('saved-pause payload starts', payloadStarts)
     assert.deepEqual(payloadStarts, [], 'Saved pause must prevent renderer startup, not merely hide or abort it')
   })
+  const pausedReloads = report.scenarios.find((result) => result.name === 'paused-reloads')
+  const pausedPayloadStarts = pausedReloads.observations.find((note) => note.name === 'saved-pause payload starts').evidence
+  if (pausedPayloadStarts.length) pausedReloads.outcome = 'FAIL'
+  assert.deepEqual(pausedPayloadStarts, [], 'Saved pause must prevent payload starts through settlement and context close')
   for (const width of [390, 320]) {
     await scenario('mobile-' + width, { viewport: { width, height: 844 }, isMobile: true, hasTouch: true }, async ({ page, mark, note }) => {
       mark('load')
