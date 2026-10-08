@@ -1,0 +1,120 @@
+{
+  "date": "2026-10-08",
+  "scope": "Actual local production-preview whole-result acceptance, not publication or owner design approval",
+  "originalRequestAt": "2026-10-06T09:38:14Z",
+  "observedHead": "0fb178fe80f271409a1b6866bccd96c0826d61fb",
+  "applicationRepairCommit": "1de0aabfabd03b87443d7b16542615fe1a2d81ba",
+  "networkGuardCommit": "0fb178fe80f271409a1b6866bccd96c0826d61fb",
+  "browser": "154.0.8037.95",
+  "renderer": "Headless system Chrome, SwiftShader WebGL2",
+  "baseURL": "http://127.0.0.1:4173",
+  "outcome": "PASS_WITH_OWNER_CONTENT_BLOCKED",
+  "ownerOutcomeDelivered": false,
+  "rawRoot": "%TEMP%/portfolio-whole-result-20261008-fixed",
+  "earlierRoot": "%TEMP%/portfolio-whole-result-20261008-0314",
+  "sourceSha256": {
+    "src/App.tsx": "a8ac37a13af3593f8eb173d864baa108a4ebcccccb7c4b6142556171d94aa63a",
+    "src/lib/scene.ts": "5286fcecb0052b58b32b62f64350ebccb16b3570ccefdeded66598d3ddea91f9",
+    "src/data/projects.ts": "cf13087f80a37fde1a7f24c05d1f966757c0dc672d0c1d18d06d2eb3bb17a442",
+    "src/data/profile.ts": "80d18de2134260b0dd1b3dde26c054e28d43b544acbafad57edaebd8f343865a",
+    "scripts/check-pages.test.mjs": "9533b545d5597a203d8232e5800c12575d4fb5bcb58862c543f1339a6cf11952",
+    "scripts/content-contract.mjs": "549efb6bc4995e795089a9f04d24fda762efbdf2fa289c66d842cdb914eedd30",
+    "scripts/content-contract.test.mjs": "0fea1739f7d004e127d59e90005b4872d52229b80747c4a49da1d0a6add0c7bc",
+    "scripts/request-settlement.mjs": "a9beeb0ec9d06bd7ecb0a01da6cf515c53b070d26ad29545becb6856eb74bc7c",
+    "scripts/request-settlement.test.mjs": "52b4ffd7f81dd80f18818d745a2bdeeebf72c542c1303a478b7e4f8c14777a03",
+    "scripts/check-public-network.mjs": "a2c7371bc4b4d506a1aa2a0511dd19cee1cead83d18c418ac48d17134381ed98",
+    "scripts/check-sections.mjs": "ef438f79fdfe8ce4455d858c3796adf87c5481fd7352ddfb28631b4d603ed125",
+    "scripts/check-space-trip.mjs": "cdeb01323f03106657c0fea609629e78e6d2c136a5da21b94ad465b99e7502aa"
+  },
+  "publicObserverSha256": "b8d0236826f4ca27c2a031ff7c292163fed5fb210b41442d713e9cf02b9b1bcb",
+  "publicObserverParity": "Identical to the corrected earlier public-mapped.mjs except its output path. No further native action or assertion change for final run.",
+  "artifacts": [
+    { "path": "core-runs.json", "sha256": "a058e9ef49ff92dd2e3c62e33a432aa018939ddf2a34e1337b7a83f255c83a76", "startedAt": "2026-10-08T05:20:44.834Z", "finishedAt": "2026-10-08T05:27:05.046Z", "outcome": "PASS" },
+    { "path": "public-runs.json", "sha256": "09bbdba80e485b17d6affae79134bebbd82dc04aa7c38b68b32b8082bb479f5e", "startedAt": "2026-10-08T05:27:10.828Z", "finishedAt": "2026-10-08T05:29:06.751Z", "outcome": "PASS_WITH_OWNER_CONTENT_BLOCKED" },
+    { "path": "network/network-phases.json", "sha256": "fbafa2d6459a71630aefd4996b84ff8e152e676f604fb0c9cdc563a2edf42099", "startedAt": "2026-10-08T05:21:13.763Z", "finishedAt": "2026-10-08T05:22:12.110Z", "outcome": "PASS" },
+    { "path": "sections/report.json", "sha256": "d1bfe449a2ca5c52ae834382990ed3773c85198b327adc161e40d0ce0de15ce2", "startedAt": "2026-10-08T05:22:12.716Z", "finishedAt": "2026-10-08T05:25:41.394Z", "passed": 6, "total": 6 },
+    { "path": "renderer/report.json", "sha256": "d880cb7d057fd4d58704975be21805c4cfb9c184e09fdb3193e12cb881410aba", "startedAt": "2026-10-08T05:25:42.384Z", "finishedAt": "2026-10-08T05:27:04.735Z", "passed": 10, "total": 10 },
+    { "path": "public/report.json", "sha256": "4b6876ffdcf08d21ae1bb2c1be411fba5d48681f4637e208337014f5d9850822", "startedAt": "2026-10-08T05:27:12.021Z", "finishedAt": "2026-10-08T05:29:06.672Z", "outcome": "PASS_WITH_OWNER_CONTENT_BLOCKED", "PASS": 38, "BLOCKED_CONTENT": 3 }
+  ],
+  "mappedExecutions": [
+    { "name": "build", "exitCode": 0, "acceptance": "Actual repository TypeScript/client/SSR/static-page build" },
+    { "name": "pages", "exitCode": 0, "passed": 5, "acceptance": "Actual generated documents, assets, metadata, readable content, resume integrity and unchanged budgets" },
+    { "name": "content", "exitCode": 0, "passed": 14, "acceptance": "Supplemental in-memory evidence only: nine contract and five settlement guard regressions" },
+    { "name": "paused-probe", "exitCode": 0, "acceptance": "Six real home/About reloads after the actual footer pause switch, zero paused payload starts" },
+    { "name": "network", "exitCode": 0, "acceptance": "Six settled actual public workflows plus one separate unfinished early-close boundary" },
+    { "name": "sections", "exitCode": 0, "acceptance": "Six real local native workflows, including modal/focus/history, literal filters and motion preferences" },
+    { "name": "renderer", "exitCode": 0, "acceptance": "Ten supplemental legacy-anchor/renderer stress scenarios, including intentional injected failures" },
+    { "name": "public", "exitCode": 0, "acceptance": "Complete 41-observation real unmodified public interface, 38 PASS and three owner-content blockers" }
+  ],
+  "executionIntegrity": "Both finished per-mode ledgers retain each execution's timestamps, exit, exact log SHA256 and twelve unchanged source fingerprints. All were verified against current files. Core and public used separate tool budgets and ran serially.",
+  "requirementTrace": [
+    { "id": "R1", "checks": "Visible literal badges, all 112 section rows plus 28 normal-network public rows, exact counts/empty announcements/opposite controls/restoration", "observed": "NeOS/mEgis Ongoing, FerrumCalc Completed; nine empty intersections per matrix; restored 5 projects/3 studies", "outcome": "MECHANISM_PASS_OWNER_CLASSIFICATION_BLOCKED" },
+    { "id": "R2", "checks": "Actual introduction/drawer/contact and no-JS controls, unique described-by notes, real resume request", "observed": "Zero native download links, three explained disabled controls, HTTP200 text/html non-PDF, native transfer false", "outcome": "GENUINE_APPROVED_DOWNLOAD_BLOCKED" },
+    { "id": "R3", "checks": "Actual desktop/390/320/no-JS root and generated documents", "observed": "Six ordered direct chapters, one H1/five H2s/eight articles, no duplicate IDs or horizontal overflow", "outcome": "LOCAL_PASS_UNDER_DOCUMENTED_INTERPRETATION" },
+    { "id": "R4", "checks": "Actual six drawer links, desktop rail, narrow openers, modal keyboard/inertness/dismissal, no-JS disclosure", "observed": "No top header, 88px desktop side rail, native visible focused root destinations and expected hashes", "outcome": "LOCAL_PASS" },
+    { "id": "R5", "checks": "Native wheel/reveal keyframes/reading progress/matrix drift, unchanged canvas/no section transit, pre-click smooth observation, pause/reload/resume/system reduction", "observed": "All chapters advance, intermediate native scrolling, immediate distant paused/reduced navigation, six saved-pause reloads off/readyfalse/switchfalse with zero renderer payload starts", "outcome": "LOCAL_PASS_UNDER_DOCUMENTED_INTERPRETATION" }
+  ],
+  "otherChangedPublicOutputs": [
+    "Actual Hero Projects CTA, Scroll to explore cue and side monogram",
+    "Both actual interest tabs and ArrowRight native keyboard selection",
+    "Both exact native focused-tab wheel Projects-entry guards with focus/aria-selected preservation",
+    "Legitimate data-themed project cards remain allowed after stale interest title release",
+    "All five actual footer chapter links and Back to top",
+    "Heading hover/leave title preview/restoration and unchanged root canonical",
+    "Actual project Details and all eight JavaScript-disabled native Details disclosures",
+    "About/contact existing role/text/mailto/social hrefs without OS side effects",
+    "Retained standalone Projects to root About, reload, Back and Forward",
+    "Used Inter and JetBrains Mono normal-network faces",
+    "Narrow 390/320 viewport layout, wrapping, visible side controls",
+    "Generated five-route metadata/canonical/sitemap/static404/preloads/assets/gzip budgets",
+    "Supplemental persistent renderer recovery and interruption scenarios"
+  ],
+  "networkScenarios": [
+    { "name": "desktop", "outcome": "PASS", "requests": 54, "finished": 54, "pendingBefore": 0, "pendingAfter": 0 },
+    { "name": "paused-reloads", "outcome": "PASS", "requests": 100, "finished": 100, "pendingBefore": 0, "pendingAfter": 0 },
+    { "name": "mobile-390", "outcome": "PASS", "requests": 23, "finished": 23, "pendingBefore": 0, "pendingAfter": 0 },
+    { "name": "mobile-320", "outcome": "PASS", "requests": 23, "finished": 23, "pendingBefore": 0, "pendingAfter": 0 },
+    { "name": "reduced-motion-settled", "outcome": "PASS", "requests": 15, "finished": 15, "pendingBefore": 0, "pendingAfter": 0 },
+    { "name": "reduced-motion-early-close", "outcome": "BOUNDARY_OBSERVED", "requests": 15, "finished": 13, "pendingBefore": 2, "pendingAfter": 2 },
+    { "name": "no-js", "outcome": "PASS", "requests": 11, "finished": 6, "pendingBefore": 0, "pendingAfter": 0 }
+  ],
+  "normalNetworkErrors": { "unexpected": 0, "httpAtLeast400": 0, "uncaughtPage": 0, "exactNoJsModulePreloadCspPerReport": 5 },
+  "publicClosure": { "contexts": 5, "allClosed": true, "allPendingZero": true, "observedQuietMs": 500, "deadlineMs": 15000 },
+  "sectionEvidence": { "passed": 6, "total": 6, "nativeMatrixRows": 112, "additionalPublicMatrixRows": 28, "emptyPerMatrix": 9, "restored": [5,3], "nativeFocusedTopicEntries": 2, "entryY": 1426, "entryTitle": "Projects | Uthsara Dahanaike", "focusAndSelectionPreserved": true, "consoleCounts": [3,3,3,2,1,5], "consoleTotal": 17, "consoleCauseNotUrlCorrelated": true },
+  "smoothNativeObservation": { "origin": 0, "target": 1512, "motion": "on", "reduced": false, "sampleY": [0,0,0,0,0,0,0,793,1423,1512], "finalY": 1512, "focused": true, "path": "/", "hash": "#projects" },
+  "pauseImprovement": {
+    "repair": "Restore saved paused state synchronously in the existing post-hydration effect, not startTransition. Initial useState(false) and generated HTML/hydration parity remain unchanged.",
+    "before": { "root": "earlierRoot", "path": "paused-reload-before.json", "sha256": "c205a068ff2725d56a82483a431b2394075fa8719e2a010879630d7605bbd72e", "startedAt": "2026-10-08T05:13:24.917Z", "finishedAt": "2026-10-08T05:13:35.874Z", "outcome": "FAIL", "observedHead": "d12471129c0a1d784bcda88866dfb5e91912ea83", "appSha256": "bd875f2beb48283aec2b746e6fd85f12ea4ebb7f50513d2983e369de41bcf3c2", "observations": 2, "motion": ["off","off"], "ready": ["false","false"], "switchChecked": ["false","true"], "pausedPayloadStarts": 8, "failedRequests": 5, "uncaughtPageErrors": 0 },
+    "uncommittedAfter": { "root": "earlierRoot", "path": "paused-reload-after.json", "sha256": "5ad33caacd68412feacedb555ef5bc373277eec03fb307f4279662229ac22119", "startedAt": "2026-10-08T05:15:58.136Z", "finishedAt": "2026-10-08T05:16:12.464Z", "outcome": "PASS", "observedHead": "d12471129c0a1d784bcda88866dfb5e91912ea83", "appSha256": "a8ac37a13af3593f8eb173d864baa108a4ebcccccb7c4b6142556171d94aa63a", "sourceWasUncommittedAtObservation": true, "nativeReloads": 6, "allMotionOffReadyFalseSwitchFalse": true, "pausedPayloadStarts": 0, "failedRequests": 0, "uncaughtPageErrors": 0 },
+    "committedAfter": { "root": "earlierRoot", "path": "paused-reload-committed.json", "sha256": "a77050f9cf59482f3941f68d857be57b74f49d5302d7d5d1877d2f750380798a", "startedAt": "2026-10-08T05:21:00.002Z", "finishedAt": "2026-10-08T05:21:13.579Z", "outcome": "PASS", "observedHead": "0fb178fe80f271409a1b6866bccd96c0826d61fb", "nativeReloads": 6, "allMotionOffReadyFalseSwitchFalse": true, "pausedPayloadStarts": 0, "failedRequests": 0, "uncaughtPageErrors": 0 },
+    "trackedRegression": "Six actual paused-reloads states and retained payload array zero, asserted again after tracked settlement and context close. No storage forcing, interception, render API substitution or private content."
+  },
+  "preservedFailures": [
+    { "root": "earlierRoot", "path": "orchestration-timeout.status.json", "sha256": "5973b998a408a45f3446c33f34e346686c034578b7239fc635bc8f6c41378636", "exitCode": 124, "publicReportFinished": false, "interpretation": "Tool deadline, not a completed public acceptance or proven app assertion failure" },
+    { "root": "earlierRoot", "path": "public-timeout.status.json", "sha256": "84509474dab965df0e2fb1388d6d67aa0cc06312192049bf83581af34a67ce43", "exitCode": 124, "publicReportFinished": false, "interpretation": "Second tool deadline; host pause is not established" },
+    { "root": "earlierRoot", "path": "public-complete/report.json", "sha256": "39196819b0c72a760b640f784ae9cc57f774a976e7d6afc6811508afa08de781", "outcome": "FAIL", "observations": 28, "interpretation": "Smooth assertion failed with unsaved post-click samples. Exact cause unproven. Pre-click native rAF observation subsequently strengthened, not dropped." },
+    { "root": "earlierRoot", "path": "public-verified/report.json", "sha256": "783107bc2ccbb5b3c27671256f8d8e51e789b77d4e4dc4d1fcbad01ad6db18c4", "outcome": "FAIL", "observations": 19, "interpretation": "Focused-wheel endpoint timeout, failed samples not saved. Scene exclusion corrected to reject stale interest title while allowing legitimate card data-scenes. Exact prior endpoint cause unproven." },
+    { "root": "earlierRoot", "path": "public-mapped/report.json", "sha256": "69b8bc11d304b4b26c392decd828fb6dd3079c09ad9fad6aecc6e5a7b46df484", "outcome": "FAIL", "observations": 41, "interpretation": "Eight precisely phase-labelled .dat aborts after native saved-pause home/About reloads. Reaching 41 UI observations was not an overall PASS." }
+  ],
+  "oldInterruptedLedgersUnchanged": { "path": "earlierRoot/runs.json", "sha256": "f92249cbe39fec6c0c43d72da0a137f6be4889b338ad717248318690bd95d6e2", "finished": false, "recoveryRunOutcome": "RUNNING", "notConvertedToPass": true },
+  "documents": [
+    { "route": "/", "bytes": 50884, "sha256": "cac8c7816662c944bdbd1375deec1ae14481993f2cfc32d7a2408b7e61d58724", "initialJavaScriptGzipBytes": 66744 },
+    { "route": "/projects/", "bytes": 24341, "sha256": "3e6d52f86d60a339f1a8d3d4ea3f673906a2e2dce70c1d54b50b2920456d0795", "initialJavaScriptGzipBytes": 60436 },
+    { "route": "/coursework/", "bytes": 23276, "sha256": "65a123b47f4480d675b5d290a1c2aa993c47975a5308b793255bbf0d69ca4e35", "initialJavaScriptGzipBytes": 60436 },
+    { "route": "/about/", "bytes": 16144, "sha256": "fae870413473d1ce2d81ff9caf44da98cec9e307bd08ab099161dfcdb24ae812", "initialJavaScriptGzipBytes": 56269 },
+    { "route": "/contact/", "bytes": 14569, "sha256": "4bda0da02a59e2beb27a14de926521cfee9843e4ba2cd5156bc686d374aed560", "initialJavaScriptGzipBytes": 56230 }
+  ],
+  "documentIdentityScope": "Each recorded initial browser document matches final dist. Additional post-run HTTP probe matches all five served routes. Post-run probe is not retrospective browser instrumentation.",
+  "historicalComparisonRetained": "Existing October7 actual baseline remains immutable comparison-only: two to six chapters, zero to eight embedded articles, top bar to side rail, full-page Projects trip to focused same-document navigation. Current native results recheck after states without rebuilding history.",
+  "assumptionsRetained": ["Authorized local repository work, not publication", "Left desktop rail and top-left mobile opener", "Introduction/Interests/Projects/Coursework/About/Contact order and retained standalone routes", "Normal scrolling, reveals and reading-driven scene flow, not scroll-jacking", "Coursework lifecycle/filtering is an optional extension", "Unknown facts remain unknown and resume must be owner-approved"],
+  "limitations": [
+    "Genuine approved resume PDF absent; no native owner-file transfer",
+    "Museek/hsfix and optional coursework lifecycle confirmations absent",
+    "No push, deployment, private PDF copy, invented status, email send or system clipboard overwrite",
+    "Owner aesthetic approval, real-device/hardware performance, Core Web Vitals and measured contrast unverified",
+    "Section runner deliberately blocks remote fonts and logs scroll calls; 17 generic console errors lack exact request correlation",
+    "Fourteen in-memory guards, injected renderer failures, temporary legacy anchors and old synthetic PDF tests are supplemental only",
+    "500ms observed quiet with zero pending is bounded, not proof no future request can arrive",
+    "Two early-close fonts remain unfinished; newer pause phases do not retrospectively explain older untimed aborts"
+  ]
+}
