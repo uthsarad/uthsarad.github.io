@@ -196,6 +196,41 @@ try {
     await ready(page)
     note('native standalone-to-home link', { url: page.url() })
   })
+  await scenario('paused-reloads', {}, async ({ page, mark, note }) => {
+    mark('load')
+    await openBuiltPage(page)
+    await ready(page)
+    mark('native-pause')
+    await page.getByRole('switch', { name: 'Visual animations', exact: true }).click()
+    await page.waitForFunction(() => document.documentElement.dataset.motion === 'off' && document.querySelector('.black-hole')?.dataset.ready === 'false')
+    await page.waitForLoadState('networkidle')
+    const payloadStarts = []
+    page.on('request', (request) => {
+      const pathname = new URL(request.url()).pathname
+      if (/\/black-hole\/.*(?:\.dat|noise_texture\.png)$/.test(pathname)) payloadStarts.push({ url: request.url(), at: new Date().toISOString() })
+    })
+    for (const id of ['hero', 'about']) {
+      mark('paused-drawer-' + id)
+      await navigate(page, id)
+      for (let index = 1; index <= 3; index++) {
+        mark(`paused-reload-${id}-${index}`)
+        const response = await page.reload()
+        assert.equal(response?.status(), 200)
+        assert.deepEqual(await response.body(), await readFile(join(repositoryRoot, 'dist', 'index.html')))
+        await ready(page, false)
+        const state = await page.evaluate(() => ({ motion: document.documentElement.dataset.motion,
+          canvasReady: document.querySelector('.black-hole')?.dataset.ready,
+          checked: document.querySelector('[role="switch"]')?.getAttribute('aria-checked'), hash: location.hash }))
+        assert.equal(state.motion, 'off')
+        assert.equal(state.canvasReady, 'false')
+        assert.equal(state.checked, 'false')
+        assert.equal(state.hash, '#' + id)
+        note('native saved-pause reload', state)
+      }
+    }
+    note('saved-pause payload starts', payloadStarts)
+    assert.deepEqual(payloadStarts, [], 'Saved pause must prevent renderer startup, not merely hide or abort it')
+  })
   for (const width of [390, 320]) {
     await scenario('mobile-' + width, { viewport: { width, height: 844 }, isMobile: true, hasTouch: true }, async ({ page, mark, note }) => {
       mark('load')

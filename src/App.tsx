@@ -1,4 +1,4 @@
-import { startTransition, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useReducedMotion } from './lib/motion'
 import { Navigation } from './components/ui/Navigation'
 import { Footer } from './components/ui/Footer'
@@ -43,8 +43,8 @@ export default function App({
   }
 
   useEffect(() => {
-    const restore = () =>
-      startTransition(() => setPaused(readMotionPreference()))
+    // Restore before enabling decorative renderers, not in a deferred transition.
+    const restore = () => setPaused(readMotionPreference())
     restore()
     const changed = (event: StorageEvent) => {
       if (event.key === motionKey) restore()
