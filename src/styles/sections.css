@@ -98,12 +98,7 @@ html:has(.navigation-drawer[open]) { overflow: hidden; }
 .resume-control { display: flex; flex-direction: column; gap: 8px; max-width: 270px; }
 .resume-control button:disabled { cursor: not-allowed; color: #b5c5dd; opacity: 0.8; background: #102039; }
 .resume-note { font-size: 12px; color: #adc0dc; line-height: 1.5; }
-/* One composited canvas drifts between chapters without remounting its renderer. */
-.ambient-background[data-section='interests'] .black-hole__visual { transform: translate(4%, -8%) scale(.92); }
-.ambient-background[data-section='projects'] .black-hole__visual { transform: translate(-12%, 10%) scale(.87); }
-.ambient-background[data-section='coursework'] .black-hole__visual { transform: translate(6%, -10%) scale(.96); }
-.ambient-background[data-section='about'] .black-hole__visual { transform: translate(-8%, 6%) scale(.9); }
-.ambient-background[data-section='contact'] .black-hole__visual { transform: translate(0, -6%) scale(1.04); }
+/* The black hole drifts between chapters as you scroll. See BlackHole.tsx. */
 @keyframes drawer-arrive { from { opacity: .5; transform: translateX(-28px); } to { opacity: 1; transform: translateX(0); } }
 @keyframes scroll-cue { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
 @media (max-width: 1050px) {

@@ -2,7 +2,19 @@ import { useEffect, useRef, useState } from 'react'
 import type { PageId } from '@/lib/pages'
 import type { SceneId } from '@/lib/scene'
 import type { createPhysicalBlackHoleRenderer } from '@/lib/blackHolePhysical/webgl'
+import { sectionEntries } from '@/data/sections'
 import '@/styles/black-hole.css'
+
+/** Where the hole sits at the top of each section, as an offset from its resting spot (vw, vh, scale). */
+const waypoints: Record<string, [number, number, number]> = {
+  hero: [0, 0, 1],
+  interests: [-12, -8, 0.92],
+  projects: [-38, 10, 0.86],
+  coursework: [-6, -10, 0.96],
+  about: [-32, 8, 0.9],
+  contact: [-14, -4, 1.04],
+}
+const ease = (t: number) => t * t * (3 - 2 * t)
 
 type Renderer = ReturnType<typeof createPhysicalBlackHoleRenderer>
 const assetBase = `${import.meta.env.BASE_URL}black-hole/`
@@ -25,6 +37,65 @@ export function BlackHole({ page, scene, enabled }: {
     query.addEventListener('change', update)
     return () => query.removeEventListener('change', update)
   }, [])
+
+  // Scroll-linked drift: the fixed hole glides along a path as the reader moves through sections.
+  // Written straight to CSS variables, so scrolling never re-renders React.
+  useEffect(() => {
+    const root = rootRef.current
+    if (!root || !enabled || reducedMotion) return
+    let frame = 0
+    let dirty = true
+    let marks: { top: number; point: [number, number, number] }[] = []
+    const apply = () => {
+      frame = 0
+      const y = window.scrollY
+      if (dirty) {
+        dirty = false
+        marks = sectionEntries.flatMap(({ id }) => {
+          const element = document.getElementById(id)
+          return element
+            ? [{ top: element.getBoundingClientRect().top + y, point: waypoints[id] }]
+            : []
+        })
+      }
+      if (!marks.length) return
+      const line = y + window.innerHeight * 0.42
+      let index = 0
+      for (let i = 0; i < marks.length; i++) if (marks[i].top <= line) index = i
+      const from = marks[index]
+      const to = marks[index + 1] ?? from
+      const span = to.top - from.top
+      const t = span > 0 ? ease(Math.max(0, Math.min(1, (line - from.top) / span))) : 0
+      const narrow = window.innerWidth < 700 ? 0.35 : 1
+      const x = (from.point[0] + (to.point[0] - from.point[0]) * t) * narrow
+      const yy = from.point[1] + (to.point[1] - from.point[1]) * t
+      const s = from.point[2] + (to.point[2] - from.point[2]) * t
+      root.style.setProperty('--drift-x', `${x.toFixed(2)}vw`)
+      root.style.setProperty('--drift-y', `${yy.toFixed(2)}vh`)
+      root.style.setProperty('--drift-scale', s.toFixed(3))
+    }
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(apply)
+    }
+    const invalidate = () => {
+      dirty = true
+      schedule()
+    }
+    apply()
+    const resize = new ResizeObserver(invalidate)
+    resize.observe(document.body)
+    window.addEventListener('scroll', schedule, { passive: true })
+    window.addEventListener('resize', invalidate)
+    return () => {
+      cancelAnimationFrame(frame)
+      resize.disconnect()
+      window.removeEventListener('scroll', schedule)
+      window.removeEventListener('resize', invalidate)
+      root.style.removeProperty('--drift-x')
+      root.style.removeProperty('--drift-y')
+      root.style.removeProperty('--drift-scale')
+    }
+  }, [enabled, reducedMotion])
 
   useEffect(() => {
     const canvas = canvasRef.current

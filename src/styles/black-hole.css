@@ -35,7 +35,10 @@
   position: absolute;
   inset: 0;
   transform-origin: 50% 50%;
-  transition: transform 700ms cubic-bezier(.22, .8, .2, 1), opacity 700ms ease;
+  /* Scroll-linked drift, set from BlackHole.tsx. No transition so it tracks the scroll exactly. */
+  transform: translate(var(--drift-x, 0), var(--drift-y, 0)) scale(var(--drift-scale, 1));
+  will-change: transform;
+  transition: opacity 700ms ease;
   /* Fade only the rectangular outer edge, never the physically dark event horizon. */
   mask-image: radial-gradient(ellipse at center, #000 42%, transparent 73%);
   -webkit-mask-image: radial-gradient(ellipse at center, #000 42%, transparent 73%);
@@ -57,14 +60,6 @@
 .black-hole__canvas { opacity: 0; }
 .black-hole[data-ready="true"] .black-hole__canvas { opacity: 1; }
 .black-hole[data-ready="true"] .black-hole__fallback { opacity: 0; }
-
-/* Only magnify around the same visible center while the content is ingested. */
-:root[data-transit="ingesting"] .black-hole[data-motion="true"] .black-hole__visual {
-  transform: scale(1.12);
-}
-:root[data-transit="emerging"] .black-hole[data-motion="true"] .black-hole__visual {
-  transform: scale(1);
-}
 
 @media (max-width: 700px) {
   .black-hole {
