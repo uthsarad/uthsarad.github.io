@@ -1,6 +1,7 @@
 .black-hole {
   --hole-x: 70vw;
   --hole-y: 48vh;
+  --hole-drift-start: 140px;
   position: fixed;
   left: var(--hole-x);
   top: var(--hole-y);
@@ -11,6 +12,25 @@
   isolation: isolate;
 }
 
+/* While loading with motion enabled, sit at the initial right offset so entrance does not jump. */
+.black-hole[data-motion="true"]:not([data-ready="true"]) {
+  transform: translate(calc(-50% + var(--hole-drift-start, 140px)), -50%);
+}
+
+/* When renderer finishes loading and is ready, smoothly glide from right to left into place. */
+.black-hole[data-ready="true"][data-motion="true"] {
+  animation: black-hole-drift-in 2.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes black-hole-drift-in {
+  0% {
+    transform: translate(calc(-50% + var(--hole-drift-start, 140px)), -50%);
+  }
+  100% {
+    transform: translate(-50%, -50%);
+  }
+}
+
 .black-hole__visual {
   position: absolute;
   inset: 0;
@@ -19,6 +39,8 @@
   /* Fade only the rectangular outer edge, never the physically dark event horizon. */
   mask-image: radial-gradient(ellipse at center, #000 42%, transparent 73%);
   -webkit-mask-image: radial-gradient(ellipse at center, #000 42%, transparent 73%);
+  /* Align accretion disc with portfolio cyan/blue accent theme (#83aeff / #72dacb). */
+  filter: hue-rotate(190deg) saturate(0.85);
 }
 
 .black-hole__fallback,
@@ -48,13 +70,23 @@
   .black-hole {
     --hole-x: 70vw;
     --hole-y: 48vh;
+    --hole-drift-start: 50px;
     width: 130vw;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .black-hole {
+    animation: none !important;
+    transform: translate(-50%, -50%) !important;
+  }
   .black-hole__visual,
   .black-hole__fallback,
   .black-hole__canvas { transition: none; }
   .black-hole__visual { transform: none !important; }
+}
+
+html[data-motion='off'] .black-hole {
+  animation: none !important;
+  transform: translate(-50%, -50%) !important;
 }
