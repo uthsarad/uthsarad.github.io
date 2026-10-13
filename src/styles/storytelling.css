@@ -1,16 +1,9 @@
 /* Blue atmosphere, with React Bits text effects and domain-specific scenes. */
-:root {
-  --bg: #060d1c;
-  --surface: #0b172b;
-  --surface-raised: #12223d;
-  --line: #233653;
-  --blue: #8db7ff;
-}
 body {
   background: var(--bg);
 }
 .site-header {
-  background: #060d1ced;
+  background: var(--bg-overlay);
 }
 .hero-grid {
   background-image:
@@ -27,14 +20,14 @@ body {
 }
 .shiny-text {
   display: inline-block;
-  color: #bbd7ff;
+  color: var(--text);
   background-image: linear-gradient(
     115deg,
-    #8aaff2 0%,
-    #b9d4ff 35%,
-    #fff 50%,
-    #a5c7ff 65%,
-    #7fa6e4 100%
+    var(--text) 0%,
+    var(--text) 35%,
+    #ffffff 50%,
+    var(--text) 65%,
+    var(--text) 100%
   );
   background-size: 200% auto;
   background-clip: text;
@@ -59,9 +52,9 @@ body {
   position: relative;
   min-width: 0;
   width: 100%;
-  border: 1px solid #365585;
+  border: 1px solid var(--line-strong);
   border-radius: 12px;
-  background: #0a1529;
+  background: var(--surface);
   box-shadow:
     0 18px 100px #1247941c,
     inset 0 1px 0 #b3d1ff0a;
@@ -72,13 +65,13 @@ body {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 5px;
   padding: 9px 12px;
-  border-bottom: 1px solid #243959;
+  border-bottom: 1px solid var(--line-strong);
 }
 .interest-tabs button {
   min-height: 52px;
   padding: 9px 7px;
   font-size: 14px;
-  color: #9badc8;
+  color: var(--muted);
   border: 1px solid transparent;
   border-radius: 5px;
   transition:
@@ -86,13 +79,13 @@ body {
     color 0.2s;
 }
 .interest-tabs button:hover {
-  color: #edf4ff;
-  background: #1b3050;
+  color: var(--text);
+  background: var(--surface-raised);
 }
 .interest-tabs button[aria-selected='true'] {
-  color: #e4efff;
-  border-color: #45699b;
-  background: #1c365e;
+  color: var(--text);
+  border-color: var(--blue);
+  background: var(--surface-raised);
   box-shadow: inset 0 1px 0 #adc9ff1a;
 }
 .interest-tabs button:focus-visible {
@@ -107,8 +100,8 @@ body {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  background: #08142a;
-  border-bottom: 1px solid #294268;
+  background: var(--surface);
+  border-bottom: 1px solid var(--line-strong);
 }
 .ghost-fibers,
 .ghost-fibers canvas,
@@ -193,7 +186,7 @@ html[data-motion='off'] .security-lock * {
   align-items: center;
   gap: 8px;
   font-size: 14px;
-  color: #8db7ff;
+  color: var(--blue);
   min-height: 32px;
   margin-top: 4px;
 }
@@ -201,20 +194,20 @@ html[data-motion='off'] .security-lock * {
   padding: 6px 0;
 }
 .lab-action:hover {
-  color: #d7e7ff;
+  color: var(--blue-light);
 }
 .interest-lab[data-animate='false'] *,
 .interest-lab[data-animate='false'] *::before {
   animation-play-state: paused !important;
 }
 .about-section {
-  background: #0a1324;
+  background: var(--surface);
 }
 .background-panel {
-  background: #0d192d;
+  background: var(--surface);
 }
 .timeline-dot {
-  box-shadow: 0 0 0 4px #0d192d;
+  box-shadow: 0 0 0 4px var(--surface);
 }
 .contact-section {
   background: radial-gradient(ellipse at 15% 100%, #1b4d883d, transparent 75%);

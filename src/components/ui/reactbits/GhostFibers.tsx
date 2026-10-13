@@ -55,7 +55,9 @@ export function GhostFibers({ enabled }: { enabled: boolean }) {
 
   useEffect(() => {
     const canvas = canvasRef.current
-    if (!canvas) return
+    // Keep the prerendered SVG until this effect is actually visible and motion is enabled.
+    // Compiling an offscreen shader at hydration can stall the short arrival's first frames.
+    if (!canvas || !enabled) return
     const gl = canvas.getContext('webgl2', {
       alpha: false,
       antialias: false,
@@ -187,7 +189,7 @@ export function GhostFibers({ enabled }: { enabled: boolean }) {
       release()
       delete canvas.dataset.renderState
     }
-  }, [generation])
+  }, [generation, enabled])
 
   return (
     <div className="ghost-fibers" aria-hidden="true">

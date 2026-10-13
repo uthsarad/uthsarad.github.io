@@ -1,14 +1,22 @@
 :root {
   color-scheme: dark;
-  --bg: #080c13;
-  --surface: #0e141e;
-  --surface-raised: #131c28;
-  --text: #edf2fa;
-  --muted: #9ba9bd;
-  --subtle: #8393a9;
-  --blue: #83aeff;
-  --cyan: #72dacb;
-  --line: #222c3b;
+  /* Semantic palette shared by UI, navigation, and scene protection. */
+  --bg: #070809;
+  --surface: #111214;
+  --surface-raised: #1b1d20;
+  --text: #f5f7fb;
+  --muted: #b7bbc3;
+  --subtle: #a1a6b0;
+  --blue: #4c8dff;
+  --blue-light: #8bb5ff;
+  --focus: var(--blue);
+  --on-blue: #070809;
+  --line: #34373d;
+  --line-strong: #626873;
+  --surface-overlay: #111214f2;
+  --bg-overlay: #070809ed;
+  --blue-tint: #4c8dff18;
+  --scene-scrim: #070809eb;
   font-synthesis: none;
 }
 * {
@@ -69,11 +77,11 @@ svg {
   flex-shrink: 0;
 }
 ::selection {
-  background: #315899;
-  color: white;
+  background: var(--blue);
+  color: var(--on-blue);
 }
 :focus-visible {
-  outline: 2px solid var(--cyan);
+  outline: 2px solid var(--focus);
   outline-offset: 5px;
   border-radius: 4px;
 }
@@ -123,7 +131,7 @@ h2 {
   text-wrap: balance;
 }
 h2 > span {
-  color: var(--blue);
+  color: var(--text);
 }
 h3 {
   letter-spacing: -0.025em;
@@ -165,20 +173,20 @@ h3 {
     transform 0.2s;
 }
 .button-primary {
-  color: #091323;
-  background: #91b6fa;
+  color: var(--on-blue);
+  background: var(--blue);
 }
 .button-primary:hover {
-  background: #b1ceff;
+  background: var(--blue-light);
   transform: translateY(-2px);
 }
 .button-secondary {
-  border-color: #334054;
-  background: #111a28;
+  border-color: var(--line-strong);
+  background: var(--surface);
 }
 .button-secondary:hover {
-  background: #1a2739;
-  border-color: #6485b8;
+  background: var(--surface-raised);
+  border-color: var(--blue-light);
 }
 .text-link {
   display: inline-flex;
@@ -189,7 +197,7 @@ h3 {
   min-height: 44px;
 }
 .text-link:hover {
-  color: #bed4ff;
+  color: var(--blue-light);
 }
 .skip-link {
   position: fixed;
@@ -212,7 +220,7 @@ h3 {
   top: 0;
   z-index: 40;
   border-bottom: 1px solid #ffffff0b;
-  background: #080c13ed;
+  background: var(--bg-overlay);
   backdrop-filter: blur(18px);
 }
 .header-inner {
@@ -334,7 +342,7 @@ h1 {
   line-height: 1.05;
 }
 h1 > span {
-  color: #b1bfd4;
+  color: var(--text);
 }
 .hero-description {
   color: var(--muted);
@@ -375,15 +383,15 @@ h1 > span {
   color: var(--subtle);
 }
 .filters button:hover {
-  background: #151f2d;
+  background: var(--surface);
 }
 .filters button[aria-pressed='true'] {
-  background: #18273e;
-  border-color: #345276;
-  color: #d0e1ff;
+  background: var(--surface);
+  border-color: var(--line-strong);
+  color: var(--text);
 }
 .filters button[aria-pressed='true'] span {
-  color: #a7c5ff;
+  color: var(--blue-light);
 }
 .result-count {
   color: var(--subtle);
@@ -429,7 +437,7 @@ h1 > span {
   transition: border-color 0.2s;
 }
 .project-card:hover {
-  border-color: #425b7b;
+  border-color: var(--line-strong);
 }
 .project-body {
   padding: 25px 26px 0;
@@ -453,9 +461,9 @@ h1 > span {
   color: var(--muted);
 }
 .project-status.is-active {
-  color: #8bdac5;
-  background: #72dacb06;
-  border-color: #294c48;
+  color: var(--blue-light);
+  background: var(--blue-tint);
+  border-color: var(--line-strong);
 }
 .project-body h3 {
   font-size: 23px;
@@ -485,7 +493,7 @@ h1 > span {
     monospace;
   border-radius: 4px;
   border: 1px solid #ffffff08;
-  color: #a8b7ca;
+  color: var(--muted);
   background: #ffffff04;
 }
 .project-links {
@@ -563,7 +571,7 @@ details[open] summary svg {
   position: absolute;
   bottom: 13px;
   left: 20px;
-  color: #a9b9d0;
+  color: var(--muted);
   font:
     12px 'JetBrains Mono',
     monospace;
@@ -578,7 +586,7 @@ details[open] summary svg {
   transform: translateY(8px) rotate(-3deg);
   border: 1px solid #466286;
   border-radius: 7px;
-  background: #0c1420;
+  background: var(--surface);
   box-shadow: 0 20px 40px #0005;
   overflow: hidden;
 }
@@ -589,7 +597,7 @@ details[open] summary svg {
   gap: 4px;
   padding: 0 10px;
   border-bottom: 1px solid var(--line);
-  background: #162133;
+  background: var(--surface-raised);
 }
 .window-bar i {
   width: 5px;
@@ -612,22 +620,22 @@ details[open] summary svg {
   font:
     12px/1.9 'JetBrains Mono',
     monospace;
-  color: #afc3de;
+  color: var(--muted);
 }
 .terminal-body strong {
   font-size: 21px;
   font-weight: 400;
-  color: #e0eafb;
+  color: var(--text);
 }
 .terminal-prompt {
-  color: var(--cyan);
+  color: var(--focus);
 }
 .terminal-caret {
   display: inline-block;
   width: 5px;
   height: 10px;
   margin-left: 6px;
-  background: var(--cyan);
+  background: var(--focus);
 }
 .art-calculator {
   background: radial-gradient(ellipse at 50% 110%, #34465a, #181b24 70%);
@@ -637,7 +645,7 @@ details[open] summary svg {
   padding: 18px;
   border: 1px solid #667386;
   border-radius: 10px;
-  background: #222b38;
+  background: var(--surface-raised);
   transform: translateY(25px) rotate(5deg);
   box-shadow: 0 20px 40px #0006;
 }
@@ -645,7 +653,7 @@ details[open] summary svg {
   font:
     12px 'JetBrains Mono',
     monospace;
-  color: #aebdd1;
+  color: var(--muted);
   letter-spacing: 0.1em;
 }
 .calculator-face > strong {
@@ -666,7 +674,7 @@ details[open] summary svg {
   gap: 5px;
 }
 .calculator-keys i {
-  background: #344253;
+  background: var(--surface-raised);
   border: 1px solid #55687c;
   border-radius: 4px;
   text-align: center;
@@ -676,14 +684,14 @@ details[open] summary svg {
     monospace;
 }
 .calculator-keys i:last-child {
-  color: #0c1827;
+  color: var(--on-blue);
   background: var(--blue);
 }
 .art-map {
-  background-color: #0d252b;
+  background-color: var(--surface);
   background-image:
-    linear-gradient(#76c6a909 1px, transparent 1px),
-    linear-gradient(90deg, #76c6a909 1px, transparent 1px);
+    linear-gradient(#4c8dff09 1px, transparent 1px),
+    linear-gradient(90deg, #4c8dff09 1px, transparent 1px);
   background-size: 24px 24px;
 }
 .art-map svg {
@@ -692,26 +700,26 @@ details[open] summary svg {
   height: 100%;
 }
 .map-road {
-  stroke: #43737950;
+  stroke: #4c8dff50;
   stroke-width: 12;
   fill: none;
 }
 .map-zone {
-  stroke: #7cc7b17c;
+  stroke: #8bb5ff7c;
   stroke-dasharray: 5 5;
-  fill: #6cbca61a;
+  fill: var(--blue-tint);
 }
 .map-route {
   fill: none;
-  stroke: #77dfc4;
+  stroke: var(--blue-light);
   stroke-width: 2;
 }
 .map-pulse {
-  fill: #77dfc425;
+  fill: #4c8dff25;
 }
 .map-dot {
-  fill: #b2ffdf;
-  stroke: #274739;
+  fill: var(--text);
+  stroke: var(--surface);
   stroke-width: 3;
 }
 .map-tag {
@@ -722,10 +730,10 @@ details[open] summary svg {
     12px 'JetBrains Mono',
     monospace;
   padding: 8px;
-  background: #122e30;
-  border: 1px solid #48766b;
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
   border-radius: 4px;
-  color: #9be1c9;
+  color: var(--blue-light);
 }
 .art-schematic {
   background: radial-gradient(ellipse at 50% 50%, #26314977, #111823);
@@ -745,7 +753,7 @@ details[open] summary svg {
   font:
     12px 'JetBrains Mono',
     monospace;
-  color: #b8c9e0;
+  color: var(--muted);
   text-align: center;
   line-height: 2;
 }
@@ -776,7 +784,7 @@ details[open] summary svg {
 /* Background and current interests. */
 .about-section {
   border-block: 1px solid var(--line);
-  background: #0b1018;
+  background: var(--surface);
 }
 .about-layout {
   display: grid;
@@ -793,7 +801,7 @@ details[open] summary svg {
 .background-panel {
   border: 1px solid var(--line);
   border-radius: 10px;
-  background: #0f1621;
+  background: var(--surface);
   padding: 25px 28px;
 }
 .panel-label {
@@ -810,7 +818,7 @@ details[open] summary svg {
 .timeline {
   margin: 28px 0;
   padding-left: 22px;
-  border-left: 1px solid #365072;
+  border-left: 1px solid var(--line-strong);
 }
 .timeline-item {
   position: relative;
@@ -827,7 +835,7 @@ details[open] summary svg {
   height: 7px;
   border-radius: 50%;
   background: var(--blue);
-  box-shadow: 0 0 0 4px #0f1621;
+  box-shadow: 0 0 0 4px var(--surface);
 }
 .timeline-item .eyebrow {
   font-size: 14px;
@@ -928,7 +936,7 @@ details[open] summary svg {
 }
 .copy-message {
   font-size: 14px;
-  color: #efb895;
+  color: var(--text);
   margin-top: 8px;
   line-height: 1.7;
 }
@@ -995,8 +1003,8 @@ details[open] summary svg {
     left: 0;
     right: 0;
     padding: 14px 20px 20px;
-    border-bottom: 1px solid #34445b;
-    background: #0e1623;
+    border-bottom: 1px solid var(--line-strong);
+    background: var(--surface);
     box-shadow: 0 20px 30px #0005;
   }
   .primary-nav.is-open {
@@ -1011,7 +1019,7 @@ details[open] summary svg {
     font-size: 14px;
   }
   .primary-nav a[aria-current] {
-    background: #1c2b41;
+    background: var(--surface-raised);
   }
   .primary-nav a[aria-current]::after {
     display: none;

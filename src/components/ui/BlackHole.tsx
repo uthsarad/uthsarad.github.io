@@ -56,6 +56,7 @@ export function BlackHole({ page, scene, enabled }: {
     let renderer: Renderer | null = null
     let loading = false
     let failed = false
+    let startupTimer = 0
     const resize = () => {
       if (!renderer || disposed) return
       try {
@@ -117,7 +118,7 @@ export function BlackHole({ page, scene, enabled }: {
     }
     const visibility = () => {
       if (renderer) renderer.setRunning(!document.hidden)
-      else void initialize()
+      else if (!startupTimer) void initialize()
     }
     const contextLost = (event: Event) => {
       event.preventDefault()
@@ -138,9 +139,15 @@ export function BlackHole({ page, scene, enabled }: {
     document.addEventListener('visibilitychange', visibility)
     canvas.addEventListener('webglcontextlost', contextLost)
     canvas.addEventListener('webglcontextrestored', contextRestored)
-    void initialize()
+    // Paint readable HTML and the short arrival before compiling shaders or fetching physics tables.
+    // Resume later in the same document remains immediate, without another artificial wait.
+    startupTimer = window.setTimeout(() => {
+      startupTimer = 0
+      void initialize()
+    }, Math.max(0, 2500 - performance.now()))
     return () => {
       disposed = true
+      window.clearTimeout(startupTimer)
       generation += 1
       observer.disconnect()
       document.removeEventListener('visibilitychange', visibility)
@@ -156,7 +163,7 @@ export function BlackHole({ page, scene, enabled }: {
     <div ref={rootRef} className="black-hole" data-page={page} data-scene={scene}
       data-ready={ready} data-motion={enabled && !reducedMotion} aria-hidden="true">
       <div className="black-hole__visual">
-        <img className="black-hole__fallback" src={`${assetBase}preview.jpg`} alt="" decoding="async" />
+        <img className="black-hole__fallback" src={`${assetBase}preview-blue.jpg`} alt="" decoding="async" />
         <canvas ref={canvasRef} className="black-hole__canvas" />
       </div>
     </div>

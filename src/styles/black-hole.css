@@ -42,8 +42,6 @@
   /* Fade only the rectangular outer edge, never the physically dark event horizon. */
   mask-image: radial-gradient(ellipse at center, #000 42%, transparent 73%);
   -webkit-mask-image: radial-gradient(ellipse at center, #000 42%, transparent 73%);
-  /* Align accretion disc with portfolio cyan/blue accent theme (#83aeff / #72dacb). */
-  filter: hue-rotate(190deg) saturate(0.85);
 }
 
 .black-hole__fallback,
@@ -57,7 +55,11 @@
   transition: opacity 400ms ease;
 }
 
-.black-hole__canvas { opacity: 0; }
+.black-hole__canvas {
+  opacity: 0;
+  /* The fallback is already blue. Tint only the physical renderer, never twice. */
+  filter: hue-rotate(185deg) saturate(1.1) contrast(1.08);
+}
 .black-hole[data-ready="true"] .black-hole__canvas { opacity: 1; }
 .black-hole[data-ready="true"] .black-hole__fallback { opacity: 0; }
 

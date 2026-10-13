@@ -29,9 +29,16 @@ public/black-hole/inverse_radius.dat
 public/black-hole/noise_texture.png
 public/previews/black-hole.jpg -> public/black-hole/preview.jpg
 
+Local presentation asset added 2026-10-13:
+public/black-hole/preview-blue.jpg is a 960x600 frame captured from the
+vendored physical renderer with the portfolio's blue-white CSS color filter.
+It contains no upstream demo interface labels and is the active fallback.
+The upstream preview.jpg above is retained for provenance, but not displayed.
+
 No runtime CDN fetches. No replacement or approximated physics tables.
 The renderer preserves Schwarzschild beam tracing, gravitational lensing,
 Doppler shift, black-body disc temperature, and original precomputed tables.
-The observer is stationary, with camera distance index 850 and time scale
-0.35. Upstream defaults for disc density, opacity and temperature are kept.
+The observer starts at camera distance index 850 and time scale 1.2, with
+local scroll-linked camera choreography. Upstream defaults for disc density,
+opacity and temperature are kept.
 As in kam-ui, tone mapping is used without the original full bloom pipeline.

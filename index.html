@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#060d1c" />
+    <meta name="theme-color" content="#02040a" />
     <script>
       // Honor motion preferences before the prerendered background can animate.
       ;(() => {
@@ -15,8 +15,59 @@
           paused || matchMedia('(prefers-reduced-motion: reduce)').matches
             ? 'off'
             : 'on'
+        // A decorative arrival, not a gate on page content or the physical renderer.
+        // Hash destinations and restored pages must remain immediately visible.
+        if (
+          document.documentElement.dataset.motion === 'on' &&
+          location.pathname === '/' &&
+          !location.hash &&
+          performance.getEntriesByType('navigation')[0]?.type !== 'back_forward' &&
+          performance.now() < 1600
+        ) {
+          document.documentElement.dataset.arrival = 'on'
+          const finish = () => delete document.documentElement.dataset.arrival
+          // A hard navigation-relative deadline also skips a late-loading stylesheet.
+          setTimeout(finish, Math.max(0, 1600 - performance.now()))
+          addEventListener('pagehide', finish, { once: true })
+          addEventListener('pointerdown', finish, { once: true, capture: true })
+          addEventListener('keydown', finish, { once: true, capture: true })
+          addEventListener('wheel', finish, { once: true, passive: true })
+        }
       })()
     </script>
+    <style>
+      /* Critical and self-expiring: no script, font, image or renderer needs to finish. */
+      .space-arrival { display: none; opacity: 0; visibility: hidden; }
+      html[data-arrival='on'] .space-arrival {
+        position: fixed; inset: 0; z-index: 60; display: grid; place-items: center;
+        pointer-events: none; color: #f5f7fb;
+        background: #02040a;
+        animation: arrival-exit 1250ms ease both;
+      }
+      .space-arrival__signal { width: min(280px, 68vw); margin: 0; text-align: center; }
+      .space-arrival__signal svg { display: block; width: 100%; overflow: visible; }
+      .space-arrival__orbit { transform-origin: 160px 100px; animation: arrival-orbit 1000ms ease-out both; }
+      .space-arrival__signal figcaption {
+        margin-top: 18px; color: #b4bcc9; font: 11px/1.5 ui-monospace, monospace;
+        letter-spacing: .24em;
+      }
+      html:has(:focus-visible) .space-arrival,
+      html:has(.navigation-drawer[open]) .space-arrival,
+      html[data-motion='off'] .space-arrival { display: none; }
+      /* Avoid expensive decorative compositing beneath the brief opaque arrival. */
+      html[data-arrival='on'] .ambient-background,
+      html[data-arrival='on'] .hero-grid { visibility: hidden; }
+      html[data-arrival='on'] .side-navigation { backdrop-filter: none; }
+      @keyframes arrival-exit {
+        0%, 64% { opacity: 1; visibility: visible; }
+        100% { opacity: 0; visibility: hidden; }
+      }
+      @keyframes arrival-orbit {
+        from { transform: rotate(-14deg) scale(.9); opacity: .4; }
+        to { transform: rotate(4deg) scale(1); opacity: 1; }
+      }
+      @media (prefers-reduced-motion: reduce) { .space-arrival { display: none !important; } }
+    </style>
     <link rel="stylesheet" href="/src/styles/index.css" />
     <link rel="stylesheet" href="/src/styles/storytelling.css" />
     <link rel="stylesheet" href="/src/styles/pages.css" />
@@ -85,6 +136,26 @@
     </script>
   </head>
   <body>
+    <div class="space-arrival" aria-hidden="true">
+      <figure class="space-arrival__signal">
+        <svg viewBox="0 0 320 200" focusable="false" aria-hidden="true">
+          <g fill="#f5f7fb" opacity=".5">
+            <circle cx="32" cy="37" r="1" /><circle cx="272" cy="44" r="1.3" />
+            <circle cx="295" cy="139" r=".9" /><circle cx="59" cy="155" r=".8" />
+          </g>
+          <g class="space-arrival__orbit" fill="none">
+            <ellipse cx="160" cy="100" rx="126" ry="27" stroke="#4c8dff" stroke-opacity=".12" stroke-width="12" />
+            <ellipse cx="160" cy="100" rx="122" ry="24" stroke="#f5f7fb" stroke-width="2" />
+            <circle cx="160" cy="100" r="43" fill="#02040a" stroke="#4c8dff" stroke-width="1.5" />
+            <path d="M111 100a49 49 0 0 1 98 0" stroke="#4c8dff" stroke-opacity=".25" stroke-width="9" />
+            <path d="M115 100a45 45 0 0 1 90 0" stroke="#f5f7fb" stroke-width="3" />
+            <path d="M38 100c25 25 219 25 244 0" stroke="#f5f7fb" stroke-width="2" />
+            <circle cx="160" cy="100" r="34" stroke="#f5f7fb" stroke-opacity=".14" stroke-dasharray="2 5" />
+          </g>
+        </svg>
+        <figcaption>ENTERING ORBIT</figcaption>
+      </figure>
+    </div>
     <div id="root"></div>
     <noscript>
       <style>
@@ -95,7 +166,7 @@
           transition: none !important;
         }
       </style>
-      <p class="container" style="padding-block: 1rem; color: #b9cce8">
+      <p class="container" style="padding-block: 1rem; color: #b4bcc9">
         Interactive controls require JavaScript. Page links and project details
         remain available.
       </p>

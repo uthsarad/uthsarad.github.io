@@ -15,6 +15,8 @@ export function Navigation({
   const menuButton = useRef<HTMLButtonElement>(null)
   const dialog = useRef<HTMLDialogElement>(null)
   const hoverTimer = useRef<number>(0)
+  const suppressHover = useRef(false)
+  const pointer = useRef<{ x: number; y: number } | null>(null)
   const active = sectionEntries.find((item) => item.id === section)
 
   useEffect(() => {
@@ -31,6 +33,10 @@ export function Navigation({
   function close() {
     // Close synchronously so the section receiving focus is no longer inert.
     window.clearTimeout(hoverTimer.current)
+    const box = menuButton.current?.getBoundingClientRect()
+    const position = pointer.current
+    suppressHover.current = !!(box && position && position.x >= box.left &&
+      position.x <= box.right && position.y >= box.top && position.y <= box.bottom)
     dialog.current?.close()
     setOpen(null)
   }
@@ -67,14 +73,18 @@ export function Navigation({
           setOpen('pinned')
         }}
         onPointerEnter={(event) => {
+          pointer.current = { x: event.clientX, y: event.clientY }
           // Mouse hover opens the menu after a short pause. Touch and keyboard use click.
-          if (event.pointerType !== 'mouse' || open) return
+          if (event.pointerType !== 'mouse' || open || suppressHover.current) return
           window.clearTimeout(hoverTimer.current)
           hoverTimer.current = window.setTimeout(() => {
             setOpen('hover')
           }, 220)
         }}
-        onPointerLeave={() => window.clearTimeout(hoverTimer.current)}
+        onPointerLeave={() => {
+          window.clearTimeout(hoverTimer.current)
+          suppressHover.current = false
+        }}
       >
         {brand}
       </button>
@@ -106,6 +116,7 @@ export function Navigation({
         onPointerDown={() => setOpen('pinned')}
         onKeyDown={() => setOpen('pinned')}
         onPointerMove={(event) => {
+          pointer.current = { x: event.clientX, y: event.clientY }
           // A hover-opened menu closes once the mouse leaves the panel. Clicked menus stay put.
           if (open !== 'hover' || event.pointerType !== 'mouse') return
           const box = event.currentTarget.getBoundingClientRect()
