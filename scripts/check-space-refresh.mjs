@@ -4,6 +4,7 @@
  * --max-paint-ms 2000 asserts local paint timings. Use 0 to record live timings without a promise.
  * --bfcache attempts real restore separately, reporting BLOCKED unless persisted:true is observed.
  * --arrival-visual captures intro appearance separately, without timing acceptance claims.
+ * --only name,name runs an explicitly recorded subset. Each workflow has a 45s diagnostic cap.
  * PLAYWRIGHT_MODULE and PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH match check-navigation.mjs.
  */
 import assert from 'node:assert/strict'
@@ -19,9 +20,15 @@ const option = (name, fallback) => argv.includes(name) ? argv[argv.indexOf(name)
 const url = new URL(option('--url', 'http://127.0.0.1:4173')).href
 const output = resolve(option('--output', join(tmpdir(), 'portfolio-space-refresh')))
 const maxPaint = Number(option('--max-paint-ms', '2000'))
+const selected = option('--only', '').split(',').filter(Boolean)
 assert.ok(Number.isFinite(maxPaint) && maxPaint >= 0, '--max-paint-ms must be nonnegative')
 const exists = (path) => access(path).then(() => true, () => false)
 const list = (path) => readdir(path).catch(() => [])
+async function bounded(promise, ms, message) {
+  let timer
+  try { return await Promise.race([promise, new Promise((_, reject) => { timer = setTimeout(() => reject(new Error(message)), ms) })]) }
+  finally { clearTimeout(timer) }
+}
 async function tools() {
   const candidates = [process.env.PLAYWRIGHT_MODULE].filter(Boolean)
   for (const name of ['playwright', 'playwright-core', '@playwright/test']) {
@@ -88,7 +95,7 @@ const { chromium, modulePath } = await tools()
 const launch = { executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH || chromium.executablePath(), headless: true, args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader'] }
 const browser = await chromium.launch(launch)
 await mkdir(output, { recursive: true })
-const report = { url, startedAt: new Date().toISOString(), browser: await browser.version(), modulePath, maxPaintMs: maxPaint, tests: [], limitations: [
+const report = { url, startedAt: new Date().toISOString(), browser: await browser.version(), modulePath, maxPaintMs: maxPaint, selected, tests: [], limitations: [
   'Single lab navigation per performance condition, not field p75 or a universal network guarantee. Fonts and external failures retained separately.',
   'Latest LCP candidate observed through 5 seconds without input, not proof that no later candidate can occur. Software GPU, no CPU throttling.',
   'Timed startup completion cases never request a screenshot before the completion deadline. Capture follows 3s. --arrival-visual is separate untimed visual evidence, not a causal explanation for prior failures.',
@@ -97,17 +104,20 @@ const report = { url, startedAt: new Date().toISOString(), browser: await browse
   'BFCache is disabled by default in Playwright. --bfcache is an isolated best-effort attempt, never a synthetic event claim.'
 ] }
 let failures = 0
+let workflowFinished = false
 const waitAt = (page, ms) => page.waitForFunction((deadline) => performance.now() >= deadline, ms)
 const snapshot = (page) => page.evaluate(() => window.__spaceRefresh)
 const opener = (page) => page.getByRole('button', { name: 'Open navigation', exact: true })
 const hidden = (page) => page.locator('.space-arrival').evaluate((node) => { const css = getComputedStyle(node); return css.opacity === '0' && css.visibility === 'hidden' })
 const expectedNoJsPreload = (entry, javaScriptEnabled, hrefs) => javaScriptEnabled === false && entry.phase === 'workflow' && entry.error === 'csp' && entry.resourceType === 'script' && !entry.external && hrefs.includes(entry.url)
 async function test(name, options, check, setup = async () => {}, path = '/', seed = {}) {
+  if (selected.length && !selected.includes(name)) return
   const context = await browser.newContext({ viewport: { width: 1440, height: 900 }, ...options })
   const page = await context.newPage()
   page.setDefaultTimeout(15000)
   const result = { name, javaScriptEnabled: options.javaScriptEnabled !== false, outcome: 'RUNNING', observations: [], pageErrors: [], failedRequests: [], httpErrors: [], screenshots: [] }
   report.tests.push(result)
+  await writeFile(join(output, 'space-refresh.json'), JSON.stringify(report, null, 2))
   let phase = 'workflow'
   const note = (requirement, evidence) => result.observations.push({ requirement, evidence })
   page.on('pageerror', (error) => result.pageErrors.push(error.message))
@@ -119,7 +129,7 @@ async function test(name, options, check, setup = async () => {}, path = '/', se
     await setup(page, context, note)
     const response = await page.goto(new URL(path, url).href, { waitUntil: 'commit' })
     assert.equal(response?.status(), 200, 'Document must respond successfully')
-    await check(page, note, shot, result)
+    await bounded(check(page, note, shot, result), 45000, `${name} browser workflow did not settle within 45 seconds`)
     if (!name.includes('blocked')) assert.deepEqual(result.pageErrors, [], 'Unexpected application errors')
     result.documentModulePreloads = result.javaScriptEnabled === false ? await page.locator('link[rel~="modulepreload"][href]').evaluateAll((nodes) => [...new Set(nodes.map((node) => node.href))]) : []
     result.expectedNoJsModulePreloadCsp = result.failedRequests.filter((entry) => expectedNoJsPreload(entry, result.javaScriptEnabled, result.documentModulePreloads))
@@ -133,13 +143,14 @@ async function test(name, options, check, setup = async () => {}, path = '/', se
     failures++
     result.outcome = 'FAIL'
     result.error = error.stack
-    await shot('failure').catch(() => {})
+    await bounded(shot('failure'), 5000, 'Failure screenshot timed out').catch(() => {})
     console.error('FAIL', name, error.message)
   } finally {
-    result.startup = await snapshot(page).catch(() => null)
+    result.startup = await bounded(snapshot(page), 3000, 'Final state inspection timed out').catch(() => null)
     phase = 'teardown'
-    await context.close()
-    await writeFile(join(output, 'space-refresh.json'), JSON.stringify(report, null, 2) + '\n')
+    await writeFile(join(output, 'space-refresh.json'), JSON.stringify(report, null, 2))
+    try { await bounded(context.close(), 10000, 'Browser context teardown timed out') }
+    catch (error) { result.teardownError = error.message; await writeFile(join(output, 'space-refresh.json'), JSON.stringify(report, null, 2)); throw error }
   }
 }
 async function completed(page, note, shot) {
@@ -339,9 +350,13 @@ try {
   for (const throttled of [false, true]) await test(throttled ? 'paint-fast4g-cold' : 'paint-normal-cold', { viewport: throttled ? { width: 390, height: 844 } : { width: 1440, height: 900 }, hasTouch: throttled, isMobile: throttled }, async (page, note, shot) => {
     await waitAt(page, 5000)
     const state = await snapshot(page), fcp = state.paints.find((entry) => entry.name === 'first-contentful-paint'), lcp = state.lcp.at(-1)
+    const decorativeRequests = await page.evaluate(() => performance.getEntriesByType('resource').filter((entry) => /\/assets\/(?:voyage|webgl|model)-[^/]+\.js$|\/black-hole\/[^/]+\.(?:dat|png)$/.test(new URL(entry.name).pathname)).map((entry) => ({ url: entry.name, startTime: entry.startTime })))
     const conditions = { coldCache: true, network: throttled ? '4,000,000 bits/s down and up, 40ms latency' : 'unthrottled', cpuThrottling: 'none', requestInterception: false, observationMs: 5000, userInput: false, navigationOrigin: new URL(url).origin }
     note('separate no-input FCP/LCP observations and main-thread long tasks', { conditions, fcp, lcp, longtasks: state.longtasks, unsupported: state.unsupported })
     assert.ok(fcp && lcp, 'Browser must report both paint metrics')
+    note('Actual optional imports and physics requests follow FCP and the unchanged startup floor', decorativeRequests)
+    assert.ok(decorativeRequests.some((entry) => /\/assets\/voyage-/.test(entry.url)), 'Motion-enabled page must actually start its deferred voyage')
+    for (const entry of decorativeRequests) assert.ok(entry.startTime >= 2500 && entry.startTime >= fcp.startTime, `Decorative request started before content paint/startup floor: ${entry.url}`)
     assert.ok(state.events.every((event) => !['pointerdown', 'keydown', 'wheel'].includes(event.type)), 'Metrics cannot follow user input')
     if (maxPaint > 0) { assert.ok(fcp.startTime < maxPaint, `FCP ${fcp.startTime}ms exceeds ${maxPaint}`); assert.ok(lcp.startTime < maxPaint, `LCP ${lcp.startTime}ms exceeds ${maxPaint}`) }
     await shot('5s')
@@ -387,12 +402,15 @@ try {
     finally { await context.close(); await alternate.close() }
     console.log(result.outcome, result.name)
   }
+  assert.ok(report.tests.length > 0, 'No matching acceptance scenarios ran')
+  for (const name of selected) assert.ok(report.tests.some((entry) => entry.name === name), `Unknown or unenabled scenario: ${name}`)
+  workflowFinished = true
 } finally {
-  await browser.close()
+  await bounded(browser.close(), 10000, 'Browser teardown timed out').catch((error) => { report.teardownError = error.message; workflowFinished = false })
   report.finishedAt = new Date().toISOString()
   report.counts = { total: report.tests.length, passed: report.tests.filter((entry) => entry.outcome === 'PASS').length, failed: failures, blocked: report.tests.filter((entry) => entry.outcome === 'BLOCKED').length }
-  report.outcome = failures ? 'FAIL' : report.counts.blocked ? 'PASS_WITH_BLOCKED_FOLLOWUP' : 'PASS'
+  report.outcome = !workflowFinished ? 'INCOMPLETE' : failures ? 'FAIL' : report.counts.blocked ? 'PASS_WITH_BLOCKED_FOLLOWUP' : 'PASS'
   await writeFile(join(output, 'space-refresh.json'), JSON.stringify(report, null, 2) + '\n')
   console.log(JSON.stringify({ outcome: report.outcome, ...report.counts, report: join(output, 'space-refresh.json') }))
-  if (failures) process.exitCode = 1
+  if (failures || !workflowFinished) process.exitCode = 1
 }

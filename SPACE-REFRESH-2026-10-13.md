@@ -22,7 +22,7 @@ The measured final startup cases observed actual visible frames followed by full
 
 These frame observations begin before navigation. Timing cases do not take screenshots before the deadline. Appearance capture is separate because screenshot preparation can wait for fonts and perturb rendering. Computed visibility is not a proof of every compositor frame.
 
-The final startup report contained 22 scenarios, 20 passing and two failing:
+The first published revision's startup report contained 22 scenarios, 20 passing and two failing:
 
 1. The cold-cache, software-GPU 4 Mbps / 40 ms case reported FCP 4016 ms and an LCP candidate at 4032 ms, above the unchanged 2000 ms assertion. The unthrottled cache-cold case reported FCP 292 ms and LCP 1860 ms. Both were no-input observations through five seconds, not field p75 data. They share a browser process warmed by earlier suite cases, so cold HTTP cache must not be mislabeled cold GPU.
 2. The optional untimed arrival screenshot case could not observe a visible frame before its timeout. That visual capture was not a timing measurement and is not claimed as passing.
@@ -62,3 +62,40 @@ Preserved earlier failed reports:
 - `portfolio-space-light-20261013/space-refresh.json`
 
 Live publication and checks are recorded separately after the deployment completes. This record does not assert publication merely because a local build passed.
+
+## Paint-aware follow-through
+
+The initial refresh was published as `985e250`. The later scheduling repair is committed as `1361aca`. This follow-through keeps the original 1.25-second animation and 1.6-second navigation-relative disarm. A shorter timing experiment was discarded after it failed cold-process checks, not retrospectively counted as a success.
+
+### Targeted changes
+
+- Both voyage imports and physical renderer initialization now require first contentful paint, the existing 2.5-second minimum, a visible document and two rendering frames. Late hydration and visibility/context-restoration handlers cannot bypass that boundary. Unsupported paint timing uses a double-frame opportunity and is not claimed as FCP evidence.
+- The already-blue static image remains paintable during the intro instead of being explicitly hidden and revealed late. Its soft edge is painted over the solid ambient backdrop before readiness, avoiding the initial permanent transform promotion and mask. The original mask and live motion promotion return when the renderer becomes ready.
+- The unready canvas has no display box. Once ready, the fallback fades out over the actual canvas. Physics, shader palette, renderer dimensions, frame caps and image pixels remain unchanged.
+- The acceptance runner preserves results before teardown, supports explicit `--only name,name` selection and bounds hung workflows/diagnostic teardown. A missing scenario or incomplete run cannot report PASS. The navigation-relative completion and FCP/LCP assertions remain strictly below 2000 ms.
+
+### Latest complete local workflow
+
+`portfolio-space-restored-final-20261013/space-refresh.json` reports **21/21 PASS**, including real BFCache restoration. No scenario was blocked or skipped in that full run.
+
+| Width | First visible frame observation | First fully hidden frame observation |
+|---|---:|---:|
+| 1440 | 194 ms | 1732 ms |
+| 390 | 256 ms | 1529 ms |
+| 320 | 213 ms | 1488 ms |
+
+The separate cache-cold, no-input desktop case observed FCP/LCP at 332/332 ms. The 390px, 4 Mbps / 40 ms case observed 552/568 ms. These two cases share a browser process already warmed by earlier scenarios, so they are not cold-GPU evidence. An image LCP candidate is also not proof that content underneath an opaque intro was readable at that instant.
+
+Real resource timings show the voyage, WebGL/model imports and physics requests starting after FCP and the unchanged 2.5-second floor. The runner requires an actual voyage request, preventing an empty request list from satisfying this check.
+
+All nine navigation scenarios passed again in `portfolio-navigation-paint-gated-final-20261013/report.json`, including voyage motion controls and native no-JavaScript navigation. Production build and five generated-page tests passed. The fourteen content/settlement tests and twenty-three real-source scheduler tests passed. The scheduler harness is deterministic browser-API simulation, not a substitute for the real browser checks. Shared runtime is 55,602 bytes gzip and home HTML is 11,090 bytes gzip, below the unchanged 56,000/12,000-byte budgets.
+
+Actual physical-canvas handoff, fallback fade, pause and rebuild/resume also passed at 1440px and 390px with no application errors in `portfolio-fallback-handoff-20261013/handoff.json`. An additional font-isolated visual-ablation comparison measured mean absolute channel differences of 0.067/0.089 on a 0-255 scale between the old static mask and new paint feather. It is not a pixel-identical or production font-timing claim. The first comparison was confounded by a font swap, and waiting for the external font stylesheet later timed out. Those captures remain retained separately. No production font settings or performance test network conditions were changed to obtain the isolated visual result.
+
+### Retained counter-evidence and limits
+
+The earlier nine fresh-process static-paint probes recorded FCP between 1244 and 1792 ms and latest LCP between 1244 and 1792 ms. Two unthrottled mobile intro-completion observations still exceeded two seconds, at 2031 and 2089 ms. They are retained in `portfolio-startup-static-paint-20261013/timings.json` and are not converted into passes.
+
+The discarded shortened-intro series recorded FCP at 3128 to 4044 ms and LCP at 3128 to 4212 ms. Its combined runner later timed out after fourteen reported passing functional cases and did not finish acceptance. The causal explanation for that variation is not established. The raw timings and failed task output remain retained in `portfolio-startup-final-short-20261013/timings.json` and background task `8207441j3m`. Restoring the original timing, bounding diagnostic operations and rerunning the complete workflow produced the 21-case passing report above. The isolated history case also passed in `portfolio-history-paint-gated-20261013/space-refresh.json`.
+
+**Conclusion:** the latest complete lab workflow meets the unchanged two-second intro/paint checks and preserves the requested appearance and interactions. This is not a universal cold-device, cold-GPU, real-network or field-p75 page-load guarantee. The optional multi-megabyte physical scene intentionally starts later than the readable page.

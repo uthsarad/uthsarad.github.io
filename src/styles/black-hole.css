@@ -37,11 +37,26 @@
   transform-origin: 50% 50%;
   /* Scroll-linked drift, set from BlackHole.tsx. No transition so it tracks the scroll exactly. */
   transform: translate(var(--drift-x, 0), var(--drift-y, 0)) rotate(var(--drift-rot, 0deg)) scale(var(--drift-scale, 1));
-  will-change: transform;
   transition: opacity 700ms ease;
   /* Fade only the rectangular outer edge, never the physically dark event horizon. */
   mask-image: radial-gradient(ellipse at center, #000 42%, transparent 73%);
   -webkit-mask-image: radial-gradient(ellipse at center, #000 42%, transparent 73%);
+}
+
+/* The static frame needs no promoted layer or GPU mask. Paint the same feather
+   against the solid ambient backdrop until the live renderer takes over. */
+.black-hole:not([data-ready="true"]) .black-hole__visual {
+  mask-image: none;
+  -webkit-mask-image: none;
+}
+.black-hole:not([data-ready="true"]) .black-hole__visual::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 42%, var(--bg) 73%);
+}
+.black-hole[data-ready="true"][data-motion="true"] .black-hole__visual {
+  will-change: transform;
 }
 
 .black-hole__fallback,
@@ -56,11 +71,12 @@
 }
 
 .black-hole__canvas {
+  display: none;
   opacity: 0;
   /* The fallback is already blue. Tint only the physical renderer, never twice. */
   filter: hue-rotate(185deg) saturate(1.1) contrast(1.08);
 }
-.black-hole[data-ready="true"] .black-hole__canvas { opacity: 1; }
+.black-hole[data-ready="true"] .black-hole__canvas { display: block; opacity: 1; }
 .black-hole[data-ready="true"] .black-hole__fallback { opacity: 0; }
 
 @media (max-width: 700px) {

@@ -54,8 +54,7 @@
       html:has(:focus-visible) .space-arrival,
       html:has(.navigation-drawer[open]) .space-arrival,
       html[data-motion='off'] .space-arrival { display: none; }
-      /* Avoid expensive decorative compositing beneath the brief opaque arrival. */
-      html[data-arrival='on'] .ambient-background,
+      /* Keep the static black hole paintable from the start, without a delayed image reveal. */
       html[data-arrival='on'] .hero-grid { visibility: hidden; }
       html[data-arrival='on'] .side-navigation { backdrop-filter: none; }
       @keyframes arrival-exit {
