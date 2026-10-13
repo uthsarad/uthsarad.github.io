@@ -3,6 +3,7 @@ import type { PageId } from '@/lib/pages'
 import type { SceneId } from '@/lib/scene'
 import type { createPhysicalBlackHoleRenderer } from '@/lib/blackHolePhysical/webgl'
 import type { Camera } from '@/lib/blackHolePhysical/voyage'
+import { scheduleDecorativeStartup } from '@/lib/decorative-startup'
 import '@/styles/black-hole.css'
 
 type Renderer = ReturnType<typeof createPhysicalBlackHoleRenderer>
@@ -28,19 +29,22 @@ export function BlackHole({ page, scene, enabled }: {
     return () => query.removeEventListener('change', update)
   }, [])
 
-  // Decorative voyage code loads only after the visitor enables motion.
+  // Decorative voyage code loads after motion restoration and the first content paint.
   useEffect(() => {
     const root = rootRef.current
     if (!root || !enabled || reducedMotion) return
     let disposed = false
     let stop: (() => void) | undefined
-    void import('@/lib/blackHolePhysical/voyage').then(({ startVoyage }) => {
-      if (!disposed) stop = startVoyage(root, () => cameraRef.current)
-    }).catch(() => {
-      // Navigation and the static black hole remain usable if this optional chunk fails.
+    const cancelStartup = scheduleDecorativeStartup(() => {
+      void import('@/lib/blackHolePhysical/voyage').then(({ startVoyage }) => {
+        if (!disposed) stop = startVoyage(root, () => cameraRef.current)
+      }).catch(() => {
+        // Navigation and the static black hole remain usable if this optional chunk fails.
+      })
     })
     return () => {
       disposed = true
+      cancelStartup()
       stop?.()
     }
   }, [enabled, reducedMotion])
@@ -56,7 +60,7 @@ export function BlackHole({ page, scene, enabled }: {
     let renderer: Renderer | null = null
     let loading = false
     let failed = false
-    let startupTimer = 0
+    let startupAllowed = false
     const resize = () => {
       if (!renderer || disposed) return
       try {
@@ -70,7 +74,7 @@ export function BlackHole({ page, scene, enabled }: {
       }
     }
     const initialize = async () => {
-      if (disposed || loading || renderer || document.hidden || failed) return
+      if (!startupAllowed || disposed || loading || renderer || document.hidden || failed) return
       loading = true
       const current = ++generation
       let candidate: Renderer | null = null
@@ -118,7 +122,7 @@ export function BlackHole({ page, scene, enabled }: {
     }
     const visibility = () => {
       if (renderer) renderer.setRunning(!document.hidden)
-      else if (!startupTimer) void initialize()
+      else if (startupAllowed) void initialize()
     }
     const contextLost = (event: Event) => {
       event.preventDefault()
@@ -139,15 +143,15 @@ export function BlackHole({ page, scene, enabled }: {
     document.addEventListener('visibilitychange', visibility)
     canvas.addEventListener('webglcontextlost', contextLost)
     canvas.addEventListener('webglcontextrestored', contextRestored)
-    // Paint readable HTML and the short arrival before compiling shaders or fetching physics tables.
-    // Resume later in the same document remains immediate, without another artificial wait.
-    startupTimer = window.setTimeout(() => {
-      startupTimer = 0
+    // A late hydration must not start GPU probes before readable content has painted.
+    // Resume later in the same document yields frames but adds no further artificial wait.
+    const cancelStartup = scheduleDecorativeStartup(() => {
+      startupAllowed = true
       void initialize()
-    }, Math.max(0, 2500 - performance.now()))
+    })
     return () => {
       disposed = true
-      window.clearTimeout(startupTimer)
+      cancelStartup()
       generation += 1
       observer.disconnect()
       document.removeEventListener('visibilitychange', visibility)

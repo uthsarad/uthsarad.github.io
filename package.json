@@ -8,7 +8,8 @@
     "build": "tsc && vite build && vite build --ssr src/entry-server.tsx --outDir dist-ssr && node scripts/build-pages.mjs",
     "preview": "vite preview --port 4173",
     "check:pages": "node --test scripts/check-pages.test.mjs",
-    "check:content": "node --test scripts/content-contract.test.mjs scripts/request-settlement.test.mjs"
+    "check:content": "node --test scripts/content-contract.test.mjs scripts/request-settlement.test.mjs",
+    "check:startup": "node --test scripts/decorative-startup.test.mjs"
   },
   "dependencies": {
     "clsx": "^2.1.1",
