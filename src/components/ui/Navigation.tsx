@@ -11,12 +11,16 @@ export function Navigation({
   progressRef: RefObject<HTMLSpanElement>
 }) {
   const [enhanced, setEnhanced] = useState(false)
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState<'hover' | 'pinned' | null>(null)
   const menuButton = useRef<HTMLButtonElement>(null)
   const dialog = useRef<HTMLDialogElement>(null)
+  const hoverTimer = useRef<number>(0)
   const active = sectionEntries.find((item) => item.id === section)
 
-  useEffect(() => setEnhanced(true), [])
+  useEffect(() => {
+    setEnhanced(true)
+    return () => window.clearTimeout(hoverTimer.current)
+  }, [])
   useEffect(() => {
     const drawer = dialog.current
     if (!drawer) return
@@ -26,9 +30,12 @@ export function Navigation({
 
   function close() {
     // Close synchronously so the section receiving focus is no longer inert.
+    window.clearTimeout(hoverTimer.current)
     dialog.current?.close()
-    setOpen(false)
+    setOpen(null)
   }
+
+  const brand = <span className="monogram" aria-hidden="true">u<span>.</span></span>
 
   function links() {
     return sectionEntries.map((item) => (
@@ -47,25 +54,35 @@ export function Navigation({
 
   return (
     <header className="side-navigation">
-      <a className="side-brand" href="/#hero" aria-label="Uthsara Dahanaike, introduction">
-        <span className="monogram">u<span>.</span></span>
-      </a>
       <button
         ref={menuButton}
         type="button"
-        className="icon-button side-menu-toggle"
+        className="side-menu-button"
         hidden={!enhanced}
         aria-label="Open navigation"
-        aria-expanded={open}
+        aria-expanded={!!open}
         aria-controls="navigation-drawer"
-        onClick={() => setOpen(true)}
+        onClick={() => {
+          window.clearTimeout(hoverTimer.current)
+          setOpen('pinned')
+        }}
+        onPointerEnter={(event) => {
+          // Mouse hover opens the menu after a short pause. Touch and keyboard use click.
+          if (event.pointerType !== 'mouse' || open) return
+          window.clearTimeout(hoverTimer.current)
+          hoverTimer.current = window.setTimeout(() => {
+            setOpen('hover')
+          }, 220)
+        }}
+        onPointerLeave={() => window.clearTimeout(hoverTimer.current)}
       >
-        <Icon name="menu" />
+        {brand}
       </button>
       {/* Native disclosure keeps section navigation usable without JavaScript. */}
       <details className="menu-fallback" hidden={enhanced}>
-        <summary className="icon-button" aria-label="Open navigation">
-          <Icon name="menu" /><span className="sr-only">Open navigation</span>
+        <summary className="side-menu-button" aria-label="Open navigation">
+          {brand}
+          <span className="sr-only">Open navigation</span>
         </summary>
         <nav className="static-section-nav" aria-label="Portfolio sections">{links()}</nav>
       </details>
@@ -81,10 +98,18 @@ export function Navigation({
         ref={dialog}
         className="navigation-drawer"
         aria-labelledby="navigation-title"
-        onCancel={(event) => { event.preventDefault(); close() }}
+        onCancel={(event) => { event.preventDefault(); close(); menuButton.current?.focus() }}
         onClose={(event) => {
           // A delayed close event from an earlier opening must not close a new one.
-          if (!event.currentTarget.open) setOpen(false)
+          if (!event.currentTarget.open) setOpen(null)
+        }}
+        onPointerDown={() => setOpen('pinned')}
+        onKeyDown={() => setOpen('pinned')}
+        onPointerMove={(event) => {
+          // A hover-opened menu closes once the mouse leaves the panel. Clicked menus stay put.
+          if (open !== 'hover' || event.pointerType !== 'mouse') return
+          const box = event.currentTarget.getBoundingClientRect()
+          if (event.clientX > box.right + 16) close()
         }}
         onClick={(event) => {
           if (event.target !== event.currentTarget) return

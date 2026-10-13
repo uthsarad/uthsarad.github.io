@@ -203,7 +203,7 @@ test('Direct visits preload reachable static page dependencies only, with bounde
           !assets.has('/' + chunk.file),
           href + ' preloads unrelated page ' + key,
         )
-      if (key.includes('BlackHole') || key.includes('Aurora') || key.includes('Antigravity'))
+      if (key.includes('BlackHole') || key.includes('blackHolePhysical/') || key.includes('Aurora') || key.includes('Antigravity'))
         assert.ok(
           !assets.has('/' + chunk.file),
           'Decorative renderers must stay outside the critical preload path',
