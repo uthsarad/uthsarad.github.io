@@ -99,3 +99,11 @@ The earlier nine fresh-process static-paint probes recorded FCP between 1244 and
 The discarded shortened-intro series recorded FCP at 3128 to 4044 ms and LCP at 3128 to 4212 ms. Its combined runner later timed out after fourteen reported passing functional cases and did not finish acceptance. The causal explanation for that variation is not established. The raw timings and failed task output remain retained in `portfolio-startup-final-short-20261013/timings.json` and background task `8207441j3m`. Restoring the original timing, bounding diagnostic operations and rerunning the complete workflow produced the 21-case passing report above. The isolated history case also passed in `portfolio-history-paint-gated-20261013/space-refresh.json`.
 
 **Conclusion:** the latest complete lab workflow meets the unchanged two-second intro/paint checks and preserves the requested appearance and interactions. This is not a universal cold-device, cold-GPU, real-network or field-p75 page-load guarantee. The optional multi-megabyte physical scene intentionally starts later than the readable page.
+
+### Verified publication
+
+The tested application changes were published as `4509337999075f77cad0064109bc0b8021a1f4a1`. GitHub Pages workflow run `38379462047` completed successfully on 13 October 2026. The first live verifier encountered an HTTP 503 for an initial asset and failed before browser checks. That output remains retained as background task `221002wjkg`. An independent rerun, task `2577493pr3`, completed successfully at 09:55 UTC.
+
+The rerun byte-matched the live home HTML, all seven initial JavaScript/CSS/modulepreload assets and the blue fallback against the tested production build. Live 1440px/390px screenshots and computed checks confirmed the neutral black/blue/white palette, unfiltered blue fallback with zero warm-classifier pixels, reduced-motion intro suppression and no horizontal overflow. All nine navigation scenarios also passed against the deployed site, including keyboard, touch, native no-JavaScript links and voyage pause/resume.
+
+Publication evidence is retained under `%TEMP%/portfolio-space-paint-aware-live-20261013/verification.json` and `%TEMP%/portfolio-navigation-paint-aware-live-20261013/report.json`. These live appearance and interaction checks do not claim a live-network two-second latency guarantee.
