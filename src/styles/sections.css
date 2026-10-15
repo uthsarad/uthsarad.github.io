@@ -85,14 +85,18 @@ html:has(.navigation-drawer[open]) { overflow: hidden; }
 .scroll-cue { margin-top: 38px; }
 .scroll-cue > svg { animation: scroll-cue 2.4s ease-in-out infinite; }
 .interests-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
-/* Local feathered scrims protect copy without covering the scene between blocks. */
+/* Local feathered scrims protect copy, filters and contact actions without covering the scene between blocks. */
 .interests-section .section-introduction,
-.about-section .about-layout > div:first-child {
+.about-section .about-layout > div:first-child,
+.work-toolbar,
+.contact-section .button-row {
   position: relative;
   isolation: isolate;
 }
 .interests-section .section-introduction::before,
-.about-section .about-layout > div:first-child::before {
+.about-section .about-layout > div:first-child::before,
+.work-toolbar::before,
+.contact-section .button-row::before {
   content: '';
   position: absolute;
   inset: -32px -16px;
@@ -101,6 +105,7 @@ html:has(.navigation-drawer[open]) { overflow: hidden; }
   background: linear-gradient(90deg, transparent, #070809f2 16px, #070809f2 calc(100% - 16px), transparent);
   mask-image: linear-gradient(transparent, #000 32px, #000 calc(100% - 32px), transparent);
 }
+.contact-section .button-row { width: fit-content; max-width: 100%; }
 .section-introduction .body-copy { max-width: 36ch; color: var(--muted); }
 .page-home h2 { font-size: clamp(34px, 4.5vw, 58px); line-height: 1.12; letter-spacing: -0.055em; font-weight: 550; }
 .page-home .collection-heading { max-width: none; display: flex; gap: 32px; align-items: end; justify-content: space-between; }
