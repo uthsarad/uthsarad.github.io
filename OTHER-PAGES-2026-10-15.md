@@ -52,4 +52,14 @@ Reports and screenshots retained under the machine's temporary directory:
 
 ## Publication
 
-Pending verification of the exact published commit and final public workflows. Do not treat local acceptance as deployment evidence.
+Commit `c3749cd9acf893c578d97de6516a9057ead38d80` was pushed to main. GitHub Pages run `38693605258` completed successfully. Public HTML for the home page and all four standalone routes matched the local production build byte-for-byte. The published `/assets/index-BEdl3Nsi.css` also matched exactly (47,811 bytes).
+
+Final public browser acceptance passed:
+
+- Reading protection and real select/copy controls: 9/9 cases at 1440, 390 and 320 pixels. Reviewed live Coursework 390 and Contact 320 screenshots.
+- Whole home navigation: 6/6 profiles, 36/36 hops, including both no-JavaScript profiles and reduced motion.
+- All four standalone routes at 390 pixels, 4 Mbps/40 ms: 4/4 functional passes, all 28 category/status combinations, native Details, actual drawer-to-home focus and browser Back, contact destinations and feedback. No application exceptions or first-party HTTP errors were observed.
+
+Final public FCP / LCP in milliseconds were Projects **2536 / 2536**, Coursework **1448 / 1500**, About **1232 / 1248**, Contact **976 / 1060**. Projects still exceeded two seconds. Earlier slower results above remain relevant; this change closes the scoped readability and functional checks, not the broader page-load performance target.
+
+Additional retained evidence: `portfolio-public-bytes-20261015.json`, `portfolio-public-reading-scrim-20261015/report.json`, `portfolio-public-home-final-20261015/report.json`, and `portfolio-public-routes-final-20261015/report.json` in the machine temporary directory.
