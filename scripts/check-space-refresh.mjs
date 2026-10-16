@@ -13,6 +13,8 @@ import { createRequire } from 'node:module'
 import { homedir, tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
 import { pathToFileURL } from 'node:url'
+import { isExpectedRendererAbort } from './renderer-cancellation.mjs'
+import { settleTrackedRequests } from './request-settlement.mjs'
 
 const require = createRequire(import.meta.url)
 const argv = process.argv.slice(2)
@@ -119,22 +121,52 @@ async function test(name, options, check, setup = async () => {}, path = '/', se
   report.tests.push(result)
   await writeFile(join(output, 'space-refresh.json'), JSON.stringify(report, null, 2))
   let phase = 'workflow'
+  const trackSettlement = name === 'pause-resume-history' || name === 'pause-during-noise-load'
+  const pending = new Map()
+  let lastActivityAt = Date.now()
+  const requestIds = new WeakMap()
+  let nextRequestId = 0
+  const requestIdOf = (request) => {
+    if (!requestIds.has(request)) requestIds.set(request, ++nextRequestId)
+    return requestIds.get(request)
+  }
+  // Functions are intentionally omitted from the JSON report. Raw request ids and
+  // the browser's original AbortSignal evidence are retained as serializable data.
+  result.requestIdOf = requestIdOf
   const note = (requirement, evidence) => result.observations.push({ requirement, evidence })
   page.on('pageerror', (error) => result.pageErrors.push(error.message))
-  page.on('requestfailed', (request) => result.failedRequests.push({ url: request.url(), resourceType: request.resourceType(), error: request.failure()?.errorText, phase, external: new URL(request.url()).origin !== new URL(url).origin }))
+  if (trackSettlement) {
+    page.on('request', (request) => {
+      lastActivityAt = Date.now()
+      pending.set(request, { requestId: requestIdOf(request), url: request.url(), resourceType: request.resourceType() })
+    })
+    page.on('requestfinished', (request) => { lastActivityAt = Date.now(); pending.delete(request) })
+  }
+  page.on('requestfailed', (request) => {
+    if (trackSettlement) { lastActivityAt = Date.now(); pending.delete(request) }
+    result.failedRequests.push({ requestId: requestIdOf(request), url: request.url(), resourceType: request.resourceType(), error: request.failure()?.errorText, phase, external: new URL(request.url()).origin !== new URL(url).origin })
+  })
   page.on('response', (response) => { if (response.status() >= 400) result.httpErrors.push({ url: response.url(), status: response.status(), external: new URL(response.url()).origin !== new URL(url).origin }) })
   const shot = async (suffix) => { const file = join(output, `${name}-${suffix}.png`); await page.screenshot({ path: file }); result.screenshots.push(file) }
   try {
     await page.addInitScript(instrument, seed)
-    await setup(page, context, note)
+    await setup(page, context, note, result)
     const response = await page.goto(new URL(path, url).href, { waitUntil: 'commit' })
     assert.equal(response?.status(), 200, 'Document must respond successfully')
     await bounded(check(page, note, shot, result), 45000, `${name} browser workflow did not settle within 45 seconds`)
+    if (trackSettlement) {
+      result.requestSettlement = await settleTrackedRequests(pending, () => lastActivityAt)
+      note('request ledger empty and quiet before classifying motion workflow', result.requestSettlement)
+    }
     if (!name.includes('blocked')) assert.deepEqual(result.pageErrors, [], 'Unexpected application errors')
     result.documentModulePreloads = result.javaScriptEnabled === false ? await page.locator('link[rel~="modulepreload"][href]').evaluateAll((nodes) => [...new Set(nodes.map((node) => node.href))]) : []
     result.expectedNoJsModulePreloadCsp = result.failedRequests.filter((entry) => expectedNoJsPreload(entry, result.javaScriptEnabled, result.documentModulePreloads))
     if (!result.javaScriptEnabled) note('exact document modulepreload CSP failures retained and classified separately', { hrefs: result.documentModulePreloads, classifiedFailures: result.expectedNoJsModulePreloadCsp })
-    const workflowFailures = result.failedRequests.filter((entry) => entry.phase === 'workflow' && !entry.external && !result.expectedNoJsModulePreloadCsp.includes(entry))
+    result.expectedRendererAborts = name === 'pause-during-noise-load'
+      ? result.failedRequests.filter((entry) => entry.phase === 'workflow' && !entry.external && isExpectedRendererAbort(entry, result.rendererAbortProof))
+      : []
+    if (name === 'pause-during-noise-load') assert.equal(result.expectedRendererAborts.length, 1, 'Exactly one original request must have a proven pause cancellation')
+    const workflowFailures = result.failedRequests.filter((entry) => entry.phase === 'workflow' && !entry.external && !result.expectedNoJsModulePreloadCsp.includes(entry) && !result.expectedRendererAborts.includes(entry))
     if (!name.includes('blocked')) assert.deepEqual(workflowFailures, [], 'Unexpected first-party request failures')
     assert.deepEqual(result.httpErrors.filter((entry) => !entry.external), [], 'Unexpected first-party HTTP errors')
     result.outcome = 'PASS'
@@ -146,6 +178,8 @@ async function test(name, options, check, setup = async () => {}, path = '/', se
     await bounded(shot('failure'), 5000, 'Failure screenshot timed out').catch(() => {})
     console.error('FAIL', name, error.message)
   } finally {
+    result.releaseRendererHold?.()
+    if (trackSettlement) result.pendingAtClose = [...pending.values()]
     result.startup = await bounded(snapshot(page), 3000, 'Final state inspection timed out').catch(() => null)
     phase = 'teardown'
     await writeFile(join(output, 'space-refresh.json'), JSON.stringify(report, null, 2))
@@ -273,12 +307,16 @@ try {
   })
   await test('pause-resume-history', {}, async (page, note, shot) => {
     await completed(page, note, shot)
+    // History acceptance exercises an already-ready renderer. The separate
+    // pause-during-noise-load case below covers disposal while a fetch is pending.
+    await page.locator('.black-hole[data-ready="true"]').waitFor({ timeout: 20000 })
     const token = (await snapshot(page)).documentId
     const motion = page.getByRole('switch', { name: 'Visual animations' })
     await motion.click()
     await page.waitForFunction(() => document.documentElement.dataset.motion === 'off')
     await motion.click()
     await page.waitForFunction(() => document.documentElement.dataset.motion === 'on')
+    await page.locator('.black-hole[data-ready="true"]').waitFor({ timeout: 20000 })
     await opener(page).click()
     await page.locator('#primary-navigation a[href="/#projects"]').click()
     await page.waitForFunction(() => location.hash === '#projects')
@@ -288,6 +326,84 @@ try {
     assert.equal(await hidden(page), true)
     note('pause/resume and same-document history do not rearm intro', { documentId: token, arrivalAttribute: await page.locator('html').getAttribute('data-arrival') })
     await shot('no-rerun')
+  })
+  await test('pause-during-noise-load', {}, async (page, note, shot, result) => {
+    await page.waitForFunction(() => window.__rendererFetches?.some((entry) => entry.path === '/black-hole/noise_texture.png' && entry.outcome === 'pending' && entry.signalId > 0), null, { timeout: 20000 })
+    const token = (await snapshot(page)).documentId
+    const initial = await page.evaluate(() => window.__rendererFetches.find((entry) => entry.path === '/black-hole/noise_texture.png'))
+    assert.ok(result.heldRendererRequest, 'Need the exact intercepted initial request object')
+    assert.equal(await page.evaluate(() => window.__rendererFetches.length), 1, 'Only one initial noise fetch may be correlated with the held browser request')
+    assert.equal(initial.url, result.heldRendererRequest.url())
+    assert.equal(initial.abortedAt, null)
+    assert.equal(await page.locator('.black-hole').getAttribute('data-ready'), 'false')
+    const failureEvent = page.waitForEvent('requestfailed', { predicate: (request) => request === result.heldRendererRequest, timeout: 15000 })
+      .then((request) => ({ request }), (error) => ({ error: error.message }))
+    const pauseStartedAt = await page.evaluate(() => performance.now())
+    await page.getByRole('switch', { name: 'Visual animations' }).click()
+    await page.waitForFunction(() => document.documentElement.dataset.motion === 'off' && window.__rendererFetches[0].abortedAt !== null && window.__rendererFetches[0].outcome === 'AbortError')
+    result.releaseRendererHold()
+    const failed = await failureEvent
+    assert.equal(failed.request, result.heldRendererRequest, 'The original request must report its own browser abort')
+    const cancelled = await page.evaluate(() => window.__rendererFetches[0])
+    assert.equal(await page.evaluate(() => window.__rendererFetches.length), 1)
+    assert.equal(cancelled.id, initial.id)
+    assert.equal(cancelled.signalId, initial.signalId)
+    result.rendererAbortProof = {
+      requestId: result.requestIdOf(result.heldRendererRequest), url: cancelled.url,
+      phase: 'motion-pause', generation: 'initial', signalAborted: cancelled.abortedAt !== null,
+      fetchOutcome: cancelled.outcome, pauseStartedAt, abortedAt: cancelled.abortedAt,
+    }
+    // Cross a real rendering opportunity while paused. The disposed generation
+    // must not declare readiness after its own fetch has been cancelled.
+    await page.evaluate(() => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))))
+    assert.equal(await page.locator('.black-hole').getAttribute('data-ready'), 'false')
+    assert.equal(await page.locator('.black-hole__fallback').evaluate((node) => getComputedStyle(node).opacity), '1')
+    const resumeStartedAt = await page.evaluate(() => performance.now())
+    await page.getByRole('switch', { name: 'Visual animations' }).click()
+    await page.locator('.black-hole[data-ready="true"]').waitFor({ timeout: 20000 })
+    assert.equal(await page.evaluate(() => window.__rendererFetches.length), 2, 'Exactly one new generation must resume')
+    assert.equal(await page.locator('html').getAttribute('data-motion'), 'on')
+    const resumed = await page.evaluate(() => window.__rendererFetches.find((entry) => entry.id !== window.__rendererFetches[0].id))
+    assert.ok(resumed, 'Resume must issue a new noise fetch')
+    assert.notEqual(resumed.signalId, initial.signalId, 'Resume must own a different AbortSignal')
+    assert.ok(resumed.signalId > 0)
+    assert.ok(resumed.startedAt >= resumeStartedAt)
+    assert.equal(resumed.abortedAt, null)
+    assert.equal(resumed.outcome, 'fulfilled')
+    assert.equal((await snapshot(page)).documentId, token)
+    assert.equal(await hidden(page), true)
+    note('exact pending renderer fetch cancelled by actual pause; distinct generation resumes to readiness', { initial, cancelled, resumed, resumeStartedAt, proof: result.rendererAbortProof, documentId: token })
+    await shot('resumed')
+  }, async (page, context, note, result) => {
+    // Keep the original fetch arguments, signal and rejection intact. Observe
+    // only the exact renderer noise asset, without changing application headers.
+    await page.addInitScript(() => {
+      const original = window.fetch
+      const signals = new WeakMap()
+      let nextSignal = 0
+      window.__rendererFetches = []
+      window.fetch = function (...args) {
+        const target = new URL(typeof args[0] === 'string' ? args[0] : args[0].url ?? args[0].href, location.href)
+        if (target.origin !== location.origin || target.pathname !== '/black-hole/noise_texture.png') return original.apply(this, args)
+        const signal = args[1]?.signal ?? args[0]?.signal
+        if (signal && !signals.has(signal)) signals.set(signal, ++nextSignal)
+        const entry = { id: window.__rendererFetches.length + 1, url: target.href, path: target.pathname, signalId: signal ? signals.get(signal) : 0, startedAt: performance.now(), abortedAt: signal?.aborted ? performance.now() : null, outcome: 'pending' }
+        window.__rendererFetches.push(entry)
+        signal?.addEventListener('abort', () => { entry.abortedAt = performance.now() }, { once: true })
+        return original.apply(this, args).then((response) => { entry.outcome = 'fulfilled'; return response }, (error) => { entry.outcome = error.name; throw error })
+      }
+    })
+    const gate = new Promise((resolve) => { result.releaseRendererHold = resolve })
+    await context.route(new URL('/black-hole/noise_texture.png', url).href, async (route) => {
+      if (!result.heldRendererRequest) {
+        result.heldRendererRequest = route.request()
+        // Avoid serializing the Playwright request object and its private graph.
+        Object.defineProperty(result, 'heldRendererRequest', { enumerable: false })
+        await gate
+      }
+      await route.continue()
+    })
+    note('failure-path injection, not performance evidence', { kind: 'hold only initial noise fetch until observed signal cancellation' })
   })
   await test('client-navigation', {}, async (page, note, shot) => {
     await opener(page).waitFor()

@@ -40,6 +40,8 @@ npm run dev -- --host 127.0.0.1 --port 5173 --strictPort
 npm run build
 npm run check:pages
 npm run check:content
+npm run check:startup
+npm run check:cancellation
 npm run preview
 ```
 
@@ -48,6 +50,8 @@ Development uses port **5173**; production preview uses **4173**. Dev renders so
 After starting preview, `node scripts/check-navigation.mjs --url http://127.0.0.1:4173` checks the combined logo/menu, hover delay and dismissal, click persistence, keyboard adoption/focus, 390px and 320px touch navigation, native no-JavaScript links, and deferred voyage pause/reload/resume. It uses existing Playwright/browser installations only, with the same environment overrides described below, and writes screenshots plus a report under the system temporary directory.
 
 `node scripts/check-space-refresh.mjs --url http://127.0.0.1:4173` observes arrival frames from before navigation, verifies visible-to-hidden completion before two seconds, and checks mobile, input, motion, history, disabled animation, missing entry-module, delayed-CSS, blue-fallback pixels, and solid-color contrast paths. Separate cold-cache runs record FCP, LCP candidates and long tasks without clicking or scrolling, including a 4 Mbps / 40 ms network profile. Local paint assertions default to two seconds. Use `--max-paint-ms 0` only to record external-network timings without asserting that guarantee. `--bfcache` attempts a real full-document restore and requires `pageshow.persisted` and the same document identity. It reports blocked if a genuine restore is unavailable, not a synthetic-event pass. Moving-image contrast still requires rendered-frame review beyond the computed solid-background checks.
+
+The `pause-during-noise-load` startup case deliberately holds only the initial renderer noise fetch, observes its original AbortSignal during an actual pause click, and requires a distinct signal and successful renderer readiness after resume. Only that exact correlated request may be classified as an expected cleanup abort. All raw failures remain in the report, and every other first-party failure or HTTP error is still fatal. Both motion cases require an empty tracked request ledger and a 500ms quiet interval before classification. The independent history case waits for renderer readiness before pausing. These are lifecycle/failure-path checks, not page-load timing evidence. `npm run check:cancellation` exercises the strict proof classifier with built-in Node tests, not a browser or GPU substitute.
 
 `node scripts/check-sections.mjs` checks desktop, mobile, 320px, reduced motion, no JavaScript, deep links/history, drawer dismissal/focus, filters, and hydration. For each of the four JavaScript-enabled landing scenarios it exercises all 28 category/lifecycle combinations against literal source data, checking visible card titles/badges, result counts, empty states, and unchanged opposite collection controls. It verifies current resume markup and served-byte integrity, but does not claim a native file download transfer. This local suite deliberately blocks remote fonts and logs native scrolling calls. Use the separate network runner for normal-network evidence. `node scripts/check-space-trip.mjs` retains the heavy renderer and legacy-route regression checks. Legacy-route stress tests use temporary anchors, while the section runner exercises the actual navigation UI. If Chromium is not cached, set `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` to an installed Chrome or Edge executable. The runners never install packages.
 
