@@ -72,4 +72,6 @@ An approved resume PDF is still absent. Unconfirmed project statuses remain expl
 
 ## Publication
 
-Pending publication of this test/documentation follow-up. Runtime bytes should remain identical to the verified application build. Deployment and byte checks will be recorded after publication.
+Published test follow-up commit `ac6c250f37f4f06c89c26f91033ff28612035ad9` and whole-result audit commit `fd662ca` to main. GitHub Pages run **38845871559** completed successfully on 2026-10-16. The production build and generated-page/content checks passed in that workflow.
+
+Post-deployment comparison matched local `dist/` byte-for-byte for all five public HTML documents: home 54,441 bytes, Projects 27,898, Coursework 26,833, About 19,701 and Contact 18,126. The unchanged `/assets/index-BEdl3Nsi.css` also matched at **47,811 bytes**. Machine-readable comparison: `%TEMP%/portfolio-public-bytes-20261016.json`. The final public browser acceptance above exercised these same runtime bytes, so no new application behavior was introduced after that run. The desktop timing failure remains unresolved.
